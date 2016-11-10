@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D1791C991DCD344300FF097A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791C981DCD344300FF097A /* AppDelegate.swift */; };
-		D1791C9B1DCD344300FF097A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D1791C9A1DCD344300FF097A /* GameScene.sks */; };
-		D1791C9D1DCD344300FF097A /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D1791C9C1DCD344300FF097A /* Actions.sks */; };
 		D1791C9F1DCD344300FF097A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791C9E1DCD344300FF097A /* GameScene.swift */; };
 		D1791CA11DCD344300FF097A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CA01DCD344300FF097A /* GameViewController.swift */; };
 		D1791CA41DCD344300FF097A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1791CA21DCD344300FF097A /* Main.storyboard */; };
@@ -27,6 +25,9 @@
 		D1791CDE1DCE54EB00FF097A /* TimeDilationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CDD1DCE54EB00FF097A /* TimeDilationComponent.swift */; };
 		D1791CE01DCE54FC00FF097A /* OrbitComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */; };
 		D1791CE41DCE56A700FF097A /* Meteorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CE31DCE56A700FF097A /* Meteorite.swift */; };
+		D1FD87EC1DD21069003A247B /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87EB1DD21069003A247B /* EntityManager.swift */; };
+		D1FD87EF1DD24F8A003A247B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87EE1DD24F8A003A247B /* Extensions.swift */; };
+		D1FD87F11DD26978003A247B /* CollisionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87F01DD26978003A247B /* CollisionComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +50,6 @@
 /* Begin PBXFileReference section */
 		D1791C951DCD344300FF097A /* EventHorizon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventHorizon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1791C981DCD344300FF097A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D1791C9A1DCD344300FF097A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		D1791C9C1DCD344300FF097A /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		D1791C9E1DCD344300FF097A /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		D1791CA01DCD344300FF097A /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		D1791CA31DCD344300FF097A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -73,6 +72,9 @@
 		D1791CDD1DCE54EB00FF097A /* TimeDilationComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeDilationComponent.swift; sourceTree = "<group>"; };
 		D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitComponent.swift; sourceTree = "<group>"; };
 		D1791CE31DCE56A700FF097A /* Meteorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meteorite.swift; sourceTree = "<group>"; };
+		D1FD87EB1DD21069003A247B /* EntityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
+		D1FD87EE1DD24F8A003A247B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D1FD87F01DD26978003A247B /* CollisionComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,12 +125,11 @@
 		D1791C971DCD344300FF097A /* EventHorizon */ = {
 			isa = PBXGroup;
 			children = (
+				D1FD87ED1DD24F77003A247B /* Helper */,
 				D1791CE21DCE55A200FF097A /* Controllers */,
 				D1791CE11DCE559500FF097A /* Scenes */,
 				D1791CCC1DCE483D00FF097A /* Entities */,
 				D1791CCD1DCE484400FF097A /* Components */,
-				D1791C9A1DCD344300FF097A /* GameScene.sks */,
-				D1791C9C1DCD344300FF097A /* Actions.sks */,
 				D1791CCE1DCE484D00FF097A /* Supporting Files */,
 			);
 			path = EventHorizon;
@@ -155,10 +156,11 @@
 		D1791CCC1DCE483D00FF097A /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				D1791CD31DCE521A00FF097A /* Spaceship.swift */,
 				D1791CCF1DCE51D300FF097A /* BlackHole.swift */,
 				D1791CD11DCE51F600FF097A /* Planet.swift */,
-				D1791CD31DCE521A00FF097A /* Spaceship.swift */,
 				D1791CE31DCE56A700FF097A /* Meteorite.swift */,
+				D1FD87EB1DD21069003A247B /* EntityManager.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -169,6 +171,7 @@
 				D1791CD71DCE543000FF097A /* SpriteComponent.swift */,
 				D1791CD51DCE540C00FF097A /* GravityComponent.swift */,
 				D1791CD91DCE543D00FF097A /* MovementComponent.swift */,
+				D1FD87F01DD26978003A247B /* CollisionComponent.swift */,
 				D1791CDB1DCE545D00FF097A /* FuelComponent.swift */,
 				D1791CDD1DCE54EB00FF097A /* TimeDilationComponent.swift */,
 				D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */,
@@ -202,6 +205,14 @@
 				D1791CA01DCD344300FF097A /* GameViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		D1FD87ED1DD24F77003A247B /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				D1FD87EE1DD24F8A003A247B /* Extensions.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,10 +326,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1791CA41DCD344300FF097A /* Main.storyboard in Resources */,
-				D1791C9B1DCD344300FF097A /* GameScene.sks in Resources */,
 				D1791CA61DCD344300FF097A /* Assets.xcassets in Resources */,
 				D1791CA91DCD344300FF097A /* LaunchScreen.storyboard in Resources */,
-				D1791C9D1DCD344300FF097A /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,13 +354,16 @@
 			files = (
 				D1791CD41DCE521A00FF097A /* Spaceship.swift in Sources */,
 				D1791C9F1DCD344300FF097A /* GameScene.swift in Sources */,
+				D1FD87F11DD26978003A247B /* CollisionComponent.swift in Sources */,
 				D1791CD81DCE543000FF097A /* SpriteComponent.swift in Sources */,
 				D1791CDC1DCE545D00FF097A /* FuelComponent.swift in Sources */,
 				D1791CA11DCD344300FF097A /* GameViewController.swift in Sources */,
 				D1791C991DCD344300FF097A /* AppDelegate.swift in Sources */,
 				D1791CD01DCE51D300FF097A /* BlackHole.swift in Sources */,
 				D1791CD21DCE51F600FF097A /* Planet.swift in Sources */,
+				D1FD87EC1DD21069003A247B /* EntityManager.swift in Sources */,
 				D1791CDE1DCE54EB00FF097A /* TimeDilationComponent.swift in Sources */,
+				D1FD87EF1DD24F8A003A247B /* Extensions.swift in Sources */,
 				D1791CDA1DCE543D00FF097A /* MovementComponent.swift in Sources */,
 				D1791CE41DCE56A700FF097A /* Meteorite.swift in Sources */,
 				D1791CE01DCE54FC00FF097A /* OrbitComponent.swift in Sources */,
@@ -608,6 +620,7 @@
 				D1791CC51DCD344300FF097A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D1791CC61DCD344300FF097A /* Build configuration list for PBXNativeTarget "EventHorizonTests" */ = {
 			isa = XCConfigurationList;
@@ -616,6 +629,7 @@
 				D1791CC81DCD344300FF097A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D1791CC91DCD344300FF097A /* Build configuration list for PBXNativeTarget "EventHorizonUITests" */ = {
 			isa = XCConfigurationList;
@@ -624,6 +638,7 @@
 				D1791CCB1DCD344300FF097A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

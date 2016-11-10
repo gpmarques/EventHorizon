@@ -13,8 +13,9 @@ class SpriteComponent: GKComponent {
     
     var node: SKSpriteNode
     
-    init(texture: SKTexture) {
-        node = SKSpriteNode(texture: texture)
+    init(texture: SKTexture, size: CGSize) {
+        node = SKSpriteNode(texture: texture, color: SKColor.white, size: size)
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         super.init()
     }
     

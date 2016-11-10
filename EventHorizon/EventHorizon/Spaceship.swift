@@ -11,14 +11,23 @@ import GameplayKit
 
 class Spaceship: GKEntity {
     
-    // TO-DO
-    init() {
+    init(imageNamed: String) {
         super.init()
+        let texture = SKTexture(imageNamed: imageNamed)
+        let spriteComponent = SpriteComponent(texture: texture,
+                                              size: CGSize(width: texture.size().width/10,
+                                                           height: texture.size().height/10))
+        spriteComponent.gravityFieldCategory = GravityFieldCategory.Gravity
+        addComponent(spriteComponent)
+        let movementComponent = MovementComponent(speed: 200,
+                                                  maxSpeed: 500,
+                                                  acceleration: 15)
+        addComponent(movementComponent)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
 }

@@ -12,7 +12,7 @@ import GameplayKit
 class Meteorite: GKEntity {
     
     // TO-DO
-    init() {
+    override init() {
         super.init()
     }
     

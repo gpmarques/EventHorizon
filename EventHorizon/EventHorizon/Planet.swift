@@ -11,9 +11,17 @@ import GameplayKit
 
 class Planet: GKEntity {
     
-    // TO-DO
-    init() {
+    init(imageNamed: String, radius: Float, strenght: Float) {
         super.init()
+        
+        let texture = SKTexture(imageNamed: imageNamed)
+        let spriteComponent = SpriteComponent(texture: texture, size: texture.size())
+        spriteComponent.physicsBody?.mass = 100000000000
+        addComponent(spriteComponent)
+        
+        let gravityComponent = GravityComponent(radius: radius, strenght: strenght)
+        addComponent(gravityComponent)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
