@@ -11,7 +11,6 @@ import GameplayKit
 
 class BlackHole: GKEntity {
     
-    
     // TO-DO
     override init() {
         super.init()

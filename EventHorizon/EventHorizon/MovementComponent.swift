@@ -14,21 +14,18 @@ class MovementComponent: GKComponent {
     var speed: Double
     var maxSpeed: Double
     var acceleration: Double
+    var angle: Float
     
-    init(speed: Double, maxSpeed: Double, acceleration: Double) {
+    init(speed: Double, maxSpeed: Double, acceleration: Double, parentNode: SKSpriteNode) {
         
         self.speed = speed
         self.maxSpeed = maxSpeed
         self.acceleration = acceleration
+        self.angle = 0
+        parentNode.physicsBody?.isDynamic = false
+        parentNode.physicsBody?.velocity = CGVector(dx: 0.0, dy: self.speed)
+        parentNode.physicsBody?.allowsRotation = true
         super.init()
-    }
-    
-    func setupEntityDependentProperties() {
-        if let spriteComponent = entity?.spriteComponent {
-            spriteComponent.physicsBody?.isDynamic = true
-            spriteComponent.speed = CGVector(dx: 0.0, dy: self.speed)
-            spriteComponent.physicsBody?.allowsRotation = true
-        }
     }
     
     func accelerate(forThisManySeconds seconds: Double) {
@@ -37,10 +34,12 @@ class MovementComponent: GKComponent {
     }
     
     func rotate() {
-        guard let sprite = entity?.spriteComponent else { return }
-        let velocity = sprite.node.physicsBody!.velocity
-        let angle = atan2f(Float(velocity.dy), Float(velocity.dx))
-        print(angle)
+        guard let sprite = entity?.spriteComponent else {
+            print("MovementComponent Error"); return }
+        guard let velocity = sprite.node.physicsBody?.velocity else {
+            print("MovementComponent Error"); return }
+        
+        angle = velocity.angle
         sprite.node.zRotation = angle.minusPi2
     }
     
@@ -50,7 +49,6 @@ class MovementComponent: GKComponent {
     
     override func update(deltaTime seconds: TimeInterval) {
         super.update(deltaTime: seconds)
-        print("Component update")
         self.rotate()
     }
     

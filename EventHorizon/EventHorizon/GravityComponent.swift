@@ -19,29 +19,19 @@ class GravityComponent: GKComponent {
     
     var gravitationalFieldNode: SKFieldNode
     
-    init(radius: Float, strenght: Float) {
+    init(parentNode: SKSpriteNode, radius: Float, strenght: Float) {
         gravitationalFieldNode = SKFieldNode.radialGravityField()
         gravitationalFieldNode.region = SKRegion(radius: radius)
         gravitationalFieldNode.strength = strenght
         gravitationalFieldNode.falloff = 2.5
-
-        super.init()
-    }
-    
-    func setupEntityDependentProperties() {
-        guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
-            return
-        }
-        gravitationalFieldNode.position = spriteComponent.node.anchorPoint
+        gravitationalFieldNode.position = parentNode.anchorPoint
         gravitationalFieldNode.physicsBody?.categoryBitMask = GravityFieldCategory.Gravity
         gravitationalFieldNode.physicsBody?.fieldBitMask = GravityFieldCategory.None
-        spriteComponent.gravityFieldCategory = GravityFieldCategory.None
-        gravitationalFieldNode.isEnabled = true
-        spriteComponent.node.addChild(gravitationalFieldNode)
+        parentNode.physicsBody?.fieldBitMask = GravityFieldCategory.None
         
-        print(gravitationalFieldNode.position.x)
-        print(gravitationalFieldNode.position.y)
-        
+        parentNode.addChild(gravitationalFieldNode)
+
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
