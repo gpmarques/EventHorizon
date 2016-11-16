@@ -45,7 +45,8 @@ class EntityManager {
     
     lazy var componentSystems: [GKComponentSystem] = {
         let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
-        return [moveSystem]
+        let orbitSystem = GKComponentSystem(componentClass: OrbitComponent.self)
+        return [moveSystem, orbitSystem]
     }()
     
     init(scene: SKScene) {
@@ -89,7 +90,10 @@ class EntityManager {
 
     func update(deltaTime: CFTimeInterval) {
         componentSystems.forEach{ $0.update(deltaTime: deltaTime) }
+<<<<<<< Updated upstream
 //        print("Entity update")
+=======
+>>>>>>> Stashed changes
     }
     
     
