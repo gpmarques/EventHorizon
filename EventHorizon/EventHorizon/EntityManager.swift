@@ -21,19 +21,34 @@ extension EntityManager {
         }
     }
     
-    func removeCopy() {
+    func removeCopy(inPosition position: CGPoint) {
         
-        guard let copy = trajectory.first else { return }
-        
-        if let spriteNode = copy.component(ofType: SpriteComponent.self)?.node {
-            spriteNode.removeFromParent()
+        guard let index = trajectory.index(where: { $0.spriteComponent?.node.position == position}) else {
+            print("index not found")
+            return
         }
-        trajectory.removeFirst()
+        
+        removeCopy(UntilThisIndex: index)
+        
     }
     
     func removeAllCopies() {
-        trajectory.forEach{ _ in removeCopy() }
+        removeCopy(UntilThisIndex: trajectory.count-1)
     }
+    
+    private func removeCopy(UntilThisIndex index: Int) {
+        
+        for i in 0...index {
+            let copy = trajectory[i]
+            
+            if let spriteNode = copy.component(ofType: SpriteComponent.self)?.node {
+                spriteNode.removeFromParent()
+            }
+        }
+        
+        trajectory.removeSubrange(1..<index+1)
+    }
+    
 }
 
 class EntityManager {

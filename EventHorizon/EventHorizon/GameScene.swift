@@ -70,8 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if contact.bodyA.node?.name == "copy" &&
             contact.bodyB.node?.name == "Planet" {
-            
-            entityManager.removeCopy()
+            entityManager.removeCopy(inPosition: (contact.bodyA.node?.position)!)
         }
         
     }

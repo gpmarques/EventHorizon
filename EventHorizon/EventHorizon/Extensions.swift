@@ -39,7 +39,6 @@ extension EntityManager {
     }
 }
 
-
 extension SpriteComponent {
     var physicsBody: SKPhysicsBody? {
         get {

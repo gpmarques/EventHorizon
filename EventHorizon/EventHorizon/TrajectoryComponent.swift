@@ -12,9 +12,11 @@ import GameplayKit
 class TrajectoryComponent: GKComponent {
     
     let entityManager: EntityManager
+    var copyCounter: Int
     
     init(entityManager: EntityManager) {
         self.entityManager = entityManager
+        copyCounter = 0
         super.init()
     }
     
@@ -30,6 +32,7 @@ class TrajectoryComponent: GKComponent {
             print("trajectory owner not found")
             return
         }
+        copyCounter += 1
         let copy = trajectoryOwner.copy() as! GKEntity
         copy.spriteComponent?.physicsBody?.isDynamic = true
         copy.spriteComponent?.node.name = "copy"

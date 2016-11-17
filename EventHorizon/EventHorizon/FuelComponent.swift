@@ -10,7 +10,18 @@ import SpriteKit
 import GameplayKit
 
 class FuelComponent: GKComponent {
+
+    let fuelBar: SKShapeNode
     
-    // TO-DO
+    init(parentNode: SKSpriteNode, rect: CGRect) {
+        fuelBar = SKShapeNode(rect: rect, cornerRadius: rect.height/2)
+        let shader = SKShader(fileNamed: <#T##String#>)
+        
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
 }
