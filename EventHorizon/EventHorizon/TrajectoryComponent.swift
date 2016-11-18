@@ -34,6 +34,7 @@ class TrajectoryComponent: GKComponent {
         }
         copyCounter += 1
         let copy = trajectoryOwner.copy() as! GKEntity
+        copy.removeComponent(ofType: FuelComponent.self)
         copy.spriteComponent?.physicsBody?.isDynamic = true
         copy.spriteComponent?.node.name = "copy"
         

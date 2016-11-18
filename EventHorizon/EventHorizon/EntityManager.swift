@@ -9,6 +9,73 @@
 import SpriteKit
 import GameplayKit
 
+class EntityManager {
+    
+    var entities = Set<GKEntity>()
+    var trajectory = [GKEntity]()
+    let scene: SKScene
+    var timer: Timer = Timer()
+    
+    lazy var componentSystems: [GKComponentSystem] = {
+        let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
+        return [moveSystem]
+    }()
+    
+    init(scene: SKScene) {
+        self.scene = scene
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in 
+            
+            guard let spaceship = self.find(entityOfType: Spaceship.self) else {
+                print("Spaceship not found")
+                return
+            }
+            
+//            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
+//                print("Trajectory not found")
+//                return
+//            }
+            
+            guard let fuelComponent = spaceship.component(ofType: FuelComponent.self) else {
+                print("Fuel not found")
+                return
+            }
+            
+            var _ = fuelComponent.spendFuel(10)
+            
+//            trajectoryComponent.trajectory()
+            
+        })
+    }
+    
+    func add(_ entity: GKEntity) {
+        entities.insert(entity)
+        
+        componentSystems.forEach{$0.addComponent(foundIn: entity)}
+        
+        if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
+            scene.addChild(spriteNode)
+        }
+    }
+    
+    func remove(_ entity: GKEntity) {
+        
+        if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
+            spriteNode.removeFromParent()
+        }
+//        toRemove.insert(entity)
+        entities.remove(entity)
+        
+    }
+
+    func update(deltaTime: CFTimeInterval) {
+        componentSystems.forEach{ $0.update(deltaTime: deltaTime) }
+//        print("Entity update")
+    }
+    
+    
+}
+
+// Extension to manage the copies that create the trajectory effect
 extension EntityManager {
     
     func addCopy(_ copy: GKEntity) {
@@ -51,61 +118,10 @@ extension EntityManager {
     
 }
 
-class EntityManager {
+extension EntityManager {
     
-    var entities = Set<GKEntity>()
-    var trajectory = [GKEntity]()
-    let scene: SKScene
-    var timer: Timer = Timer()
-    
-    lazy var componentSystems: [GKComponentSystem] = {
-        let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
-        return [moveSystem]
-    }()
-    
-    init(scene: SKScene) {
-        self.scene = scene
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in 
-            
-            guard let spaceship = self.find(entityOfType: Spaceship.self) else {
-                print("Spaceship not found")
-                return
-            }
-            
-            guard let trajectory = spaceship.component(ofType: TrajectoryComponent.self) else {
-                print("Trajectory not found")
-                return
-            }
-            
-            trajectory.trajectory()
-            
-        })
+    func addToScene(thisNode node: SKNode) {
+        scene.addChild(node)
     }
-    
-    func add(_ entity: GKEntity) {
-        entities.insert(entity)
-        
-        componentSystems.forEach{$0.addComponent(foundIn: entity)}
-        
-        if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
-            scene.addChild(spriteNode)
-        }
-    }
-    
-    func remove(_ entity: GKEntity) {
-        
-        if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
-            spriteNode.removeFromParent()
-        }
-//        toRemove.insert(entity)
-        entities.remove(entity)
-        
-    }
-
-    func update(deltaTime: CFTimeInterval) {
-        componentSystems.forEach{ $0.update(deltaTime: deltaTime) }
-//        print("Entity update")
-    }
-    
     
 }

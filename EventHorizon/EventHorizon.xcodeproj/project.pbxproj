@@ -26,7 +26,7 @@
 		D1791CE01DCE54FC00FF097A /* OrbitComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */; };
 		D1791CE41DCE56A700FF097A /* Meteorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CE31DCE56A700FF097A /* Meteorite.swift */; };
 		D1E7B3641DDA924800902667 /* TrajectoryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E7B3631DDA924800902667 /* TrajectoryComponent.swift */; };
-		D1E7B3661DDDDC8F00902667 /* FuelShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D1E7B3651DDDDC8F00902667 /* FuelShader.fsh */; };
+		D1E7B3681DDF455C00902667 /* ParticleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E7B3671DDF455C00902667 /* ParticleComponent.swift */; };
 		D1FD87EC1DD21069003A247B /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87EB1DD21069003A247B /* EntityManager.swift */; };
 		D1FD87EF1DD24F8A003A247B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87EE1DD24F8A003A247B /* Extensions.swift */; };
 		D1FD87F11DD26978003A247B /* CollisionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87F01DD26978003A247B /* CollisionComponent.swift */; };
@@ -75,7 +75,7 @@
 		D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitComponent.swift; sourceTree = "<group>"; };
 		D1791CE31DCE56A700FF097A /* Meteorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meteorite.swift; sourceTree = "<group>"; };
 		D1E7B3631DDA924800902667 /* TrajectoryComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrajectoryComponent.swift; sourceTree = "<group>"; };
-		D1E7B3651DDDDC8F00902667 /* FuelShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = FuelShader.fsh; sourceTree = "<group>"; };
+		D1E7B3671DDF455C00902667 /* ParticleComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleComponent.swift; sourceTree = "<group>"; };
 		D1FD87EB1DD21069003A247B /* EntityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		D1FD87EE1DD24F8A003A247B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D1FD87F01DD26978003A247B /* CollisionComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionComponent.swift; sourceTree = "<group>"; };
@@ -180,6 +180,7 @@
 				D1791CDD1DCE54EB00FF097A /* TimeDilationComponent.swift */,
 				D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */,
 				D1E7B3631DDA924800902667 /* TrajectoryComponent.swift */,
+				D1E7B3671DDF455C00902667 /* ParticleComponent.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -216,7 +217,6 @@
 			isa = PBXGroup;
 			children = (
 				D1FD87EE1DD24F8A003A247B /* Extensions.swift */,
-				D1E7B3651DDDDC8F00902667 /* FuelShader.fsh */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -331,7 +331,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1E7B3661DDDDC8F00902667 /* FuelShader.fsh in Resources */,
 				D1791CA41DCD344300FF097A /* Main.storyboard in Resources */,
 				D1791CA61DCD344300FF097A /* Assets.xcassets in Resources */,
 				D1791CA91DCD344300FF097A /* LaunchScreen.storyboard in Resources */,
@@ -364,6 +363,7 @@
 				D1FD87F11DD26978003A247B /* CollisionComponent.swift in Sources */,
 				D1791CD81DCE543000FF097A /* SpriteComponent.swift in Sources */,
 				D1791CDC1DCE545D00FF097A /* FuelComponent.swift in Sources */,
+				D1E7B3681DDF455C00902667 /* ParticleComponent.swift in Sources */,
 				D1791CA11DCD344300FF097A /* GameViewController.swift in Sources */,
 				D1791C991DCD344300FF097A /* AppDelegate.swift in Sources */,
 				D1791CD01DCE51D300FF097A /* BlackHole.swift in Sources */,

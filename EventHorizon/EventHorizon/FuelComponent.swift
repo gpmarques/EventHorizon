@@ -12,16 +12,53 @@ import GameplayKit
 class FuelComponent: GKComponent {
 
     let fuelBar: SKShapeNode
+    let entityManager: EntityManager
+    let fullFuel: CGFloat
+    var fuel: CGFloat {
+        didSet {
+            switch fuel {
+            case 0..<30:
+                fuelColor = UIColor.red
+            case 30..<60:
+                fuelColor = UIColor.yellow
+            case 60...100:
+                fuelColor = UIColor.green
+            default:
+                print("Out of Range")
+            }
+        }
+    }
+    var fuelColor: UIColor
     
-    init(parentNode: SKSpriteNode, rect: CGRect) {
-        fuelBar = SKShapeNode(rect: rect, cornerRadius: rect.height/2)
-        let shader = SKShader(fileNamed: <#T##String#>)
-        
+    init(entityManager: EntityManager, rect: CGRect, fuel: CGFloat) {
+        self.fuel = fuel
+        self.fullFuel = fuel
+        self.fuelBar = SKShapeNode(rect: rect, cornerRadius: rect.height/2)
+        self.fuelBar.fillColor = UIColor.green
+        self.fuelBar.strokeColor = UIColor.clear
+        self.entityManager = entityManager
+        self.fuelColor = UIColor.green
+        entityManager.addToScene(thisNode: fuelBar)
         super.init()
+
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func spendFuel(_ spentFuel: CGFloat) -> Bool {
+        
+        fuel = max(fuel - spentFuel, 0)
+        
+        let fuelScale = fuel/fullFuel
+        let scaleAction = SKAction.scaleX(to: fuelScale, duration: 0.5)
+        let colorAction = SKAction.colorize(with: fuelColor, colorBlendFactor: 1, duration: 0.5)
+        print("FuelColor", fuelColor.description)
+        print("fuel", fuel)
+        fuelBar.run(SKAction.group([colorAction, scaleAction]))
+        
+        return fuel == 0
     }
     
 }

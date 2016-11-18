@@ -41,6 +41,11 @@ class Spaceship: GKEntity {
         
         let trajectoryComponent = TrajectoryComponent(entityManager: entityManager)
         addComponent(trajectoryComponent)
+        
+        let fuelComponent = FuelComponent(entityManager: entityManager,
+                                          rect: CGRect(x: 50, y: 50, width: 200, height: 40),
+                                          fuel: 100)
+        addComponent(fuelComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {

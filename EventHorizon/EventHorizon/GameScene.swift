@@ -43,7 +43,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if !gameStart {
             gameStart = true
-//            spaceship.spriteComponent?.physicsBody?.velocity = CGVector(dx: 0, dy: 100)
             spaceship.spriteComponent?.physicsBody?.isDynamic = true
             spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
             entityManager.timer.invalidate()
