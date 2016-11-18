@@ -16,7 +16,7 @@ class Planet: GKEntity {
         
         let texture = SKTexture(imageNamed: imageNamed)
         let spriteComponent = SpriteComponent(texture: texture, size: texture.size())
-        spriteComponent.physicsBody?.mass = 100000000000
+        spriteComponent.physicsBody?.mass = 1000000000
         addComponent(spriteComponent)
         
         let gravityComponent = GravityComponent(radius: radius, strenght: strenght)

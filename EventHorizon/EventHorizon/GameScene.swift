@@ -13,7 +13,7 @@ import ReplayKit
 class GameScene: SKScene {
     
     var entityManager: EntityManager!
-    private var lastUpdateTime : TimeInterval = 0
+    fileprivate var lastUpdateTime : TimeInterval = 0
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -62,7 +62,7 @@ class GameScene: SKScene {
         
         let deltaTime = currentTime - lastUpdateTime
         self.lastUpdateTime = currentTime
-        entityManager.update(deltaTime: deltaTime)
+        entityManager.update(deltaTime)
         print("Scene update")
         
         

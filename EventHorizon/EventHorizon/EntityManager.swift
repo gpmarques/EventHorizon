@@ -46,7 +46,7 @@ class EntityManager {
         entities.remove(entity)
     }
 
-    func update(deltaTime: CFTimeInterval) {
+    func update(_ deltaTime: CFTimeInterval) {
         componentSystems.forEach{ $0.update(deltaTime: deltaTime) }
         print("Entity update")
     }

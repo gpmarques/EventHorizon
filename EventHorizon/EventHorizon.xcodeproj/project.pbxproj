@@ -28,6 +28,13 @@
 		D1FD87EC1DD21069003A247B /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87EB1DD21069003A247B /* EntityManager.swift */; };
 		D1FD87EF1DD24F8A003A247B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87EE1DD24F8A003A247B /* Extensions.swift */; };
 		D1FD87F11DD26978003A247B /* CollisionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87F01DD26978003A247B /* CollisionComponent.swift */; };
+		FD00ACC91DDCDC07009FD0D2 /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FD00ACC81DDCDC07009FD0D2 /* MyScene.sks */; };
+		FD0BD3401DDE5AEF00F93281 /* PlanetSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BD33F1DDE5AEF00F93281 /* PlanetSelectController.swift */; };
+		FD0BD3421DDE5B6800F93281 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BD3411DDE5B6800F93281 /* CustomScrollView.swift */; };
+		FD0BD3441DDE60BA00F93281 /* PlanetSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BD3431DDE60BA00F93281 /* PlanetSelectScene.swift */; };
+		FD3ADBC31DDA5C63004E516D /* SolarSystemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3ADBC21DDA5C63004E516D /* SolarSystemController.swift */; };
+		FD3ADBC51DDA5CD4004E516D /* SolarSystemScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3ADBC41DDA5CD4004E516D /* SolarSystemScene.swift */; };
+		FD3ADBC71DDA6ED9004E516D /* SolarSystemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3ADBC61DDA6ED9004E516D /* SolarSystemButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +82,13 @@
 		D1FD87EB1DD21069003A247B /* EntityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		D1FD87EE1DD24F8A003A247B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D1FD87F01DD26978003A247B /* CollisionComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionComponent.swift; sourceTree = "<group>"; };
+		FD00ACC81DDCDC07009FD0D2 /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
+		FD0BD33F1DDE5AEF00F93281 /* PlanetSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetSelectController.swift; sourceTree = "<group>"; };
+		FD0BD3411DDE5B6800F93281 /* CustomScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
+		FD0BD3431DDE60BA00F93281 /* PlanetSelectScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetSelectScene.swift; sourceTree = "<group>"; };
+		FD3ADBC21DDA5C63004E516D /* SolarSystemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolarSystemController.swift; sourceTree = "<group>"; };
+		FD3ADBC41DDA5CD4004E516D /* SolarSystemScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolarSystemScene.swift; sourceTree = "<group>"; };
+		FD3ADBC61DDA6ED9004E516D /* SolarSystemButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolarSystemButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +201,7 @@
 				D1791CA71DCD344300FF097A /* LaunchScreen.storyboard */,
 				D1791CA51DCD344300FF097A /* Assets.xcassets */,
 				D1791CAA1DCD344300FF097A /* Info.plist */,
+				FD00ACC81DDCDC07009FD0D2 /* MyScene.sks */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -195,6 +210,8 @@
 			isa = PBXGroup;
 			children = (
 				D1791C9E1DCD344300FF097A /* GameScene.swift */,
+				FD3ADBC41DDA5CD4004E516D /* SolarSystemScene.swift */,
+				FD0BD3431DDE60BA00F93281 /* PlanetSelectScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -203,6 +220,8 @@
 			isa = PBXGroup;
 			children = (
 				D1791CA01DCD344300FF097A /* GameViewController.swift */,
+				FD3ADBC21DDA5C63004E516D /* SolarSystemController.swift */,
+				FD0BD33F1DDE5AEF00F93281 /* PlanetSelectController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -211,6 +230,8 @@
 			isa = PBXGroup;
 			children = (
 				D1FD87EE1DD24F8A003A247B /* Extensions.swift */,
+				FD3ADBC61DDA6ED9004E516D /* SolarSystemButton.swift */,
+				FD0BD3411DDE5B6800F93281 /* CustomScrollView.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -283,18 +304,21 @@
 				TargetAttributes = {
 					D1791C941DCD344200FF097A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 56YN57ZN7X;
+						DevelopmentTeam = GBFG29DUZF;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					D1791CAE1DCD344300FF097A = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 56YN57ZN7X;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						TestTargetID = D1791C941DCD344200FF097A;
 					};
 					D1791CB91DCD344300FF097A = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 56YN57ZN7X;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						TestTargetID = D1791C941DCD344200FF097A;
 					};
@@ -327,6 +351,7 @@
 			files = (
 				D1791CA41DCD344300FF097A /* Main.storyboard in Resources */,
 				D1791CA61DCD344300FF097A /* Assets.xcassets in Resources */,
+				FD00ACC91DDCDC07009FD0D2 /* MyScene.sks in Resources */,
 				D1791CA91DCD344300FF097A /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,9 +389,15 @@
 				D1FD87EC1DD21069003A247B /* EntityManager.swift in Sources */,
 				D1791CDE1DCE54EB00FF097A /* TimeDilationComponent.swift in Sources */,
 				D1FD87EF1DD24F8A003A247B /* Extensions.swift in Sources */,
+				FD0BD3441DDE60BA00F93281 /* PlanetSelectScene.swift in Sources */,
+				FD3ADBC71DDA6ED9004E516D /* SolarSystemButton.swift in Sources */,
 				D1791CDA1DCE543D00FF097A /* MovementComponent.swift in Sources */,
+				FD0BD3421DDE5B6800F93281 /* CustomScrollView.swift in Sources */,
+				FD3ADBC51DDA5CD4004E516D /* SolarSystemScene.swift in Sources */,
+				FD0BD3401DDE5AEF00F93281 /* PlanetSelectController.swift in Sources */,
 				D1791CE41DCE56A700FF097A /* Meteorite.swift in Sources */,
 				D1791CE01DCE54FC00FF097A /* OrbitComponent.swift in Sources */,
+				FD3ADBC31DDA5C63004E516D /* SolarSystemController.swift in Sources */,
 				D1791CD61DCE540C00FF097A /* GravityComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,7 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 56YN57ZN7X;
+				DEVELOPMENT_TEAM = GBFG29DUZF;
 				INFOPLIST_FILE = EventHorizon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -533,7 +564,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 56YN57ZN7X;
+				DEVELOPMENT_TEAM = GBFG29DUZF;
 				INFOPLIST_FILE = EventHorizon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

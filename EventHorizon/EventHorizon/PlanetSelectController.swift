@@ -1,8 +1,8 @@
 //
-//  GameViewController.swift
+//  PlanetSelectController.swift
 //  EventHorizon
 //
-//  Created by Guilherme Marques on 04/11/16.
+//  Created by Rodrigo Labronici on 17/11/16.
 //  Copyright © 2016 Guilherme Marques. All rights reserved.
 //
 
@@ -10,22 +10,23 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
-
+class PlanetSelectController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let sceneSize = CGSize(width: view.bounds.width, height: view.bounds.size.height)
+        print("VC size: \(sceneSize)")
+        let sceneSize2 = CGSize(width: view.bounds.width, height: view.bounds.size.height*5)
+        print("Scene size: \(sceneSize2)")
         let scene =
-            GameScene(size: sceneSize)
+            PlanetSelectScene(size: sceneSize2)
         
-        //let scroll =
-
         let skView = self.view as! SKView
         skView.showsFPS = true
         skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
-        scene.scaleMode = .aspectFill
+        scene.scaleMode = .resizeFill
         skView.presentScene(scene)
     }
     
