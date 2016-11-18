@@ -14,6 +14,29 @@ extension GKEntity {
     var spriteComponent: SpriteComponent? {
         return self.component(ofType: SpriteComponent.self)
     }
+    
+    var ClassType: AnyClass {
+        return self.classForCoder.self
+    }
+}
+
+extension CGVector {
+    var angle: Float {
+        return atan2f(Float(self.dy),
+                      Float(self.dx))
+    }    
+}
+
+extension Float {
+    var minusPi2:CGFloat {
+        return CGFloat(Double(self) - M_PI_2)
+    }
+}
+
+extension EntityManager {
+    func find(entityOfType entityType: AnyClass) -> GKEntity? {
+        return entities.first(where: { $0.isKind(of: entityType) })
+    }
 }
 
 extension SpriteComponent {
@@ -24,29 +47,5 @@ extension SpriteComponent {
         set(newPhysicsBody) {
             self.node.physicsBody = newPhysicsBody
         }
-    }
-    
-    var gravityFieldCategory: UInt32? {
-        get {
-            return self.node.physicsBody?.fieldBitMask
-        }
-        set(category) {
-            self.node.physicsBody?.fieldBitMask = category!
-        }
-    }
-    
-    var speed: CGVector? {
-        get {
-            return self.node.physicsBody?.velocity
-        }
-        set(speed) {
-            self.node.physicsBody?.velocity = speed!
-        }
-    }
-}
-
-extension Float {
-    var minusPi2:CGFloat {
-        return CGFloat(Double(self) - M_PI_2)
     }
 }

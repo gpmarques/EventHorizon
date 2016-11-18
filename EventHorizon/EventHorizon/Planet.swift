@@ -19,7 +19,13 @@ class Planet: GKEntity {
         spriteComponent.physicsBody?.mass = 1000000000
         addComponent(spriteComponent)
         
-        let gravityComponent = GravityComponent(radius: radius, strenght: strenght)
+        let collisionComponent = CollisionComponent(parentNode: spriteComponent.node,
+                                                        bodyMass: 10000000)
+        addComponent(collisionComponent)
+        
+        let gravityComponent = GravityComponent(parentNode: spriteComponent.node,
+                                                radius: radius,
+                                                strenght: strenght)
         addComponent(gravityComponent)
         
     }

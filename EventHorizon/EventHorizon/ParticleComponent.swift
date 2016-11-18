@@ -1,17 +1,16 @@
 //
-//  BlackHole.swift
+//  ParticleComponent.swift
 //  EventHorizon
 //
-//  Created by Guilherme Marques on 05/11/16.
+//  Created by Guilherme Marques on 18/11/16.
 //  Copyright © 2016 Guilherme Marques. All rights reserved.
 //
 
 import SpriteKit
 import GameplayKit
 
-class BlackHole: GKEntity {
+class ParticleComponent: GKComponent {
     
-    // TO-DO
     override init() {
         super.init()
     }
@@ -19,5 +18,4 @@ class BlackHole: GKEntity {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
 }
