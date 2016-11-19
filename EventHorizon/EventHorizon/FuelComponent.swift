@@ -36,11 +36,10 @@ class FuelComponent: GKComponent {
         self.fuelBar = SKShapeNode(rect: rect, cornerRadius: rect.height/2)
         self.fuelBar.fillColor = UIColor.green
         self.fuelBar.strokeColor = UIColor.clear
-        self.entityManager = entityManager
         self.fuelColor = UIColor.green
+        self.entityManager = entityManager
         entityManager.addToScene(thisNode: fuelBar)
         super.init()
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,10 +52,8 @@ class FuelComponent: GKComponent {
         
         let fuelScale = fuel/fullFuel
         let scaleAction = SKAction.scaleX(to: fuelScale, duration: 0.5)
-        let colorAction = SKAction.colorize(with: fuelColor, colorBlendFactor: 1, duration: 0.5)
-        print("FuelColor", fuelColor.description)
-        print("fuel", fuel)
-        fuelBar.run(SKAction.group([colorAction, scaleAction]))
+        fuelBar.fillColor = fuelColor
+        fuelBar.run(SKAction.group([scaleAction]))
         
         return fuel == 0
     }

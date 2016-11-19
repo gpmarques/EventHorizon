@@ -12,7 +12,11 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var entityManager: EntityManager!
-    fileprivate var lastUpdateTime : TimeInterval = 0
+    private var lastUpdateTime : TimeInterval = 0
+    var spaceship: Spaceship!
+    var planet: Planet!
+    var gameStart = false
+    
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -29,7 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                               entityManager: entityManager)
         entityManager.add(spaceship)
         
-        planet = Planet(imageNamed: "blackhole", radius: 400, strenght: 5)
+        planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5)
         entityManager.add(planet)
         
         physicsWorld.gravity = CGVector.zero
@@ -76,11 +80,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let deltaTime = currentTime - lastUpdateTime
         self.lastUpdateTime = currentTime
         entityManager.update(deltaTime)
-        print("Scene update")
         
         self.lastUpdateTime = (deltaTime >= 1) ? currentTime : lastUpdateTime
         
-        entityManager.update(deltaTime: deltaTime)
+        entityManager.update(deltaTime)
         
     }
 }

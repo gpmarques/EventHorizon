@@ -12,7 +12,7 @@ import GameplayKit
 class EntityManager {
     
     var entities = Set<GKEntity>()
-    var trajectory = [GKEntity]()
+    var trajectory = [GKEntity?]()
     let scene: SKScene
     var timer: Timer = Timer()
     
@@ -30,19 +30,19 @@ class EntityManager {
                 return
             }
             
-//            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
-//                print("Trajectory not found")
-//                return
-//            }
-            
-            guard let fuelComponent = spaceship.component(ofType: FuelComponent.self) else {
-                print("Fuel not found")
+            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
+                print("Trajectory not found")
                 return
             }
             
-            var _ = fuelComponent.spendFuel(10)
+//            guard let fuelComponent = spaceship.component(ofType: FuelComponent.self) else {
+//                print("Fuel not found")
+//                return
+//            }
+//            
+//            var _ = fuelComponent.spendFuel(10)
             
-//            trajectoryComponent.trajectory()
+            trajectoryComponent.trajectory()
             
         })
     }
@@ -90,7 +90,7 @@ extension EntityManager {
     
     func removeCopy(inPosition position: CGPoint) {
         
-        guard let index = trajectory.index(where: { $0.spriteComponent?.node.position == position}) else {
+        guard let index = trajectory.index(where: { $0?.spriteComponent?.node.position == position}) else {
             print("index not found")
             return
         }
@@ -100,13 +100,15 @@ extension EntityManager {
     }
     
     func removeAllCopies() {
-        removeCopy(UntilThisIndex: trajectory.count-1)
+        removeCopy(UntilThisIndex: max(trajectory.count-1, 0))
     }
     
     private func removeCopy(UntilThisIndex index: Int) {
         
+        if index == 0 { return }
+        
         for i in 0...index {
-            let copy = trajectory[i]
+            guard let copy = trajectory[i] else { return }
             
             if let spriteNode = copy.component(ofType: SpriteComponent.self)?.node {
                 spriteNode.removeFromParent()
