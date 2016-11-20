@@ -14,6 +14,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var entityManager: EntityManager!
     var spaceship: GKEntity!
     var planet: GKEntity!
+    var blackHole: GKEntity!
+    var blackHoleOrbit: GKEntity!
     var gameStart = false
     private var lastUpdateTime : TimeInterval = 0
     
@@ -25,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        print("Scene frame", self.frame)
+        //print("Scene frame", self.frame)
         
         spaceship = Spaceship(imageNamed: "Spaceship",
                               speed: 100,
@@ -33,9 +35,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         entityManager.add(spaceship)
         
         planet = Planet(imageNamed: "blackhole", radius: 400, strenght: 5)
-        entityManager.add(planet)
+        //entityManager.add(planet)
         
+        blackHole = BlackHole(imageNamed: "blackhole")
+        entityManager.add(blackHole)
         physicsWorld.gravity = CGVector.zero
+        
     }
     
     
@@ -83,6 +88,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.lastUpdateTime = (deltaTime >= 1) ? currentTime : lastUpdateTime
         
         entityManager.update(deltaTime: deltaTime)
+        
+        guard let orbit = blackHole.component(ofType: OrbitComponent.self) else {return}
+        
+        if (orbit.OrbitNode.intersects((spaceship.spriteComponent?.node)!)) {
+            
+            let angle = blackHole.component(ofType: OrbitComponent.self)?.getAngle(ofObjectOrbiting: (spaceship.spriteComponent?.node)!)
+            blackHole.component(ofType: OrbitComponent.self)?.ship = spaceship.spriteComponent?.node
+            blackHole.component(ofType: OrbitComponent.self)?.orbiterAngle = angle!
+            blackHole.component(ofType: OrbitComponent.self)?.collision = 1
+        }
         
     }
 }

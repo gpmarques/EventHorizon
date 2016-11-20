@@ -90,10 +90,7 @@ class EntityManager {
 
     func update(deltaTime: CFTimeInterval) {
         componentSystems.forEach{ $0.update(deltaTime: deltaTime) }
-<<<<<<< Updated upstream
 //        print("Entity update")
-=======
->>>>>>> Stashed changes
     }
     
     
