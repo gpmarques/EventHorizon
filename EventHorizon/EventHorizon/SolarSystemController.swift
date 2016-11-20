@@ -1,8 +1,8 @@
 //
-//  GameViewController.swift
+//  SolarSystemController.swift
 //  EventHorizon
 //
-//  Created by Guilherme Marques on 04/11/16.
+//  Created by Rodrigo Labronici on 14/11/16.
 //  Copyright © 2016 Guilherme Marques. All rights reserved.
 //
 
@@ -10,17 +10,15 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
-
+class SolarSystemController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let sceneSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height)
+        let sceneSize = CGSize(width: view.bounds.width, height: view.bounds.size.height)
         let scene =
-            GameScene(size: sceneSize)
+            SolarSystemScene(size: sceneSize)
         
-        //let scroll =
-
         let skView = self.view as! SKView
         skView.showsFPS = true
         skView.showsNodeCount = true
@@ -33,3 +31,5 @@ class GameViewController: UIViewController {
         return true
     }
 }
+
+

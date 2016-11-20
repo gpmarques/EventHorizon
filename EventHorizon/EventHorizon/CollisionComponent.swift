@@ -9,7 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-
 struct CollisionCategory {
     static let None: UInt32 = 0x1 << 0
     static let Collision: UInt32 = 0x1 << 1

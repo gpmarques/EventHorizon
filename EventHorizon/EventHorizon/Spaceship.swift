@@ -41,6 +41,11 @@ class Spaceship: GKEntity {
         
         let trajectoryComponent = TrajectoryComponent(entityManager: entityManager)
         addComponent(trajectoryComponent)
+        
+        let fuelComponent = FuelComponent(entityManager: entityManager,
+                                          rect: CGRect(x: 0, y: 50, width: 200, height: 40),
+                                          fuel: 100)
+        addComponent(fuelComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,6 +54,9 @@ class Spaceship: GKEntity {
     
     override func copy() -> Any {
         let copy = Spaceship(imageNamed: "Spaceship", speed: 100, entityManager: entityManager)
+        let fuelComponent = copy.component(ofType: FuelComponent.self)!
+        fuelComponent.fuelBar.removeFromParent()
+        copy.removeComponent(ofType: FuelComponent.self)
         return copy
     }
     

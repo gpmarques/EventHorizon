@@ -12,12 +12,12 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var entityManager: EntityManager!
-    var spaceship: GKEntity!
-    var planet: GKEntity!
-    var blackHole: GKEntity!
-    var blackHoleOrbit: GKEntity!
-    var gameStart = false
     private var lastUpdateTime : TimeInterval = 0
+    var spaceship: Spaceship!
+    var planet: Planet!
+    var blackHole: BlackHole!
+    var gameStart = false
+    
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -34,8 +34,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                               entityManager: entityManager)
         entityManager.add(spaceship)
         
-        planet = Planet(imageNamed: "blackhole", radius: 400, strenght: 5)
-        //entityManager.add(planet)
+
+        planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5)
+        entityManager.add(planet)
         
         blackHole = BlackHole(imageNamed: "blackhole")
         entityManager.add(blackHole)
@@ -48,7 +49,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if !gameStart {
             gameStart = true
-//            spaceship.spriteComponent?.physicsBody?.velocity = CGVector(dx: 0, dy: 100)
             spaceship.spriteComponent?.physicsBody?.isDynamic = true
             spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
             entityManager.timer.invalidate()
@@ -75,8 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if contact.bodyA.node?.name == "copy" &&
             contact.bodyB.node?.name == "Planet" {
-            
-            entityManager.removeCopy()
+            entityManager.removeCopy(inPosition: (contact.bodyA.node?.position)!)
         }
         
     }
@@ -84,10 +83,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         
         let deltaTime = currentTime - lastUpdateTime
+        self.lastUpdateTime = currentTime
+        entityManager.update(deltaTime)
         
         self.lastUpdateTime = (deltaTime >= 1) ? currentTime : lastUpdateTime
         
-        entityManager.update(deltaTime: deltaTime)
+        entityManager.update(deltaTime)
         
         guard let orbit = blackHole.component(ofType: OrbitComponent.self) else {return}
         
