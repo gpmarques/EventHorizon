@@ -18,7 +18,7 @@ class Planet: GKEntity {
         let size = CGSize(width: texture.size().width, height: texture.size().height)
         let spriteComponent = SpriteComponent(texture: texture,
                                               size: size,
-                                              nodePosition: CGPoint(x: 710.5,y: 365.0),
+                                              nodePosition: CGPoint(x: 1010.5,y: 365.0),
                                               typeOfBody: .Circle,
                                               name: "Planet")
         addComponent(spriteComponent)

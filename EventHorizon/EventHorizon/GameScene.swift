@@ -41,7 +41,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blackHole = BlackHole(imageNamed: "blackhole")
         entityManager.add(blackHole)
         physicsWorld.gravity = CGVector.zero
-        
     }
     
     
@@ -89,6 +88,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.lastUpdateTime = (deltaTime >= 1) ? currentTime : lastUpdateTime
         
         entityManager.update(deltaTime)
+        
+        blackHole.update(deltaTime: deltaTime)
         
         guard let orbit = blackHole.component(ofType: OrbitComponent.self) else {return}
         

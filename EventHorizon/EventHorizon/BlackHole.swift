@@ -26,7 +26,7 @@ class BlackHole: GKEntity {
         
         let size = CGSize(width: texture.size().width+100, height: texture.size().height+100)
         
-        let orbitComponent = OrbitComponent(shipSpeed: 120,
+        let orbitComponent = OrbitComponent(shipSpeed: 100,
                                             parentNode: spriteComponent.node,
                                             blackHoleOrbitSize: size.width)
         addComponent(orbitComponent)

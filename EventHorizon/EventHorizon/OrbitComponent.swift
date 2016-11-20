@@ -48,7 +48,7 @@ class OrbitComponent: GKComponent {
         let shipNode = ship
         let Pi = CGFloat(M_PI)
         let DegreesToRadians = Pi / 180
-        //print(orbiterAngle!*DegreesToRadians)
+        
         orbiterAngle = (getAngle(ofObjectOrbiting: ship) + orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
         
         let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
@@ -74,14 +74,10 @@ class OrbitComponent: GKComponent {
         let xBlackhole = parentNode.position.x
         let yBlackhole = parentNode.position.y
         
-        print(atan2(yShip-yBlackhole, xShip-xBlackhole)*RadiansToDegree)
         return atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegree
     }
     
-    override func update(deltaTime currentTime: TimeInterval) {
-        
-        let deltaTime = 1.0/60
-        lastUpdateTime = currentTime
+    override func update( deltaTime: CFTimeInterval) {
         
         guard (ship != nil) else {return}
         
