@@ -88,9 +88,9 @@ extension EntityManager {
         }
     }
     
-    func removeCopy(inPosition position: CGPoint) {
+    func removeCopy(withThisName name: String) {
         
-        guard let index = trajectory.index(where: { $0?.spriteComponent?.node.position == position}) else {
+        guard let index = trajectory.index(where: { $0?.spriteComponent?.node.name == name}) else {
             print("index not found")
             return
         }
@@ -105,17 +105,25 @@ extension EntityManager {
     
     private func removeCopy(UntilThisIndex index: Int) {
         
-        if index == 0 { return }
+        print("Index", index)
         
         for i in 0...index {
-            guard let copy = trajectory[i] else { return }
-            
-            if let spriteNode = copy.component(ofType: SpriteComponent.self)?.node {
-                spriteNode.removeFromParent()
+            guard let copy = trajectory[i] else {
+                print("Copy not found")
+                return
             }
+            
+            guard let spriteNode = copy.component(ofType: SpriteComponent.self)?.node else {
+                print("SpriteNode not found")
+                return
+            }
+            
+            spriteNode.removeFromParent()
         }
         
-        trajectory.removeSubrange(1..<index+1)
+        trajectory.removeSubrange(0...index)
+        
+        print("Trajectory count", trajectory.count)
     }
     
 }

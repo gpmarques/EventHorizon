@@ -46,6 +46,9 @@ class Spaceship: GKEntity {
                                           rect: CGRect(x: 0, y: 50, width: 200, height: 40),
                                           fuel: 100)
         addComponent(fuelComponent)
+        
+        let timeComponent = TimeComponent(entityManager: entityManager)
+        addComponent(timeComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -56,6 +59,9 @@ class Spaceship: GKEntity {
         let copy = Spaceship(imageNamed: "Spaceship", speed: 100, entityManager: entityManager)
         let fuelComponent = copy.component(ofType: FuelComponent.self)!
         fuelComponent.fuelBar.removeFromParent()
+        let timeComponent = copy.component(ofType: TimeComponent.self)!
+        timeComponent.timeLabel.removeFromParent()
+        copy.removeComponent(ofType: TimeComponent.self)
         copy.removeComponent(ofType: FuelComponent.self)
         return copy
     }

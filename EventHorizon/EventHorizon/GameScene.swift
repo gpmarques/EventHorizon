@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         emitter?.particleAlpha = 1
         emitter?.position.y = -15
-        
+
         planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5)
         entityManager.add(planet)
         
@@ -61,13 +61,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
             entityManager.timer.invalidate()
             entityManager.removeAllCopies()
-            
-        }
-        
-        else if blackHole.component(ofType: OrbitComponent.self)?.collision == true {
-            
+            spaceship.component(ofType: TimeComponent.self)?.startTimer()
+        } else if blackHole.component(ofType: OrbitComponent.self)?.collision == true {
             blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
-            spaceship.component(ofType: MovementComponent.self)?.accelerate(forThisManySeconds: 5)
         }
         
     }
@@ -94,12 +90,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             entityManager.remove(spaceship)
         }
         if contact.bodyA.node?.name == "copy" &&
-            contact.bodyB.node?.name == "Planet" {
-            entityManager.removeCopy(inPosition: (contact.bodyA.node?.position)!)
-        }
-        if contact.bodyA.node?.name == "copy" &&
-            contact.bodyB.node?.name == "BlackHole" {
-            entityManager.removeCopy(inPosition: (contact.bodyA.node?.position)!)
+            (contact.bodyB.node?.name == "Planet"
+                || contact.bodyB.node?.name == "BlackHole") {
+            contact.bodyA.node?.name = "removeThisCopy"
+            entityManager.removeCopy(withThisName: "removeThisCopy")
+            print(self.children.count)
         }
         if contact.bodyA.node?.name == "Spaceship" &&
             contact.bodyB.node?.name == "BlackHole" {

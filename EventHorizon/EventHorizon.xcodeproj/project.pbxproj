@@ -23,9 +23,9 @@
 		D1791CD81DCE543000FF097A /* SpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CD71DCE543000FF097A /* SpriteComponent.swift */; };
 		D1791CDA1DCE543D00FF097A /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CD91DCE543D00FF097A /* MovementComponent.swift */; };
 		D1791CDC1DCE545D00FF097A /* FuelComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CDB1DCE545D00FF097A /* FuelComponent.swift */; };
-		D1791CDE1DCE54EB00FF097A /* TimeDilationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CDD1DCE54EB00FF097A /* TimeDilationComponent.swift */; };
 		D1791CE01DCE54FC00FF097A /* OrbitComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */; };
 		D1791CE41DCE56A700FF097A /* Meteorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791CE31DCE56A700FF097A /* Meteorite.swift */; };
+		D188E6BC1DE3175B00DBE849 /* TimeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D188E6BB1DE3175B00DBE849 /* TimeComponent.swift */; };
 		D1E7B3641DDA924800902667 /* TrajectoryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E7B3631DDA924800902667 /* TrajectoryComponent.swift */; };
 		D1E7B3681DDF455C00902667 /* ParticleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E7B3671DDF455C00902667 /* ParticleComponent.swift */; };
 		D1FD87EC1DD21069003A247B /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD87EB1DD21069003A247B /* EntityManager.swift */; };
@@ -80,9 +80,9 @@
 		D1791CD71DCE543000FF097A /* SpriteComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteComponent.swift; sourceTree = "<group>"; };
 		D1791CD91DCE543D00FF097A /* MovementComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
 		D1791CDB1DCE545D00FF097A /* FuelComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelComponent.swift; sourceTree = "<group>"; };
-		D1791CDD1DCE54EB00FF097A /* TimeDilationComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeDilationComponent.swift; sourceTree = "<group>"; };
 		D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitComponent.swift; sourceTree = "<group>"; };
 		D1791CE31DCE56A700FF097A /* Meteorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meteorite.swift; sourceTree = "<group>"; };
+		D188E6BB1DE3175B00DBE849 /* TimeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeComponent.swift; sourceTree = "<group>"; };
 		D1E7B3631DDA924800902667 /* TrajectoryComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrajectoryComponent.swift; sourceTree = "<group>"; };
 		D1E7B3671DDF455C00902667 /* ParticleComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleComponent.swift; sourceTree = "<group>"; };
 		D1FD87EB1DD21069003A247B /* EntityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
@@ -193,10 +193,10 @@
 				D1791CD91DCE543D00FF097A /* MovementComponent.swift */,
 				D1FD87F01DD26978003A247B /* CollisionComponent.swift */,
 				D1791CDB1DCE545D00FF097A /* FuelComponent.swift */,
-				D1791CDD1DCE54EB00FF097A /* TimeDilationComponent.swift */,
 				D1791CDF1DCE54FC00FF097A /* OrbitComponent.swift */,
 				D1E7B3631DDA924800902667 /* TrajectoryComponent.swift */,
 				D1E7B3671DDF455C00902667 /* ParticleComponent.swift */,
+				D188E6BB1DE3175B00DBE849 /* TimeComponent.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -313,7 +313,7 @@
 				TargetAttributes = {
 					D1791C941DCD344200FF097A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = EQQQP3638J;
+						DevelopmentTeam = 56YN57ZN7X;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -399,11 +399,11 @@
 				D1E7B3641DDA924800902667 /* TrajectoryComponent.swift in Sources */,
 				D1791CD21DCE51F600FF097A /* Planet.swift in Sources */,
 				D1FD87EC1DD21069003A247B /* EntityManager.swift in Sources */,
-				D1791CDE1DCE54EB00FF097A /* TimeDilationComponent.swift in Sources */,
 				D1FD87EF1DD24F8A003A247B /* Extensions.swift in Sources */,
 				FD0BD3441DDE60BA00F93281 /* PlanetSelectScene.swift in Sources */,
 				FD3ADBC71DDA6ED9004E516D /* SolarSystemButton.swift in Sources */,
 				D1791CDA1DCE543D00FF097A /* MovementComponent.swift in Sources */,
+				D188E6BC1DE3175B00DBE849 /* TimeComponent.swift in Sources */,
 				FD0BD3421DDE5B6800F93281 /* CustomScrollView.swift in Sources */,
 				FD3ADBC51DDA5CD4004E516D /* SolarSystemScene.swift in Sources */,
 				FD0BD3401DDE5AEF00F93281 /* PlanetSelectController.swift in Sources */,
@@ -562,7 +562,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EQQQP3638J;
+				DEVELOPMENT_TEAM = 56YN57ZN7X;
 				INFOPLIST_FILE = EventHorizon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -576,7 +576,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EQQQP3638J;
+				DEVELOPMENT_TEAM = 56YN57ZN7X;
 				INFOPLIST_FILE = EventHorizon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
