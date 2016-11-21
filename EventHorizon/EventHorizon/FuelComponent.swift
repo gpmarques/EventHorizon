@@ -36,6 +36,7 @@ class FuelComponent: GKComponent {
         self.fuelBar = SKShapeNode(rect: rect, cornerRadius: rect.height/2)
         self.fuelBar.fillColor = UIColor.green
         self.fuelBar.strokeColor = UIColor.clear
+        self.fuelBar.zPosition = 1
         self.fuelColor = UIColor.green
         self.entityManager = entityManager
         entityManager.addToScene(thisNode: fuelBar)
@@ -58,4 +59,7 @@ class FuelComponent: GKComponent {
         return fuel == 0
     }
     
+    override func update(deltaTime seconds: TimeInterval) {
+        
+    }
 }

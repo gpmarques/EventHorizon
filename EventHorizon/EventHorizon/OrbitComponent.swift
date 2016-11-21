@@ -19,7 +19,8 @@ class OrbitComponent: GKComponent {
     var orbiterSpeed: CGFloat
     var orbiterRadius: CGFloat
     var orbiterAngle: CGFloat?
-    var collision: Int = 0
+    var collision = false
+    var fuel = true
     var direction: Int?
     
     var orbitNode: SKSpriteNode
@@ -38,7 +39,6 @@ class OrbitComponent: GKComponent {
         orbitNode.physicsBody?.categoryBitMask = CollisionCategory.None
         orbitNode.alpha = 0
         parentNode.addChild(orbitNode)
-        
         
         super.init()
     }
@@ -59,18 +59,19 @@ class OrbitComponent: GKComponent {
         let y = sin(orbiterAngle! * DegreesToRadians) * orbiterRadius
         
         shipNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
-        shipNode.zRotation = (orbiterAngle!) * DegreesToRadians
+        shipNode.zRotation = (orbiterAngle! + 180) * DegreesToRadians
+        //shipNode.children.first?.zRotation = shipNode.zRotation
     }
     
     func leaveOrbit(){
         
-        if collision == 1 {
+        collision = false
+        orbitNode.removeFromParent()
+        
+        if collision == false {
             
             let Pi = CGFloat(M_PI)
             let DegreesToRadians = Pi / 180
-            
-            collision = 0
-            orbitNode.removeFromParent()
             
             let angle = (360 + (orbiterAngle)!).truncatingRemainder(dividingBy: 360) - 90
             
@@ -80,7 +81,21 @@ class OrbitComponent: GKComponent {
             let velocityVector = CGVector(dx: x1, dy: y1)
             
             ship?.physicsBody?.velocity = velocityVector
+        }
+        
+        if fuel == false {
             
+            let Pi = CGFloat(M_PI)
+            let DegreesToRadians = Pi / 180
+            
+            let angle = (360 + (orbiterAngle)!).truncatingRemainder(dividingBy: 360) - 180
+            
+            let x1 = cos((angle) * DegreesToRadians) * speed
+            let y1 = sin((angle) * DegreesToRadians) * speed
+            
+            let velocityVector = CGVector(dx: x1, dy: y1)
+            
+            ship?.physicsBody?.velocity = velocityVector
         }
     }
     
@@ -99,15 +114,18 @@ class OrbitComponent: GKComponent {
     
     func setupRotationDirection(object: SKSpriteNode) {
         
-        print(ship?.zRotation)
-        print(orbiterAngle)
+    }
+    
+    func manageParticle () {
+        
+        
     }
     
     override func update( deltaTime: CFTimeInterval) {
         
         guard (ship != nil) else {return}
         
-        if collision == 1 {
+        if collision == true {
             
             ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             updateOrbiter(dt: deltaTime, ship: ship!)

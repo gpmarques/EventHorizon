@@ -31,6 +31,10 @@ class BlackHole: GKEntity {
                                             blackHoleOrbitSize: size.width,
                                             speed: speedOutBlackHole)
         addComponent(orbitComponent)
+        
+        let collisionComponent = CollisionComponent(parentNode: spriteComponent.node,
+                                                    bodyMass: 10000000)
+        addComponent(collisionComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {

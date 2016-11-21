@@ -11,6 +11,7 @@ import GameplayKit
 
 class MovementComponent: GKComponent {
     
+    var velocity: CGVector
     var speed: Double
     var maxSpeed: Double
     var acceleration: Double
@@ -22,9 +23,11 @@ class MovementComponent: GKComponent {
         self.maxSpeed = maxSpeed
         self.acceleration = acceleration
         self.angle = 0
+        velocity = CGVector(dx: 0.0, dy: self.speed)
         parentNode.physicsBody?.isDynamic = false
-        parentNode.physicsBody?.velocity = CGVector(dx: 0.0, dy: self.speed)
+        parentNode.physicsBody?.velocity = velocity
         parentNode.physicsBody?.allowsRotation = true
+        
         super.init()
     }
     

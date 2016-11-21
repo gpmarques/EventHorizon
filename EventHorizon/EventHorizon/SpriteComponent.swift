@@ -25,6 +25,8 @@ class SpriteComponent: GKComponent {
         node.anchorPoint = CGPoint(x: node.centerRect.midX,
                                    y: node.centerRect.midY )
         node.name = name
+        node.physicsBody?.friction = 0
+        
         
         switch typeOfBody {
         case .Circle:
