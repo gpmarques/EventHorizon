@@ -12,7 +12,7 @@ import GameplayKit
 class BlackHole: GKEntity {
 
 
-    init(imageNamed: String) {
+    init(imageNamed: String, speedOutBlackHole: CGFloat) {
         super.init()
         
         let texture = SKTexture(imageNamed: imageNamed)
@@ -26,9 +26,10 @@ class BlackHole: GKEntity {
         
         let size = CGSize(width: texture.size().width+100, height: texture.size().height+100)
         
-        let orbitComponent = OrbitComponent(shipSpeed: 100,
+        let orbitComponent = OrbitComponent(orbitSpeed: 50,
                                             parentNode: spriteComponent.node,
-                                            blackHoleOrbitSize: size.width)
+                                            blackHoleOrbitSize: size.width,
+                                            speed: speedOutBlackHole)
         addComponent(orbitComponent)
     }
     

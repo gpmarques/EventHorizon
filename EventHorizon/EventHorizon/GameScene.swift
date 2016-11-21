@@ -38,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5)
         entityManager.add(planet)
         
-        blackHole = BlackHole(imageNamed: "blackhole")
+        blackHole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100)
         entityManager.add(blackHole)
         physicsWorld.gravity = CGVector.zero
     }
@@ -52,6 +52,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
             entityManager.timer.invalidate()
             entityManager.removeAllCopies()
+            
+        }
+        
+        else if blackHole.component(ofType: OrbitComponent.self)?.collision == 1{
+            
+            blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
         }
         
     }
@@ -83,6 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let deltaTime = currentTime - lastUpdateTime
         self.lastUpdateTime = currentTime
+        
         entityManager.update(deltaTime)
         
         self.lastUpdateTime = (deltaTime >= 1) ? currentTime : lastUpdateTime
@@ -93,12 +100,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         guard let orbit = blackHole.component(ofType: OrbitComponent.self) else {return}
         
-        if (orbit.OrbitNode.intersects((spaceship.spriteComponent?.node)!)) {
+        if (orbit.orbitNode.intersects((spaceship.spriteComponent?.node)!)) {
             
             let angle = blackHole.component(ofType: OrbitComponent.self)?.getAngle(ofObjectOrbiting: (spaceship.spriteComponent?.node)!)
             blackHole.component(ofType: OrbitComponent.self)?.ship = spaceship.spriteComponent?.node
             blackHole.component(ofType: OrbitComponent.self)?.orbiterAngle = angle!
             blackHole.component(ofType: OrbitComponent.self)?.collision = 1
+            blackHole.component(ofType: OrbitComponent.self)?.setupRotationDirection(object: (spaceship.spriteComponent?.node)!)
         }
         
     }

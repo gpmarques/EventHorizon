@@ -14,27 +14,31 @@ class OrbitComponent: GKComponent {
     var ship: SKSpriteNode?
     var parentNode: SKSpriteNode
     var lastUpdateTime: CFTimeInterval = 0
+    var speed: CGFloat
     
     var orbiterSpeed: CGFloat
     var orbiterRadius: CGFloat
     var orbiterAngle: CGFloat?
     var collision: Int = 0
+    var direction: Int?
     
-    var OrbitNode: SKSpriteNode
+    var orbitNode: SKSpriteNode
     
     
-    init(shipSpeed: CGFloat, parentNode: SKSpriteNode, blackHoleOrbitSize: CGFloat) {
+    init(orbitSpeed: CGFloat, parentNode: SKSpriteNode, blackHoleOrbitSize: CGFloat, speed: CGFloat) {
         self.parentNode = parentNode
-        self.orbiterSpeed = shipSpeed
+        self.orbiterSpeed = orbitSpeed
         self.orbiterRadius = blackHoleOrbitSize/2
+        self.speed = speed
         
-        OrbitNode = SKSpriteNode(texture: nil, size: CGSize(width: blackHoleOrbitSize, height: blackHoleOrbitSize))
+        orbitNode = SKSpriteNode(texture: nil, size: CGSize(width: blackHoleOrbitSize, height: blackHoleOrbitSize))
         
-        OrbitNode.physicsBody?.isDynamic = false
-        OrbitNode.physicsBody?.collisionBitMask = CollisionCategory.None
-        OrbitNode.physicsBody?.categoryBitMask = CollisionCategory.None
-        OrbitNode.alpha = 0
-        parentNode.addChild(OrbitNode)
+        orbitNode.physicsBody?.isDynamic = false
+        orbitNode.physicsBody?.collisionBitMask = CollisionCategory.None
+        orbitNode.physicsBody?.categoryBitMask = CollisionCategory.None
+        orbitNode.alpha = 0
+        parentNode.addChild(orbitNode)
+        
         
         super.init()
     }
@@ -49,19 +53,35 @@ class OrbitComponent: GKComponent {
         let Pi = CGFloat(M_PI)
         let DegreesToRadians = Pi / 180
         
-        orbiterAngle = (getAngle(ofObjectOrbiting: ship) + orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
+        orbiterAngle = (getAngle(ofObjectOrbiting: ship) - orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
         
         let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
         let y = sin(orbiterAngle! * DegreesToRadians) * orbiterRadius
         
         shipNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
-        shipNode.zRotation = orbiterAngle! * DegreesToRadians
+        shipNode.zRotation = (orbiterAngle!) * DegreesToRadians
     }
     
     func leaveOrbit(){
         
-        
-        
+        if collision == 1 {
+            
+            let Pi = CGFloat(M_PI)
+            let DegreesToRadians = Pi / 180
+            
+            collision = 0
+            orbitNode.removeFromParent()
+            
+            let angle = (360 + (orbiterAngle)!).truncatingRemainder(dividingBy: 360) - 90
+            
+            let x1 = cos((angle) * DegreesToRadians) * speed
+            let y1 = sin((angle) * DegreesToRadians) * speed
+            
+            let velocityVector = CGVector(dx: x1, dy: y1)
+            
+            ship?.physicsBody?.velocity = velocityVector
+            
+        }
     }
     
     func getAngle(ofObjectOrbiting object: SKSpriteNode) -> CGFloat {
@@ -77,13 +97,19 @@ class OrbitComponent: GKComponent {
         return atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegree
     }
     
+    func setupRotationDirection(object: SKSpriteNode) {
+        
+        print(ship?.zRotation)
+        print(orbiterAngle)
+    }
+    
     override func update( deltaTime: CFTimeInterval) {
         
         guard (ship != nil) else {return}
         
         if collision == 1 {
             
-            ship?.speed = 0
+            ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             updateOrbiter(dt: deltaTime, ship: ship!)
         }
     }
