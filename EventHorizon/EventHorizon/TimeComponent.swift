@@ -51,6 +51,8 @@ class TimeComponent: GKComponent {
             self.timeLabel.text = "\(self.years) years - \(self.months) months"
         })
     }
+    //modificar o update de tempo ao inves de incrementar mais por update /\/\/\/\
+    
     
 //    @objc private func timeIncrement() {
 //        months += 1

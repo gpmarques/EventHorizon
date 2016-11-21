@@ -18,7 +18,7 @@ class BlackHole: GKEntity {
         let texture = SKTexture(imageNamed: imageNamed)
         let spriteComponent = SpriteComponent(texture: texture,
                                               size: texture.size(),
-                                              nodePosition: CGPoint(x: 338, y: 700),
+                                              nodePosition: CGPoint(x: 400, y: 600),
                                               typeOfBody: TypeOfBody.Circle,
                                               name: "BlackHole")
         spriteComponent.physicsBody?.mass = 100000000000

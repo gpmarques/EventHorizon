@@ -22,7 +22,7 @@ class Spaceship: GKEntity {
         SpriteComponent(texture: texture,
                         size: CGSize(width: texture.size().width/10,
                                      height: texture.size().height/10),
-                        nodePosition: CGPoint(x:338.0, y:344.0),
+                        nodePosition: CGPoint(x:338.0, y:100.0),
                         typeOfBody: .Rectangle,
                         name: "Spaceship")
         spriteComponent.physicsBody?.fieldBitMask = GravityFieldCategory.Gravity

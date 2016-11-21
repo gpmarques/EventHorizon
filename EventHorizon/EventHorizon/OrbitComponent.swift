@@ -22,6 +22,7 @@ class OrbitComponent: GKComponent {
     var collision = false
     var fuel = true
     var direction: Int?
+    var didClick = false
     
     var orbitNode: SKSpriteNode
     
@@ -53,6 +54,8 @@ class OrbitComponent: GKComponent {
         let Pi = CGFloat(M_PI)
         let DegreesToRadians = Pi / 180
         
+        print(collision)
+        
         orbiterAngle = (getAngle(ofObjectOrbiting: ship) - orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
         
         let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
@@ -65,10 +68,9 @@ class OrbitComponent: GKComponent {
     
     func leaveOrbit(){
         
-        collision = false
-        orbitNode.removeFromParent()
-        
-        if collision == false {
+        if didClick == true {
+            
+            collision = false
             
             let Pi = CGFloat(M_PI)
             let DegreesToRadians = Pi / 180
@@ -84,6 +86,8 @@ class OrbitComponent: GKComponent {
         }
         
         if fuel == false {
+            
+            collision = false
             
             let Pi = CGFloat(M_PI)
             let DegreesToRadians = Pi / 180

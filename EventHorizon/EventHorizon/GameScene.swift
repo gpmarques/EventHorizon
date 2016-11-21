@@ -18,6 +18,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blackHole: BlackHole!
     var gameStart = false
     
+    let emitter = SKEmitterNode(fileNamed: "SpaceshipRocket.sks")
+    
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -27,20 +29,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        //print("Scene frame", self.frame)
         
         spaceship = Spaceship(imageNamed: "Spaceship",
                               speed: 100,
                               entityManager: entityManager)
         entityManager.add(spaceship)
         
-        let emitter = SKEmitterNode(fileNamed: "SpaceshipRocket.sks")
-        
         emitter?.targetNode = self
-        spaceship.spriteComponent?.node.addChild(emitter!)
-        
-        emitter?.particleAlpha = 1
+        emitter?.particleAlpha = 0
         emitter?.position.y = -15
+        
+        spaceship.spriteComponent?.node.addChild(emitter!)
 
         planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5)
         entityManager.add(planet)
@@ -63,6 +62,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             entityManager.removeAllCopies()
             spaceship.component(ofType: TimeComponent.self)?.startTimer()
         } else if blackHole.component(ofType: OrbitComponent.self)?.collision == true {
+            
+            emitter?.particleAlpha = 0
+            blackHole.component(ofType: OrbitComponent.self)?.didClick = true
             blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
         }
         
@@ -94,7 +96,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 || contact.bodyB.node?.name == "BlackHole") {
             contact.bodyA.node?.name = "removeThisCopy"
             entityManager.removeCopy(withThisName: "removeThisCopy")
-            print(self.children.count)
         }
         if contact.bodyA.node?.name == "Spaceship" &&
             contact.bodyB.node?.name == "BlackHole" {
@@ -110,8 +111,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         entityManager.update(deltaTime)
         
-        
-        
         self.lastUpdateTime = (deltaTime >= 1) ? currentTime : lastUpdateTime
         
         entityManager.update(deltaTime)
@@ -120,16 +119,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         guard let orbit = blackHole.component(ofType: OrbitComponent.self) else {return}
         
-        if (orbit.orbitNode.intersects((spaceship.spriteComponent?.node)!)) {
+        if  orbit.orbitNode.intersects((spaceship.spriteComponent?.node)!) &&
+            orbit.didClick == false {
             
+            emitter?.particleAlpha = 1
             let angle = blackHole.component(ofType: OrbitComponent.self)?.getAngle(ofObjectOrbiting: (spaceship.spriteComponent?.node)!)
             blackHole.component(ofType: OrbitComponent.self)?.ship = spaceship.spriteComponent?.node
             blackHole.component(ofType: OrbitComponent.self)?.orbiterAngle = angle!
             blackHole.component(ofType: OrbitComponent.self)?.collision = true
             blackHole.component(ofType: OrbitComponent.self)?.setupRotationDirection(object: (spaceship.spriteComponent?.node)!)
             
-            if (spaceship.component(ofType: FuelComponent.self)?.spendFuel(0.05))! {
+            if (spaceship.component(ofType: FuelComponent.self)?.spendFuel(0.5))! {
                 
+                emitter?.particleAlpha = 0
                 blackHole.component(ofType: OrbitComponent.self)?.fuel = false
                 blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
             }
