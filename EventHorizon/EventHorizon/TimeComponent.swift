@@ -29,7 +29,7 @@ class TimeComponent: GKComponent {
         timer = Timer()
         timeLabel = SKLabelNode(fontNamed: "Courier-Bold")
         timeLabel.fontSize = entityManager.scene.frame.width/50
-        timeLabel.text = " "
+        timeLabel.text = self.years.stringfyYear + " - " + self.months.stringfyMonth
         timeLabel.position = CGPoint(x: entityManager.scene.frame.width - entityManager.scene.frame.width/7,
                                      y: entityManager.scene.frame.height/26)
         entityManager.addToScene(thisNode: timeLabel)
@@ -47,8 +47,6 @@ class TimeComponent: GKComponent {
             self.timeLabel.text = self.years.stringfyYear + " - " + self.months.stringfyMonth
         })
     }
-    //modificar o update de tempo ao inves de incrementar mais por update /\/\/\/\
-    
     
     func timeDilation() {
         timeRate = 2

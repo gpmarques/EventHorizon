@@ -11,8 +11,17 @@ import GameplayKit
 
 class ParticleComponent: GKComponent {
     
-    override init() {
+    var emitter: SKEmitterNode
+    
+    init(fileNamed: String, parentNode: SKSpriteNode, entityManager: EntityManager) {
+        
+        self.emitter = SKEmitterNode(fileNamed: fileNamed)!
+        self.emitter.targetNode = entityManager.scene
+        self.emitter.particleAlpha = 0
+        self.emitter.position.y = -14.5
         super.init()
+        parentNode.addChild(emitter)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
