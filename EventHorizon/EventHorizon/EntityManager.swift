@@ -12,7 +12,7 @@ import GameplayKit
 class EntityManager {
     
     var entities = Set<GKEntity>()
-    var trajectory = [GKEntity]()
+    var trajectory = [GKEntity?]()
     let scene: SKScene
     var timer: Timer = Timer()
     
@@ -23,26 +23,26 @@ class EntityManager {
     
     init(scene: SKScene) {
         self.scene = scene
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in 
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
             
             guard let spaceship = self.find(entityOfType: Spaceship.self) else {
                 print("Spaceship not found")
                 return
             }
             
-//            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
-//                print("Trajectory not found")
-//                return
-//            }
-            
-            guard let fuelComponent = spaceship.component(ofType: FuelComponent.self) else {
-                print("Fuel not found")
+            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
+                print("Trajectory not found")
                 return
             }
             
-            var _ = fuelComponent.spendFuel(10)
+            //            guard let fuelComponent = spaceship.component(ofType: FuelComponent.self) else {
+            //                print("Fuel not found")
+            //                return
+            //            }
+            //
+            //            var _ = fuelComponent.spendFuel(10)
             
-//            trajectoryComponent.trajectory()
+            trajectoryComponent.trajectory()
             
         })
     }
@@ -62,14 +62,14 @@ class EntityManager {
         if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
             spriteNode.removeFromParent()
         }
-//        toRemove.insert(entity)
+        //        toRemove.insert(entity)
         entities.remove(entity)
         
     }
-
+    
     func update(_ deltaTime: CFTimeInterval) {
         componentSystems.forEach{ $0.update(deltaTime: deltaTime) }
-//        print("Entity update")
+        //        print("Entity update")
     }
     
     
@@ -88,9 +88,9 @@ extension EntityManager {
         }
     }
     
-    func removeCopy(inPosition position: CGPoint) {
+    func removeCopy(withThisName name: String) {
         
-        guard let index = trajectory.index(where: { $0.spriteComponent?.node.position == position}) else {
+        guard let index = trajectory.index(where: { $0?.spriteComponent?.node.name == name}) else {
             print("index not found")
             return
         }
@@ -100,20 +100,30 @@ extension EntityManager {
     }
     
     func removeAllCopies() {
-        removeCopy(UntilThisIndex: trajectory.count-1)
+        removeCopy(UntilThisIndex: max(trajectory.count-1, 0))
     }
     
     private func removeCopy(UntilThisIndex index: Int) {
         
+        print("Index", index)
+        
         for i in 0...index {
-            let copy = trajectory[i]
-            
-            if let spriteNode = copy.component(ofType: SpriteComponent.self)?.node {
-                spriteNode.removeFromParent()
+            guard let copy = trajectory[i] else {
+                print("Copy not found")
+                return
             }
+            
+            guard let spriteNode = copy.component(ofType: SpriteComponent.self)?.node else {
+                print("SpriteNode not found")
+                return
+            }
+            
+            spriteNode.removeFromParent()
         }
         
-        trajectory.removeSubrange(1..<index+1)
+        trajectory.removeSubrange(0...index)
+        
+        print("Trajectory count", trajectory.count)
     }
     
 }

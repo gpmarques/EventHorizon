@@ -22,7 +22,7 @@ class Spaceship: GKEntity {
         SpriteComponent(texture: texture,
                         size: CGSize(width: texture.size().width/10,
                                      height: texture.size().height/10),
-                        nodePosition: CGPoint(x:338.0, y:344.0),
+                        nodePosition: CGPoint(x:338.0, y:100.0),
                         typeOfBody: .Rectangle,
                         name: "Spaceship")
         spriteComponent.physicsBody?.fieldBitMask = GravityFieldCategory.Gravity
@@ -43,9 +43,12 @@ class Spaceship: GKEntity {
         addComponent(trajectoryComponent)
         
         let fuelComponent = FuelComponent(entityManager: entityManager,
-                                          rect: CGRect(x: 50, y: 50, width: 200, height: 40),
+                                          rect: CGRect(x: 0, y: 50, width: 200, height: 40),
                                           fuel: 100)
         addComponent(fuelComponent)
+        
+        let timeComponent = TimeComponent(entityManager: entityManager)
+        addComponent(timeComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,6 +57,12 @@ class Spaceship: GKEntity {
     
     override func copy() -> Any {
         let copy = Spaceship(imageNamed: "Spaceship", speed: 100, entityManager: entityManager)
+        let fuelComponent = copy.component(ofType: FuelComponent.self)!
+        fuelComponent.fuelBar.removeFromParent()
+        let timeComponent = copy.component(ofType: TimeComponent.self)!
+        timeComponent.timeLabel.removeFromParent()
+        copy.removeComponent(ofType: TimeComponent.self)
+        copy.removeComponent(ofType: FuelComponent.self)
         return copy
     }
     

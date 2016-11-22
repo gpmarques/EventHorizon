@@ -25,15 +25,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        print("Scene frame", self.frame)
         
         spaceship = Spaceship(imageNamed: "Spaceship",
                               speed: 100,
                               entityManager: entityManager)
         entityManager.add(spaceship)
         
-        planet = Planet(imageNamed: "blackhole", radius: 400, strenght: 5)
+        emitter?.targetNode = self
+        emitter?.particleAlpha = 0
+        emitter?.position.y = -15
+        
+        spaceship.spriteComponent?.node.addChild(emitter!)
+
+        planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5)
         entityManager.add(planet)
+        
+        blackHole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100)
+        entityManager.add(blackHole)
         
         physicsWorld.gravity = CGVector.zero
     }
@@ -42,19 +50,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if !gameStart {
+            
             gameStart = true
             spaceship.spriteComponent?.physicsBody?.isDynamic = true
             spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
             entityManager.timer.invalidate()
             entityManager.removeAllCopies()
+            spaceship.component(ofType: TimeComponent.self)?.startTimer()
+        } else if blackHole.component(ofType: OrbitComponent.self)?.collision == true {
+            
+            emitter?.particleAlpha = 0
+            blackHole.component(ofType: OrbitComponent.self)?.didClick = true
+            blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
         }
         
     }
+    
+    
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if gameStart {
+            spaceship.component(ofType: MovementComponent.self)?.accelerate(forThisManySeconds: 5)
+        }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -64,12 +85,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print(contact.contactPoint)
         if contact.bodyA.node?.name == "Spaceship" &&
             contact.bodyB.node?.name == "Planet" {
-            
             entityManager.remove(spaceship)
         }
         if contact.bodyA.node?.name == "copy" &&
-            contact.bodyB.node?.name == "Planet" {
-            entityManager.removeCopy(inPosition: (contact.bodyA.node?.position)!)
+            (contact.bodyB.node?.name == "Planet"
+                || contact.bodyB.node?.name == "BlackHole") {
+            contact.bodyA.node?.name = "removeThisCopy"
+            entityManager.removeCopy(withThisName: "removeThisCopy")
+        }
+        if contact.bodyA.node?.name == "Spaceship" &&
+            contact.bodyB.node?.name == "BlackHole" {
+            entityManager.remove(spaceship)
         }
         
     }
@@ -82,5 +108,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         entityManager.update(deltaTime)
         
+        blackHole.update(deltaTime: deltaTime)
+        
+        guard let orbit = blackHole.component(ofType: OrbitComponent.self) else {return}
+        
+        if  orbit.orbitNode.intersects((spaceship.spriteComponent?.node)!) &&
+            orbit.didClick == false {
+            
+            emitter?.particleAlpha = 1
+            let angle = blackHole.component(ofType: OrbitComponent.self)?.getAngle(ofObjectOrbiting: (spaceship.spriteComponent?.node)!)
+            blackHole.component(ofType: OrbitComponent.self)?.ship = spaceship.spriteComponent?.node
+            blackHole.component(ofType: OrbitComponent.self)?.orbiterAngle = angle!
+            blackHole.component(ofType: OrbitComponent.self)?.collision = true
+            blackHole.component(ofType: OrbitComponent.self)?.setupRotationDirection(object: (spaceship.spriteComponent?.node)!)
+            
+            if (spaceship.component(ofType: FuelComponent.self)?.spendFuel(0.5))! {
+                
+                emitter?.particleAlpha = 0
+                blackHole.component(ofType: OrbitComponent.self)?.fuel = false
+                blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
+            }
+        }
     }
 }

@@ -27,7 +27,6 @@ class TrajectoryComponent: GKComponent {
     func trajectory() {
         
         guard let entityClassType = entity?.ClassType else { return }
-        print("ClassType", entityClassType as Any)
         guard let trajectoryOwner = entityManager.find(entityOfType: entityClassType) else {
             print("trajectory owner not found")
             return
