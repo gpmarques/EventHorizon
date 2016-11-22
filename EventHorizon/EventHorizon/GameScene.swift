@@ -12,10 +12,15 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var entityManager: EntityManager!
-    var spaceship: GKEntity!
-    var planet: GKEntity!
+    private var lastUpdateTime : TimeInterval = 0
+    var spaceship: Spaceship!
+    var planet: Planet!
+    var blackHole: BlackHole!
     var gameStart = false
     private var lastUpdateTime : TimeInterval = 0
+    
+    let emitter = SKEmitterNode(fileNamed: "SpaceshipRocket.sks")
+    
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -103,6 +108,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         
         let deltaTime = currentTime - lastUpdateTime
+        self.lastUpdateTime = currentTime
+        
+        entityManager.update(deltaTime)
         
         self.lastUpdateTime = (deltaTime >= 1) ? currentTime : lastUpdateTime
         
