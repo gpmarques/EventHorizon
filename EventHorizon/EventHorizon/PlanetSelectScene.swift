@@ -122,7 +122,7 @@ class PlanetSelectScene: SKScene {
                 let gameScene = GameScene(size: CGSize(width: self.frame.size.width, height: self.frameHeightSize))
                 let transition: SKTransition = SKTransition.crossFade(withDuration: 1)
                 gameScene.scaleMode = SKSceneScaleMode.resizeFill
-                self.scene?.view?.presentScene(gameScene, transition: transition)
+                self.scene?.view?.presentScene(gameScene)
                 
             })
             node.zPosition = 2
