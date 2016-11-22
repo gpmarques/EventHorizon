@@ -11,14 +11,14 @@ class CustomButton : SKSpriteNode {
     
     let onButtonPress: () -> ()
     
-    init(iconName: String, text: String, view: SKView, size: CGSize, onButtonPress: @escaping () -> ()) {
+    init(iconName: String, text: String, view: SKView, position: CGPoint, size: CGSize, onButtonPress: @escaping () -> ()) {
         
         self.onButtonPress = onButtonPress
         
         let texture = SKTexture(imageNamed: iconName)
         super.init(texture: texture, color: SKColor.white, size: view.frame.size)
 
-        self.position = view.center
+        self.position = position
         self.size = size
         let label = SKLabelNode(fontNamed: "Courier-Bold")
         label.fontSize = 20

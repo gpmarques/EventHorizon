@@ -25,8 +25,13 @@ class SolarSystemScene: SKScene {
         descriptionButtom.verticalAlignmentMode = .center
         self.addChild(descriptionButtom)
         
-        let startGameButton = CustomButton(iconName: "sistema solar 2", text: "", view: view, size: CGSize(width: 0.8 * size.width, height: 0.65 * size.height), onButtonPress:{
-            
+
+        let startGameButton = CustomButton(iconName: "sistema solar 2", text: "", view: view, position: (self.view?.center)! , size: CGSize(width: 0.8 * size.width, height: 0.65 * size.height), onButtonPress:{
+//            let transition: SKTransition = SKTransition.crossFade(withDuration: 1)
+//            let nextScene: SKScene = PlanetSelectScene(size: self.size)
+//            nextScene.scaleMode = SKSceneScaleMode.resizeFill
+//            self.scene?.view?.presentScene(nextScene, transition: transition)
+//            self.viewController?.present(PlanetSelectController(), animated: true, completion: nil)
            self.viewController?.performSegue(withIdentifier: "sistema solar", sender: self)
         })
         
