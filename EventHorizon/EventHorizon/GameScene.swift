@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         spaceship.spriteComponent?.node.addChild(emitter!)
 
-        planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5)
+        planet = Planet(imageNamed: "jupiter", radius: 400, strenght: 5)
         entityManager.add(planet)
         
         blackHole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100)

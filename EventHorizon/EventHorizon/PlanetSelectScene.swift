@@ -49,7 +49,7 @@ class PlanetSelectScene: SKScene {
         
         cam = SKCameraNode()
         //position the camera on the gamescene.
-        print(frame.size.height)
+        //print(frame.size.height)
         cam.position = CGPoint(x: self.frame.midX, y: frameHeightSize/2)
         self.camera = cam
         self.addChild(cam)
@@ -57,7 +57,7 @@ class PlanetSelectScene: SKScene {
         drawPath()
         drawPlanets()
         
-        print(self.children)
+        //print(self.children)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -118,7 +118,12 @@ class PlanetSelectScene: SKScene {
 
         planets.forEach({planet in
             let node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , onButtonPress: {
-                print("mercurio")
+                print(planet.nome)
+                let gameScene = GameScene(size: CGSize(width: self.frame.size.width, height: self.frameHeightSize))
+                let transition: SKTransition = SKTransition.crossFade(withDuration: 1)
+                gameScene.scaleMode = SKSceneScaleMode.resizeFill
+                self.scene?.view?.presentScene(gameScene, transition: transition)
+                
             })
             node.zPosition = 2
             node.position = planet.position
