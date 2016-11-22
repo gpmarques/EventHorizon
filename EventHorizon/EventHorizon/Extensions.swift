@@ -37,6 +37,10 @@ extension EntityManager {
     func find(entityOfType entityType: AnyClass) -> GKEntity? {
         return entities.first(where: { $0.isKind(of: entityType) })
     }
+    
+    var getScene: SKScene {
+        return self.scene
+    }
 }
 
 extension SpriteComponent {

@@ -20,7 +20,7 @@ class CustomButton : SKSpriteNode {
         let texture = SKTexture(imageNamed: iconName)
         super.init(texture: texture, color: SKColor.white, size: view.frame.size)
 
-        self.position = view.center
+        self.position = position
         self.size = size
         let label = SKLabelNode(fontNamed: "Courier-Bold")
         label.fontSize = 20

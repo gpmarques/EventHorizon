@@ -25,9 +25,11 @@ class OrbitComponent: GKComponent {
     var didClick = false
     
     var orbitNode: SKSpriteNode
+    var entityManager: EntityManager
     
-    
-    init(orbitSpeed: CGFloat, parentNode: SKSpriteNode, blackHoleOrbitSize: CGFloat, speed: CGFloat) {
+    init(orbitSpeed: CGFloat, parentNode: SKSpriteNode, blackHoleOrbitSize: CGFloat, speed: CGFloat, entityManager: EntityManager) {
+        
+        self.entityManager = entityManager
         self.parentNode = parentNode
         self.orbiterSpeed = orbitSpeed
         self.orbiterRadius = blackHoleOrbitSize/2
@@ -54,8 +56,6 @@ class OrbitComponent: GKComponent {
         let Pi = CGFloat(M_PI)
         let DegreesToRadians = Pi / 180
         
-        print(collision)
-        
         orbiterAngle = (getAngle(ofObjectOrbiting: ship) - orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
         
         let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
@@ -75,7 +75,9 @@ class OrbitComponent: GKComponent {
             let Pi = CGFloat(M_PI)
             let DegreesToRadians = Pi / 180
             
-            let angle = (360 + (orbiterAngle)!).truncatingRemainder(dividingBy: 360) - 90
+            guard let orbiterAngle = self.orbiterAngle else { return }
+            
+            let angle = (360 + orbiterAngle).truncatingRemainder(dividingBy: 360) - 90
             
             let x1 = cos((angle) * DegreesToRadians) * speed
             let y1 = sin((angle) * DegreesToRadians) * speed
@@ -86,6 +88,8 @@ class OrbitComponent: GKComponent {
         }
         
         if fuel == false {
+            
+            print("Sucked")
             
             collision = false
             
@@ -125,14 +129,48 @@ class OrbitComponent: GKComponent {
         
     }
     
-    override func update( deltaTime: CFTimeInterval) {
+    override func update(deltaTime: CFTimeInterval) {
         
-        guard (ship != nil) else {return}
         
-        if collision == true {
-            
+        guard let node = entityManager.getShipNode() else { return }
+        ship = node
+        
+        if  self.orbitNode.intersects(ship!) && !self.didClick && fuel {
+            print("Intersect ***")
+            guard let emitter = entityManager.getEmitter() else {
+                print("particle not found")
+                return
+            }
+            emitter.particleAlpha = 1
+            self.collision = true
+            entityManager.shipIsOrbiting(isOrbiting: true)
             ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             updateOrbiter(dt: deltaTime, ship: ship!)
         }
+        
+        
+        if !fuel {
+            leaveOrbit()
+        }
+        
+//        if collision == true {
+//            print("MAMAMIA")
+//            ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+//            updateOrbiter(dt: deltaTime, ship: ship!)
+//        }
+        
+        
+        //
+        //        if  orbit.orbitNode.intersects((spaceship.spriteComponent?.node)!) &&
+        //            orbit.didClick == false {
+        //
+        //            spaceship.component(ofType: ParticleComponent.self)?.emitter.particleAlpha = 1
+        //            let angle = blackHole.component(ofType: OrbitComponent.self)?.getAngle(ofObjectOrbiting: (spaceship.spriteComponent?.node)!)
+        //            blackHole.component(ofType: OrbitComponent.self)?.ship = spaceship.spriteComponent?.node
+        //            blackHole.component(ofType: OrbitComponent.self)?.orbiterAngle = angle!
+        //            blackHole.component(ofType: OrbitComponent.self)?.collision = true
+        //            blackHole.component(ofType: OrbitComponent.self)?.setupRotationDirection(object: (spaceship.spriteComponent?.node)!)
+        //            spaceship.component(ofType: TimeComponent.self)?.timeDilation()
+
     }
 }

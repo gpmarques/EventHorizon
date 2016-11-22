@@ -12,6 +12,7 @@ import GameplayKit
 class FuelComponent: GKComponent {
 
     let fuelBar: SKShapeNode
+    let fuelTank: SKShapeNode
     let entityManager: EntityManager
     let fullFuel: CGFloat
     var fuel: CGFloat {
@@ -33,13 +34,22 @@ class FuelComponent: GKComponent {
     init(entityManager: EntityManager, rect: CGRect, fuel: CGFloat) {
         self.fuel = fuel
         self.fullFuel = fuel
-        self.fuelBar = SKShapeNode(rect: rect, cornerRadius: rect.height/2)
+        self.fuelTank = SKShapeNode(rect: CGRect(x: rect.minX, y: rect.minY - 0.5, width: rect.width + 0.1, height: rect.height + 0.5)  , cornerRadius: rect.height/2)
+        self.fuelTank.strokeColor = UIColor.black
+        self.fuelTank.lineWidth = 1
+        self.fuelTank.fillColor = UIColor.darkGray
+        self.fuelTank.zPosition = 3
+        
+        self.fuelBar = SKShapeNode(rect: rect, cornerRadius: rect.height/2.1)
         self.fuelBar.fillColor = UIColor.green
         self.fuelBar.strokeColor = UIColor.clear
-        self.fuelBar.zPosition = 1
+        self.fuelBar.zPosition = 4
+        
         self.fuelColor = UIColor.green
         self.entityManager = entityManager
-        entityManager.addToScene(thisNode: fuelBar)
+        
+        self.fuelTank.addChild(fuelBar)
+        entityManager.addToScene(thisNode: fuelTank)
         super.init()
     }
     
@@ -60,6 +70,15 @@ class FuelComponent: GKComponent {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
+        
+        if entityManager.isShipOrbiting() {
+            if spendFuel(1/6) {
+                print("ACABOUUUUU ACABOUUU")
+                guard let blackHole = entityManager.find(entityOfType: BlackHole.self) as? BlackHole else { print("blackhole not found"); return }
+                guard let orbit = blackHole.component(ofType: OrbitComponent.self) else { print("orbit not found"); return }
+                orbit.fuel = false
+            }
+        }
         
     }
 }

@@ -20,9 +20,11 @@ class TimeComponent: GKComponent {
     }
     var years: Int
     var timeRate: Int
+    var entityManager: EntityManager
     
     init(entityManager: EntityManager) {
         
+        self.entityManager = entityManager
         months = 0
         timeRate = 1
         years = months.years
@@ -30,8 +32,9 @@ class TimeComponent: GKComponent {
         timeLabel = SKLabelNode(fontNamed: "Courier-Bold")
         timeLabel.fontSize = entityManager.scene.frame.width/50
         timeLabel.text = self.years.stringfyYear + " - " + self.months.stringfyMonth
-        timeLabel.position = CGPoint(x: entityManager.scene.frame.width - entityManager.scene.frame.width/7,
+        timeLabel.position = CGPoint(x: entityManager.scene.frame.width - entityManager.scene.frame.width/4.5,
                                      y: entityManager.scene.frame.height/26)
+        timeLabel.zPosition = 3
         entityManager.addToScene(thisNode: timeLabel)
         super.init()
     }
@@ -39,6 +42,11 @@ class TimeComponent: GKComponent {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+}
+
+// dilation handling
+extension TimeComponent {
     
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
@@ -61,3 +69,19 @@ class TimeComponent: GKComponent {
     }
     
 }
+
+extension TimeComponent {
+    
+    override func update(deltaTime seconds: TimeInterval) {
+        
+        if entityManager.isShipOrbiting() {
+            timeDilation()
+        } else {
+            normalizeTimeRate()
+        }
+        
+    }
+    
+    
+}
+

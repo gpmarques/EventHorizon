@@ -12,16 +12,18 @@ import GameplayKit
 class Spaceship: GKEntity {
     
     let entityManager: EntityManager
+    var isOrbiting: Bool
     
     init(imageNamed: String, speed: Double, entityManager: EntityManager) {
         self.entityManager = entityManager
+        self.isOrbiting = false
         
         super.init()
         let texture = SKTexture(imageNamed: imageNamed)
         let spriteComponent =
         SpriteComponent(texture: texture,
-                        size: CGSize(width: texture.size().width/10,
-                                     height: texture.size().height/10),
+                        size: CGSize(width: texture.size().width/5,
+                                     height: texture.size().height/5),
                         nodePosition: CGPoint(x:338.0, y:100.0),
                         typeOfBody: .Rectangle,
                         name: "Spaceship")
@@ -43,8 +45,10 @@ class Spaceship: GKEntity {
         addComponent(trajectoryComponent)
         
         let fuelComponent = FuelComponent(entityManager: entityManager,
-                                          rect: CGRect(x: 0, y: 50, width: 200, height: 40),
-                                          fuel: 100)
+                                          rect: CGRect(x: 0,
+                                                       y: entityManager.getScene.frame.width/40,
+                                                       width: entityManager.getScene.frame.width/5 + 10 ,
+                                                       height: entityManager.getScene.frame.height/35), fuel: 100)
         addComponent(fuelComponent)
         
         let timeComponent = TimeComponent(entityManager: entityManager)
@@ -61,7 +65,7 @@ class Spaceship: GKEntity {
     }
     
     override func copy() -> Any {
-        let copy = Spaceship(imageNamed: "Spaceship", speed: 100, entityManager: entityManager)
+        let copy = Spaceship(imageNamed: "ret", speed: 100, entityManager: entityManager)
         let fuelComponent = copy.component(ofType: FuelComponent.self)!
         fuelComponent.fuelBar.removeFromParent()
         let timeComponent = copy.component(ofType: TimeComponent.self)!

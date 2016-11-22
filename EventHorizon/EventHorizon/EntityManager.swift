@@ -13,17 +13,20 @@ class EntityManager {
     
     var entities = Set<GKEntity>()
     var trajectory = [GKEntity?]()
-    let scene: SKScene
+    let scene: GameScene
     var timer: Timer = Timer()
     
     lazy var componentSystems: [GKComponentSystem] = {
         let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
-        return [moveSystem]
+        let orbitSystem = GKComponentSystem(componentClass: OrbitComponent.self)
+        let fuelSystem = GKComponentSystem(componentClass: FuelComponent.self)
+        let timeSystem = GKComponentSystem(componentClass: TimeComponent.self)
+        return [moveSystem, orbitSystem, fuelSystem, timeSystem]
     }()
     
     init(scene: SKScene) {
-        self.scene = scene
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
+        self.scene = scene as! GameScene
+        timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true, block: {_ in
             
             guard let spaceship = self.find(entityOfType: Spaceship.self) else {
                 print("Spaceship not found")
@@ -72,7 +75,6 @@ class EntityManager {
         //        print("Entity update")
     }
     
-    
 }
 
 // Extension to manage the copies that create the trajectory effect
@@ -105,7 +107,7 @@ extension EntityManager {
     
     private func removeCopy(UntilThisIndex index: Int) {
         
-        print("Index", index)
+//        print("Index", index)
         
         for i in 0...index {
             guard let copy = trajectory[i] else {
@@ -123,15 +125,86 @@ extension EntityManager {
         
         trajectory.removeSubrange(0...index)
         
-        print("Trajectory count", trajectory.count)
+//        print("Trajectory count", trajectory.count)
     }
     
 }
 
+// Miscellanea
 extension EntityManager {
     
     func addToScene(thisNode node: SKNode) {
         scene.addChild(node)
     }
     
+    func shipIsOrbiting(isOrbiting: Bool) {
+        if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
+            ship.isOrbiting = isOrbiting
+        }
+    }
+    
+    func isShipOrbiting() -> Bool {
+        if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
+            return ship.isOrbiting
+        }
+        return false
+    }
+    
+    func getShipNode() -> SKSpriteNode? {
+        if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
+            return (ship.spriteComponent?.node)!
+        }
+        return nil
+    }
+    
+    func getEmitter() -> SKEmitterNode? {
+        if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
+            return (ship.component(ofType: ParticleComponent.self)?.emitter)!
+        }
+        return nil
+    }
+
+    
 }
+
+// spawn objects
+extension EntityManager {
+    
+    func planetIsClicked() {
+        
+        if scene.planetIsClicked {
+            scene.planetIsClicked = false
+        } else {
+            scene.planetIsClicked = true
+            scene.blackHoleIsClicked = false
+        }
+        
+    }
+    
+    func spawnPlanet(inThisPoint point: CGPoint) {
+        
+        let planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5, poaition: point)
+        add(planet)
+        
+    }
+    
+    func blackHoleIsClicked() {
+        
+        if scene.blackHoleIsClicked {
+            scene.blackHoleIsClicked = false
+        } else {
+            scene.blackHoleIsClicked = true
+            scene.planetIsClicked = false
+        }
+        
+    }
+    
+    func spawnblackHole(inThisPoint point: CGPoint) {
+        
+        let blackhole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100, position: point, entityManager: self)
+        add(blackhole)
+        
+    }
+    
+}
+

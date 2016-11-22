@@ -43,10 +43,10 @@ class PlanetSelectScene: SKScene {
                    PlanetNode(nome: "venus",position: CGPoint(x: 0.8 * frame.size.width, y: 375), size: CGSize(width: 0.18 * frame.size.width, height: 0.18 * frame.size.width)),
                    PlanetNode(nome: "terra" ,position: CGPoint(x: 500, y: 822), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width)),
                    PlanetNode(nome: "marte",position: CGPoint(x: 0.55 * frame.size.width, y: 1300), size: CGSize(width: 0.15 * frame.size.width, height: 0.15 * frame.size.width)),
-                   PlanetNode(nome: "jupiter" ,position: CGPoint(x: frame.size.width/2 - 150, y: 1900), size: CGSize(width: 0.40 * frame.size.width, height: 0.40 * frame.size.width)),
-                   PlanetNode(nome: "saturno",position: CGPoint(x: 0.6 * frame.size.width, y: 2500), size: CGSize(width: 2.1 * 0.32 * frame.size.width, height: 0.32 * frame.size.width)),
+                   PlanetNode(nome: "Jupiter" ,position: CGPoint(x: frame.size.width/2 - 150, y: 1900), size: CGSize(width: 0.40 * frame.size.width, height: 0.40 * frame.size.width)),
+                   PlanetNode(nome: "Saturno",position: CGPoint(x: 0.6 * frame.size.width, y: 2500), size: CGSize(width: 2.1 * 0.32 * frame.size.width, height: 0.32 * frame.size.width)),
                    PlanetNode(nome: "urano" ,position: CGPoint(x: 260, y: 3000), size: CGSize(width: planetSizePercent * frame.size.width, height: 1.9 * planetSizePercent * frame.size.width)),
-                   PlanetNode(nome: "netuno",position: CGPoint(x: frame.size.width - 0.2 * frame.size.width, y: 3500), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width))]
+                   PlanetNode(nome: "Netuno",position: CGPoint(x: frame.size.width - 0.2 * frame.size.width, y: 3500), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width))]
         
         cam = SKCameraNode()
         //position the camera on the gamescene.
@@ -133,7 +133,7 @@ class PlanetSelectScene: SKScene {
                 self.scene?.view?.presentScene(gameScene)
             })
             node.zPosition = 2
-            node.position = planet.position
+//            node.position = planet.position
             addChild(node)
         })
 //        planets.forEach{addChild(SKSpriteNode(imageNamed: $0))}
