@@ -23,7 +23,7 @@
                         <color key="backgroundColor" red="0.05785302072763443" green="0.062581181526184082" blue="0.19159021973609924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
-                        <segue destination="rxw-Q1-liN" kind="show" identifier="sistema solar" id="LFe-rR-aIK"/>
+                        <segue destination="rxw-Q1-liN" kind="presentation" identifier="sistema solar" id="LFe-rR-aIK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

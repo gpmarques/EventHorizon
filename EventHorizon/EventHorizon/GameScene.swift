@@ -12,7 +12,6 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var entityManager: EntityManager!
-    private var lastUpdateTime : TimeInterval = 0
     var spaceship: Spaceship!
     var planet: Planet!
     var blackHole: BlackHole!

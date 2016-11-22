@@ -6,14 +6,6 @@
 //  Copyright © 2016 Guilherme Marques. All rights reserved.
 //
 
-//
-//  GameScene.swift
-//  EventHorizon
-//
-//  Created by Guilherme Marques on 04/11/16.
-//  Copyright © 2016 Guilherme Marques. All rights reserved.
-//
-
 import SpriteKit
 import GameplayKit
 import ReplayKit
@@ -38,7 +30,8 @@ class SolarSystemScene: SKScene {
 //            let nextScene: SKScene = PlanetSelectScene(size: self.size)
 //            nextScene.scaleMode = SKSceneScaleMode.resizeFill
 //            self.scene?.view?.presentScene(nextScene, transition: transition)
-            self.viewController?.performSegue(withIdentifier: "sistema solar", sender: self)
+//            self.viewController?.present(PlanetSelectController(), animated: true, completion: nil)
+           self.viewController?.performSegue(withIdentifier: "sistema solar", sender: self)
         })
         addChild(startGameButton)
     }
