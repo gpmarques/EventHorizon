@@ -11,15 +11,18 @@ class CustomButton : SKSpriteNode {
     
     let onButtonPress: () -> ()
     let onButtonReleased: () -> ()
+    let action: SKAction
+    let action2: SKAction
     
     init(iconName: String, text: String, view: SKView, size: CGSize, position: CGPoint, onButtonPress: @escaping () -> (), onButtonReleased: @escaping ()->()) {
         
         self.onButtonPress = onButtonPress
         self.onButtonReleased = onButtonReleased
-        
+        action = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
+        action2 = SKAction.scale(by: 0.9, duration: 0.1)
         let texture = SKTexture(imageNamed: iconName)
         super.init(texture: texture, color: SKColor.white, size: view.frame.size)
-
+        self.name = iconName
         self.position = position
         self.size = size
         let label = SKLabelNode(fontNamed: "Courier-Bold")
@@ -37,8 +40,6 @@ class CustomButton : SKSpriteNode {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         onButtonPress()
-        let action = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
-        let action2 = SKAction.scale(by: 0.9, duration: 0.1)
         let actionSequence = SKAction.sequence([action, action2])
         self.run(actionSequence)
     }
