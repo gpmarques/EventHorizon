@@ -27,7 +27,7 @@ class TimeComponent: GKComponent {
         timeRate = 1
         years = months.years
         timer = Timer()
-        timeLabel = SKLabelNode(fontNamed: "SF-UI-Display-Ultralight")
+        timeLabel = SKLabelNode(fontNamed: "Courier-Bold")
         timeLabel.fontSize = entityManager.scene.frame.width/50
         timeLabel.text = " "
         timeLabel.position = CGPoint(x: entityManager.scene.frame.width - entityManager.scene.frame.width/7,
