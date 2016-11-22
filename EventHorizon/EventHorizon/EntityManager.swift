@@ -183,7 +183,7 @@ extension EntityManager {
     
     func spawnPlanet(inThisPoint point: CGPoint) {
         
-        let planet = Planet(imageNamed: "Jupiter", radius: 400, strenght: 5, poaition: point)
+        let planet = Planet(imageNamed: "jupiter", radius: 400, strenght: 5, poaition: point)
         add(planet)
         
     }

@@ -119,7 +119,7 @@ class PlanetSelectScene: SKScene {
 
         
         planets.forEach({planet in
-            node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , onButtonPress: {
+            node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , position: planet.position, onButtonPress: {
                 print(planet.nome)
 //                let action = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
 //                let action2 = SKAction.scale(by: 0.9, duration: 0.1)

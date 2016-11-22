@@ -22,16 +22,16 @@ class LevelMenuView {
         menuBackground.zPosition = 2
         
         let size = CGSize(width: scene.frame.width/18 , height: scene.frame.width/18)
-        let planetButton = CustomButton(iconName: "Jupiter",
-                                        text: "", view: scene.view!,
+        let planetButton = CustomButton(iconName: "jupiter",
+                                        text: "", view: scene.view!, size: size,
                                         position: CGPoint(x: scene.frame.width/3.25, y: scene.frame.height/22.5),
-                                        size: size, onButtonPress: entityManager.planetIsClicked)
+                                        onButtonPress: entityManager.planetIsClicked, onButtonReleased: {})
         planetButton.zPosition = 3
         
         let blackHoleButton = CustomButton(iconName: "blackhole",
-                                           text: "", view: scene.view!,
+                                           text: "", view: scene.view!, size: size,
                                            position: CGPoint(x: scene.frame.width/2.25, y: scene.frame.height/22.5),
-                                           size: size, onButtonPress: entityManager.blackHoleIsClicked)
+                                           onButtonPress: entityManager.blackHoleIsClicked, onButtonReleased: {})
         blackHoleButton.zPosition = 3
         
         //let playButton = CustomButton(iconName: <#T##String#>, text: <#T##String#>, view: <#T##SKView#>, position: <#T##CGPoint#>, size: <#T##CGSize#>, onButtonPress: <#T##() -> ()#>)

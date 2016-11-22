@@ -12,7 +12,7 @@ class CustomButton : SKSpriteNode {
     let onButtonPress: () -> ()
     let onButtonReleased: () -> ()
     
-    init(iconName: String, text: String, view: SKView, size: CGSize, onButtonPress: @escaping () -> (), onButtonReleased: @escaping ()->()) {
+    init(iconName: String, text: String, view: SKView, size: CGSize, position: CGPoint, onButtonPress: @escaping () -> (), onButtonReleased: @escaping ()->()) {
         
         self.onButtonPress = onButtonPress
         self.onButtonReleased = onButtonReleased

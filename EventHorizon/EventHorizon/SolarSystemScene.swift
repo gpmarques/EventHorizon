@@ -25,8 +25,9 @@ class SolarSystemScene: SKScene {
         descriptionButtom.zPosition = 1
         descriptionButtom.verticalAlignmentMode = .center
         self.addChild(descriptionButtom)
+        
 
-        startGameButton = CustomButton(iconName: "sistema solar 2", text: "", view: view, size: CGSize(width: 0.8 * size.width, height: 0.65 * size.height), onButtonPress:{
+        startGameButton = CustomButton(iconName: "sistema solar 2", text: "", view: view, size: CGSize(width: 0.8 * size.width, height: 0.65 * size.height), position: view.center, onButtonPress:{
                 
             
         }, onButtonReleased: {
