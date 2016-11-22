@@ -120,8 +120,8 @@ class PlanetSelectScene: SKScene {
             let node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , onButtonPress: {
                 print(planet.nome)
                 let gameScene = GameScene(size: CGSize(width: self.frame.size.width, height: self.frameHeightSize))
-                let transition: SKTransition = SKTransition.crossFade(withDuration: 1)
-                gameScene.scaleMode = SKSceneScaleMode.resizeFill
+                //let transition: SKTransition = SKTransition.fade(withDuration: 1)
+                //gameScene.scaleMode = SKSceneScaleMode.resizeFill
                 self.scene?.view?.presentScene(gameScene)
                 
             })
