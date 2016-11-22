@@ -11,14 +11,14 @@ import GameplayKit
 
 class Planet: GKEntity {
     
-    init(imageNamed: String, radius: Float, strenght: Float, poaition: CGPoint) {
+    init(imageNamed: String, radius: Float, strenght: Float, position: CGPoint) {
         super.init()
         
         let texture = SKTexture(imageNamed: imageNamed)
         let size = CGSize(width: texture.size().width/2, height: texture.size().height/2)
         let spriteComponent = SpriteComponent(texture: texture,
                                               size: size,
-                                              nodePosition: poaition,
+                                              nodePosition: position,
                                               typeOfBody: .Circle,
                                               name: "Planet")
         addComponent(spriteComponent)
