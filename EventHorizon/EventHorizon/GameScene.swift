@@ -54,7 +54,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if !gameStart {
-            
             gameStart = true
             spaceship.spriteComponent?.physicsBody?.isDynamic = true
             spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
@@ -66,20 +65,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             emitter?.particleAlpha = 0
             blackHole.component(ofType: OrbitComponent.self)?.didClick = true
             blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
+            spaceship.component(ofType: TimeComponent.self)?.normalizeTimeRate()
         }
         
     }
-    
-    
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if gameStart {
-            spaceship.component(ofType: MovementComponent.self)?.accelerate(forThisManySeconds: 5)
-        }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -128,6 +122,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             blackHole.component(ofType: OrbitComponent.self)?.orbiterAngle = angle!
             blackHole.component(ofType: OrbitComponent.self)?.collision = true
             blackHole.component(ofType: OrbitComponent.self)?.setupRotationDirection(object: (spaceship.spriteComponent?.node)!)
+            spaceship.component(ofType: TimeComponent.self)?.timeDilation()
             
             if (spaceship.component(ofType: FuelComponent.self)?.spendFuel(0.5))! {
                 

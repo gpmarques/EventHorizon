@@ -9,11 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-extension Int {
-    var years: Int { return self/12 }
-    var reset: Int { return (self%12 == 0) ? 0 : self}
-}
-
 class TimeComponent: GKComponent {
     
     var timeLabel: SKLabelNode
@@ -24,10 +19,12 @@ class TimeComponent: GKComponent {
         }
     }
     var years: Int
+    var timeRate: Int
     
     init(entityManager: EntityManager) {
         
         months = 0
+        timeRate = 1
         years = months.years
         timer = Timer()
         timeLabel = SKLabelNode(fontNamed: "SF-UI-Display-Ultralight")
@@ -44,21 +41,22 @@ class TimeComponent: GKComponent {
     }
     
     func startTimer() {
-//        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timeIncrement), userInfo: nil, repeats: true)
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
-            self.months += 1
+            self.months += self.timeRate
             self.months = self.months.reset
-            self.timeLabel.text = "\(self.years) years - \(self.months) months"
+            self.timeLabel.text = self.years.stringfyYear + " - " + self.months.stringfyMonth
         })
     }
     //modificar o update de tempo ao inves de incrementar mais por update /\/\/\/\
     
     
-//    @objc private func timeIncrement() {
-//        months += 1
-//        months = months.reset
-//        timeLabel.text = "\(years) years - \(months) months"
-//    }
+    func timeDilation() {
+        timeRate = 2
+    }
+    
+    func normalizeTimeRate() {
+        timeRate = 1
+    }
     
     func stopTimer() {
         timer.invalidate()
