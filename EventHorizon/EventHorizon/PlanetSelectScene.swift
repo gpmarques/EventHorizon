@@ -119,8 +119,9 @@ class PlanetSelectScene: SKScene {
         planets.forEach({planet in
             let node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , onButtonPress: {
                 print(planet.nome)
+                
+                let transition: SKTransition = SKTransition.moveIn(with: .down, duration: 1)
                 let gameScene = GameScene(size: CGSize(width: self.frame.size.width, height: self.frameHeightSize))
-                //let transition: SKTransition = SKTransition.fade(withDuration: 1)
                 //gameScene.scaleMode = SKSceneScaleMode.resizeFill
                 self.scene?.view?.presentScene(gameScene)
                 
