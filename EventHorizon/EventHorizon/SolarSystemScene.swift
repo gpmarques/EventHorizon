@@ -13,6 +13,7 @@ import ReplayKit
 class SolarSystemScene: SKScene {
     
     var viewController: UIViewController?
+    var startGameButton: CustomButton!
     
     override func didMove(to view: SKView) {
         self.backgroundColor = SKColor(colorLiteralRed: 0.05, green: 0.07, blue: 0.17, alpha: 1)
@@ -24,10 +25,14 @@ class SolarSystemScene: SKScene {
         descriptionButtom.zPosition = 1
         descriptionButtom.verticalAlignmentMode = .center
         self.addChild(descriptionButtom)
-        
-        let startGameButton = CustomButton(iconName: "sistema solar 2", text: "", view: view, size: CGSize(width: 0.8 * size.width, height: 0.65 * size.height), onButtonPress:{
+
+        startGameButton = CustomButton(iconName: "sistema solar 2", text: "", view: view, size: CGSize(width: 0.8 * size.width, height: 0.65 * size.height), onButtonPress:{
+                
             
-           self.viewController?.performSegue(withIdentifier: "sistema solar", sender: self)
+        }, onButtonReleased: {
+            let action = SKAction.scale(by: 1.1, duration: 0.1)
+            self.startGameButton.run(SKAction.repeatForever(action))
+            self.viewController?.performSegue(withIdentifier: "sistema solar", sender: self)
         })
         
         addChild(startGameButton)

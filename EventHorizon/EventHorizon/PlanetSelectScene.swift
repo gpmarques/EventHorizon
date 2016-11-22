@@ -24,6 +24,7 @@ class PlanetSelectScene: SKScene {
     var frameHeightSize: CGFloat!
     var backgroundImage: SKSpriteNode!
     let planetSizePercent: CGFloat = 0.25
+    var node: CustomButton!
     
     override func didMove(to view: SKView) {
         
@@ -31,7 +32,7 @@ class PlanetSelectScene: SKScene {
         self.size = CGSize(width: frame.size.width, height: universeSize)
         
         backgroundColor = SKColor.black
-        backgroundImage = SKSpriteNode(imageNamed: "backgroundSelect")
+        backgroundImage = SKSpriteNode(imageNamed: "backgroundSelect2")
         backgroundImage.position = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
         addChild(backgroundImage)
         
@@ -116,15 +117,20 @@ class PlanetSelectScene: SKScene {
     
     private func drawPlanets(){
 
+        
         planets.forEach({planet in
-            let node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , onButtonPress: {
+            node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , onButtonPress: {
                 print(planet.nome)
+//                let action = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
+//                let action2 = SKAction.scale(by: 0.9, duration: 0.1)
+//                let actionSequence = SKAction.sequence([action, action2])
+//                self.node.run(actionSequence)
                 
+            }, onButtonReleased: {
                 let transition: SKTransition = SKTransition.moveIn(with: .down, duration: 1)
                 let gameScene = GameScene(size: CGSize(width: self.frame.size.width, height: self.frameHeightSize))
                 //gameScene.scaleMode = SKSceneScaleMode.resizeFill
                 self.scene?.view?.presentScene(gameScene)
-                
             })
             node.zPosition = 2
             node.position = planet.position
