@@ -20,19 +20,27 @@ import ReplayKit
 
 class SolarSystemScene: SKScene {
     
+    var viewController: UIViewController?
+    
     override func didMove(to view: SKView) {
-        self.backgroundColor = SKColor(colorLiteralRed: 0.15, green: 0.17, blue: 0.48, alpha: 1)
+        self.backgroundColor = SKColor(colorLiteralRed: 0.05, green: 0.07, blue: 0.17, alpha: 1)
         
-        let startGameButton = SolarSystemButton(iconName: "sistemaSolar", text: "", view: view,onButtonPress:{print("start game")})
-
-//        let startGameButtonShadow = SKSpriteNode(imageNamed: "sistemaSolar")
-//        startGameButtonShadow.colorBlendFactor = 1;
-//        startGameButtonShadow.position = CGPoint(x: size.width/2+10, y: size.height/2-10)
-//        startGameButtonShadow.size = CGSize(width: 813, height: 550)
-//        startGameButtonShadow.color = SKColor.black
-//        startGameButtonShadow.alpha = 0.25
+        let descriptionButtom = SKLabelNode(text: "Solar system")
+        descriptionButtom.fontSize = 30
+        descriptionButtom.fontColor = SKColor.white
+        descriptionButtom.position = CGPoint(x: size.width/2, y: 0.12 * size.height)
+        descriptionButtom.zPosition = 1
+        descriptionButtom.verticalAlignmentMode = .center
+        self.addChild(descriptionButtom)
+        
+        let startGameButton = CustomButton(iconName: "sistema solar 2", text: "", view: view, size: CGSize(width: 0.8 * size.width, height: 0.65 * size.height), onButtonPress:{
+//            let transition: SKTransition = SKTransition.crossFade(withDuration: 1)
+//            let nextScene: SKScene = PlanetSelectScene(size: self.size)
+//            nextScene.scaleMode = SKSceneScaleMode.resizeFill
+//            self.scene?.view?.presentScene(nextScene, transition: transition)
+            self.viewController?.performSegue(withIdentifier: "sistema solar", sender: self)
+        })
         addChild(startGameButton)
-//        addChild(startGameButtonShadow)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

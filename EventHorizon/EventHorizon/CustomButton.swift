@@ -7,23 +7,23 @@
 //
 import SpriteKit
 
-class SolarSystemButton : SKSpriteNode {
+class CustomButton : SKSpriteNode {
     
     let onButtonPress: () -> ()
     
-    init(iconName: String, text: String, view: SKView, onButtonPress: @escaping () -> ()) {
+    init(iconName: String, text: String, view: SKView, size: CGSize, onButtonPress: @escaping () -> ()) {
         
         self.onButtonPress = onButtonPress
         
-        let texture = SKTexture(imageNamed: "sistemaSolar")
+        let texture = SKTexture(imageNamed: iconName)
         super.init(texture: texture, color: SKColor.white, size: view.frame.size)
 
         self.position = view.center
-        self.size = CGSize(width: 800, height: 550)
+        self.size = size
         let label = SKLabelNode(fontNamed: "Courier-Bold")
-        label.fontSize = 50
-        label.fontColor = SKColor.black
-        label.position = CGPoint(x: size.width * 0.25, y: 0)
+        label.fontSize = 20
+        label.fontColor = SKColor.white
+        label.position = CGPoint(x: size.width/2, y: -100)
         label.zPosition = 1
         label.verticalAlignmentMode = .center
         label.text = text

@@ -16,6 +16,7 @@ class SolarSystemController: UIViewController {
         super.viewDidLoad()
         
         let sceneSize = CGSize(width: view.bounds.width, height: view.bounds.size.height)
+        print(sceneSize)
         let scene =
             SolarSystemScene(size: sceneSize)
         
@@ -25,6 +26,7 @@ class SolarSystemController: UIViewController {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .aspectFit
         skView.presentScene(scene)
+        scene.viewController = self
     }
     
     override var prefersStatusBarHidden: Bool {

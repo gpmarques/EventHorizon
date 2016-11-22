@@ -12,7 +12,10 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var entityManager: EntityManager!
-    fileprivate var lastUpdateTime : TimeInterval = 0
+    var spaceship: GKEntity!
+    var planet: GKEntity!
+    var gameStart = false
+    private var lastUpdateTime : TimeInterval = 0
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -74,13 +77,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         
         let deltaTime = currentTime - lastUpdateTime
-        self.lastUpdateTime = currentTime
-        entityManager.update(deltaTime)
-        print("Scene update")
         
         self.lastUpdateTime = (deltaTime >= 1) ? currentTime : lastUpdateTime
         
-        entityManager.update(deltaTime: deltaTime)
+        entityManager.update(deltaTime)
         
     }
 }

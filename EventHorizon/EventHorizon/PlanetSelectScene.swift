@@ -8,42 +8,56 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
-
+struct PlanetNode {
+    let nome: String
+    let position: CGPoint
+    let size: CGSize
+}
 
 class PlanetSelectScene: SKScene {
     
-//    let moveableNode = SKNode()
     var cam: SKCameraNode!
-    
+    var planets = [PlanetNode]()
+    let universeSize: CGFloat = 3900
+    var frameHeightSize: CGFloat!
+    var backgroundImage: SKSpriteNode!
+    let planetSizePercent: CGFloat = 0.25
     
     override func didMove(to view: SKView) {
         
-        backgroundColor = SKColor.green
+        frameHeightSize = frame.size.height
+        self.size = CGSize(width: frame.size.width, height: universeSize)
         
-        let top = SKLabelNode(text: "top")
-        top.position = CGPoint(x: frame.size.width/2, y: frame.size.height-100)
-        top.fontColor = UIColor.white
-        top.fontSize = 50
-        let bottom = SKLabelNode(text: "bottom")
-        bottom.position = CGPoint(x: frame.size.width/2, y: 100)
-        bottom.fontColor = UIColor.white
-        bottom.fontSize = 50
-        print("top \(top.position) bottom \(bottom.position)")
-        addChild(top)
-        addChild(bottom)
+        backgroundColor = SKColor.black
+        backgroundImage = SKSpriteNode(imageNamed: "backgroundSelect")
+        backgroundImage.position = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
+        addChild(backgroundImage)
+        
+
+        
+        
+        planets = [PlanetNode(nome: "mercurio",position: CGPoint(x: 250, y: 200), size: CGSize(width: 0.13 * frame.size.width, height: 0.13 * frame.size.width)),
+                   PlanetNode(nome: "venus",position: CGPoint(x: 0.8 * frame.size.width, y: 375), size: CGSize(width: 0.18 * frame.size.width, height: 0.18 * frame.size.width)),
+                   PlanetNode(nome: "terra" ,position: CGPoint(x: 500, y: 822), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width)),
+                   PlanetNode(nome: "marte",position: CGPoint(x: 0.55 * frame.size.width, y: 1300), size: CGSize(width: 0.15 * frame.size.width, height: 0.15 * frame.size.width)),
+                   PlanetNode(nome: "jupiter" ,position: CGPoint(x: frame.size.width/2 - 150, y: 1900), size: CGSize(width: 0.40 * frame.size.width, height: 0.40 * frame.size.width)),
+                   PlanetNode(nome: "saturno",position: CGPoint(x: 0.6 * frame.size.width, y: 2500), size: CGSize(width: 2.1 * 0.32 * frame.size.width, height: 0.32 * frame.size.width)),
+                   PlanetNode(nome: "urano" ,position: CGPoint(x: 260, y: 3000), size: CGSize(width: planetSizePercent * frame.size.width, height: 1.9 * planetSizePercent * frame.size.width)),
+                   PlanetNode(nome: "netuno",position: CGPoint(x: frame.size.width - 0.2 * frame.size.width, y: 3500), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width))]
         
         cam = SKCameraNode()
-        //cam.xScale = 1
-        //cam.yScale = 0.0001
-        
-        
-        self.camera = cam //set the scene's camera to reference cam
-        self.addChild(cam) //make the cam a childElement of the scene itself.
-
         //position the camera on the gamescene.
+        print(frame.size.height)
+        cam.position = CGPoint(x: self.frame.midX, y: frameHeightSize/2)
+        self.camera = cam
+        self.addChild(cam)
         
-        cam.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        drawPath()
+        drawPlanets()
+        
+        print(self.children)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -56,8 +70,16 @@ class PlanetSelectScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             let previousLocation = touch.previousLocation(in: self)
-            let deltaY = location.y - previousLocation.y
-            cam.position.y += (deltaY * (-1))
+            let deltaY =  previousLocation.y - location.y
+            print(location.y)
+            if (cam.position.y + deltaY) <= (0 + frameHeightSize/2) {
+                cam.position.y = 0 + frameHeightSize/2
+            } else if (cam.position.y + deltaY) > (universeSize - frameHeightSize/2){
+                cam.position.y = universeSize - frameHeightSize/2
+            } else {
+                cam.position.y += deltaY
+            }
+            
         }
     }
     
@@ -71,8 +93,37 @@ class PlanetSelectScene: SKScene {
         
     }
     
-    func drawPlanets(){
+    private func drawPath(){
+        let path = CGMutablePath()
+        path.move(to: planets[0].position)
         
+        for index in 1..<planets.count{
+            path.addLine(to: planets[index].position)
+            path.addCurve(to: planets[index].position, control1: CGPoint(x: 607.500061035156, y:677.000061035156),
+                          control2: CGPoint(x: 823.500061035156, y: 192.500030517578))
+        }
+        //context?.strokePath()
+        let line = SKShapeNode()
+        //let bezierLine = UIBezierPath(cgPath: path)
+       
+        line.path = path
+        line.lineWidth = CGFloat(10)
+        line.strokeColor = UIColor.white
+        line.zPosition = 1
+        
+        addChild(line)
     }
+    
+    private func drawPlanets(){
 
+        planets.forEach({planet in
+            let node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , onButtonPress: {
+                print("mercurio")
+            })
+            node.zPosition = 2
+            node.position = planet.position
+            addChild(node)
+        })
+//        planets.forEach{addChild(SKSpriteNode(imageNamed: $0))}
+    }
 }

@@ -17,10 +17,8 @@ class PlanetSelectController: UIViewController {
         
         let sceneSize = CGSize(width: view.bounds.width, height: view.bounds.size.height)
         print("VC size: \(sceneSize)")
-        let sceneSize2 = CGSize(width: view.bounds.width, height: view.bounds.size.height*5)
-        print("Scene size: \(sceneSize2)")
         let scene =
-            PlanetSelectScene(size: sceneSize2)
+            PlanetSelectScene(size: sceneSize)
         
         let skView = self.view as! SKView
         skView.showsFPS = true
