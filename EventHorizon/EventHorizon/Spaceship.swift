@@ -49,6 +49,11 @@ class Spaceship: GKEntity {
         
         let timeComponent = TimeComponent(entityManager: entityManager)
         addComponent(timeComponent)
+        
+        let particleComponent = ParticleComponent(fileNamed: "SpaceshipRocket.sks",
+                                                  parentNode: spriteComponent.node,
+                                                  entityManager: entityManager)
+        addComponent(particleComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {
