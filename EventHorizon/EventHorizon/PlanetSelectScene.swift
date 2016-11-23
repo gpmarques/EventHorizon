@@ -24,7 +24,7 @@ class PlanetSelectScene: SKScene {
     var frameHeightSize: CGFloat!
     var backgroundImage: SKSpriteNode!
     let planetSizePercent: CGFloat = 0.25
-    var node: CustomButton!
+    var node: TriggerButton!
     
     override func didMove(to view: SKView) {
         
@@ -119,12 +119,9 @@ class PlanetSelectScene: SKScene {
 
         
         planets.forEach({planet in
-            node = CustomButton(iconName: planet.nome, text: "", view: view!, size: planet.size , position: planet.position, onButtonPress: {
+            node = TriggerButton(iconName: planet.nome, text: "", view: view!, size: planet.size , position: planet.position, onButtonPress: {
                 print(planet.nome)
-//                let action = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
-//                let action2 = SKAction.scale(by: 0.9, duration: 0.1)
-//                let actionSequence = SKAction.sequence([action, action2])
-//                self.node.run(actionSequence)
+
                 
             }, onButtonReleased: {
                 //let transition: SKTransition = SKTransition.moveIn(with: .down, duration: 1)

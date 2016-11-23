@@ -39,6 +39,7 @@
 		FD3ADBC31DDA5C63004E516D /* SolarSystemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3ADBC21DDA5C63004E516D /* SolarSystemController.swift */; };
 		FD3ADBC51DDA5CD4004E516D /* SolarSystemScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3ADBC41DDA5CD4004E516D /* SolarSystemScene.swift */; };
 		FD3ADBC71DDA6ED9004E516D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3ADBC61DDA6ED9004E516D /* CustomButton.swift */; };
+		FDE722371DE60A4700193C8B /* TriggerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE722361DE60A4700193C8B /* TriggerButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		FD3ADBC21DDA5C63004E516D /* SolarSystemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolarSystemController.swift; sourceTree = "<group>"; };
 		FD3ADBC41DDA5CD4004E516D /* SolarSystemScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolarSystemScene.swift; sourceTree = "<group>"; };
 		FD3ADBC61DDA6ED9004E516D /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		FDE722361DE60A4700193C8B /* TriggerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +244,7 @@
 			children = (
 				D1FD87EE1DD24F8A003A247B /* Extensions.swift */,
 				FD3ADBC61DDA6ED9004E516D /* CustomButton.swift */,
+				FDE722361DE60A4700193C8B /* TriggerButton.swift */,
 				FD0BD3411DDE5B6800F93281 /* CustomScrollView.swift */,
 				A50EE50C1DE49E4400CFE575 /* LevelMenuView.swift */,
 			);
@@ -410,6 +413,7 @@
 				D188E6BC1DE3175B00DBE849 /* TimeComponent.swift in Sources */,
 				FD0BD3421DDE5B6800F93281 /* CustomScrollView.swift in Sources */,
 				FD3ADBC51DDA5CD4004E516D /* SolarSystemScene.swift in Sources */,
+				FDE722371DE60A4700193C8B /* TriggerButton.swift in Sources */,
 				FD0BD3401DDE5AEF00F93281 /* PlanetSelectController.swift in Sources */,
 				D1791CE41DCE56A700FF097A /* Meteorite.swift in Sources */,
 				D1791CE01DCE54FC00FF097A /* OrbitComponent.swift in Sources */,

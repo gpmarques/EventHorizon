@@ -1,13 +1,14 @@
 //
-//  SolarSystemButton.swift
+//  TriggerButton.swift
 //  EventHorizon
 //
-//  Created by Rodrigo Labronici on 14/11/16.
+//  Created by Rodrigo Labronici on 23/11/16.
 //  Copyright © 2016 Guilherme Marques. All rights reserved.
 //
+
 import SpriteKit
 
-class CustomButton : SKSpriteNode {
+class TriggerButton : SKSpriteNode {
     
     let onButtonPress: () -> ()
     let onButtonReleased: () -> ()
@@ -15,7 +16,6 @@ class CustomButton : SKSpriteNode {
     let action : SKAction
     let actionRelease: SKAction
     var actionSequence: SKAction!
-    var isPressed = false
     
     init(iconName: String, text: String, view: SKView, size: CGSize, position: CGPoint, onButtonPress: @escaping () -> (), onButtonReleased: @escaping () -> ()) {
         
@@ -46,23 +46,14 @@ class CustomButton : SKSpriteNode {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         onButtonPress()
         //actionSequence = SKAction.sequence([action, action2])
-        if !isPressed{
-            self.run(actionPress)
-            self.run(action)
-        }
-        
+        self.run(actionPress)
+        self.run(action)
         //self.run(actionSequence)
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         //self.run(actionSequence.reversed())
-        if isPressed{
-            self.run(action.reversed())
-            self.run(actionRelease)
-            isPressed = false
-        } else {
-            isPressed = true
-        }
-        
+        self.run(action.reversed())
+        self.run(actionRelease)
         onButtonReleased()
     }
     
