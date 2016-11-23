@@ -110,6 +110,7 @@ extension EntityManager {
 //        print("Index", index)
         
         if trajectory.count == 0 {
+            print("Trajectory count is 0")
             return
         }
         
@@ -191,7 +192,7 @@ extension EntityManager {
     
     func spawnPlanet(inThisPoint point: CGPoint) {
         
-        let planet = Planet(imageNamed: "jupiter", radius: 400, strenght: 5, position: point)
+        let planet = Planet(imageNamed: "jupiter", radius: 400, strenght: 1.5, position: point)
         add(planet)
         
     }

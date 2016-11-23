@@ -70,8 +70,11 @@ class Spaceship: GKEntity {
         fuelComponent.fuelBar.removeFromParent()
         let timeComponent = copy.component(ofType: TimeComponent.self)!
         timeComponent.timeLabel.removeFromParent()
+        let particleComponent = copy.component(ofType: ParticleComponent.self)!
+        particleComponent.emitter.removeFromParent()
         copy.removeComponent(ofType: TimeComponent.self)
         copy.removeComponent(ofType: FuelComponent.self)
+        copy.removeComponent(ofType: ParticleComponent.self)
         return copy
     }
     
