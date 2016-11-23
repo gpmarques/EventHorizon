@@ -34,7 +34,7 @@ class LevelMenuView {
                                            onButtonPress: entityManager.blackHoleIsClicked, onButtonReleased: {})
         blackHoleButton.zPosition = 3
         
-        //let playButton = CustomButton(iconName: <#T##String#>, text: <#T##String#>, view: <#T##SKView#>, position: <#T##CGPoint#>, size: <#T##CGSize#>, onButtonPress: <#T##() -> ()#>)
+        //let playButton = CustomButton(iconName: String, text: String, view: SKView, position: CGPoint, size: CGSize, onButtonPress: () -> ())
         
         scene.addChild(sceneBackground)
         scene.addChild(menuBackground)

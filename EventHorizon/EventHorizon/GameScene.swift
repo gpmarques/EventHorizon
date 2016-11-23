@@ -42,52 +42,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        
-        if !gameStart && !planetIsClicked && !blackHoleIsClicked {
-            gameStart = true
-            spaceship.spriteComponent?.physicsBody?.isDynamic = true
-            spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
-            entityManager.timer.invalidate()
-            entityManager.removeAllCopies()
-            spaceship.component(ofType: TimeComponent.self)?.startTimer()
-        }
         
-        if let orbitComponent = entityManager.find(entityOfType: BlackHole.self)?.component(ofType: OrbitComponent.self) {
-        
-            if orbitComponent.collision && !orbitComponent.didClick {
-                print("LeaveOrbit")
-                orbitComponent.didClick = true
-                orbitComponent.leaveOrbit()
-                entityManager.shipIsOrbiting(isOrbiting: false)
+        if !gameStart {
+            
+            if !planetIsClicked && !blackHoleIsClicked {
+                gameStart = true
+                spaceship.spriteComponent?.physicsBody?.isDynamic = true
+                spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
+                entityManager.timer.invalidate()
+                entityManager.removeAllCopies()
+                spaceship.component(ofType: TimeComponent.self)?.startTimer()
             }
             
+            guard let touchedPoint = touches.first?.location(in: self) else {
+                print("Touch location not found")
+                return
+            }
+            
+            if planetIsClicked && !gameStart{
+                print("touchedPoint", touchedPoint)
+                entityManager.spawnPlanet(inThisPoint: touchedPoint)
+            }
+            
+            if blackHoleIsClicked && !gameStart{
+                print("touchedPoint", touchedPoint)
+                entityManager.spawnblackHole(inThisPoint: touchedPoint)
+            }
         }
         
-        
-//        else if blackHole.component(ofType: OrbitComponent.self)?.collision == true {
-//
-//            spaceship.component(ofType: ParticleComponent.self)?.emitter.particleAlpha = 0
-//            blackHole.component(ofType: OrbitComponent.self)?.didClick = true
-//            blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
-//            spaceship.component(ofType: TimeComponent.self)?.normalizeTimeRate()
-//        }
-        
-        guard let touchedPoint = touches.first?.location(in: self) else {
-            print("Touch location not found")
-            return
+        else {
+            
+            if let orbitComponent = entityManager.find(entityOfType: BlackHole.self)?.component(ofType: OrbitComponent.self) {
+                
+                if orbitComponent.collision && !orbitComponent.didClick {
+                    print("LeaveOrbit")
+                    orbitComponent.didClick = true
+                    orbitComponent.leaveOrbit()
+                    entityManager.shipIsOrbiting(isOrbiting: false)
+                }
+            }
         }
-        
-        if planetIsClicked {
-            print("touchedPoint", touchedPoint)
-            entityManager.spawnPlanet(inThisPoint: touchedPoint)
-        }
-        
-        if blackHoleIsClicked {
-            print("touchedPoint", touchedPoint)
-            entityManager.spawnblackHole(inThisPoint: touchedPoint)
-        }
-        
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -126,8 +120,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let deltaTime = currentTime - lastUpdateTime
         self.lastUpdateTime = currentTime
         
-        entityManager.update(deltaTime)
-        
+        if gameStart {
+            entityManager.update(deltaTime)
+        }
 //        guard let orbit = blackHole.component(ofType: OrbitComponent.self) else {return}
 //        
 //        if  orbit.orbitNode.intersects((spaceship.spriteComponent?.node)!) &&
