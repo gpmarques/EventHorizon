@@ -11,15 +11,19 @@ class CustomButton : SKSpriteNode {
     
     let onButtonPress: () -> ()
     let onButtonReleased: () -> ()
-    let action: SKAction
-    let action2: SKAction
+    let actionPress: SKAction
+    let action : SKAction
+    let actionRelease: SKAction
+    var actionSequence: SKAction!
     
-    init(iconName: String, text: String, view: SKView, size: CGSize, position: CGPoint, onButtonPress: @escaping () -> (), onButtonReleased: @escaping ()->()) {
+    init(iconName: String, text: String, view: SKView, size: CGSize, position: CGPoint, onButtonPress: @escaping () -> (), onButtonReleased: @escaping () -> ()) {
         
         self.onButtonPress = onButtonPress
         self.onButtonReleased = onButtonReleased
-        action = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
-        action2 = SKAction.scale(by: 0.9, duration: 0.1)
+        actionPress = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
+        action = SKAction.scale(by: 0.9, duration: 0.1)
+        actionRelease = SKAction.colorize(with: UIColor.white, colorBlendFactor: 0.5, duration: 0.01)
+        
         let texture = SKTexture(imageNamed: iconName)
         super.init(texture: texture, color: SKColor.white, size: view.frame.size)
         self.name = iconName
@@ -40,10 +44,15 @@ class CustomButton : SKSpriteNode {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         onButtonPress()
-        let actionSequence = SKAction.sequence([action, action2])
-        self.run(actionSequence)
+        //actionSequence = SKAction.sequence([action, action2])
+        self.run(actionPress)
+        self.run(action)
+        //self.run(actionSequence)
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //self.run(actionSequence.reversed())
+        self.run(action.reversed())
+        self.run(actionRelease)
         onButtonReleased()
     }
     

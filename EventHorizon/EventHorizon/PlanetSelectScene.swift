@@ -127,7 +127,7 @@ class PlanetSelectScene: SKScene {
 //                self.node.run(actionSequence)
                 
             }, onButtonReleased: {
-                let transition: SKTransition = SKTransition.moveIn(with: .down, duration: 1)
+                //let transition: SKTransition = SKTransition.moveIn(with: .down, duration: 1)
                 let gameScene = GameScene(size: CGSize(width: self.frame.size.width, height: self.frameHeightSize))
                 //gameScene.scaleMode = SKSceneScaleMode.resizeFill
                 self.scene?.view?.presentScene(gameScene)

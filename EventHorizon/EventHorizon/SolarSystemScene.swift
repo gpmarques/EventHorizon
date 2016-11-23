@@ -40,7 +40,7 @@ class SolarSystemScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(touches.first?.location(in: self.view))
+        //print(touches.first?.location(in: self.view))
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
