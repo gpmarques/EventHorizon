@@ -15,7 +15,7 @@ class Planet: GKEntity {
         super.init()
         
         let texture = SKTexture(imageNamed: imageNamed)
-        let size = CGSize(width: texture.size().width/2.5, height: texture.size().height/2.5)
+        let size = CGSize(width: texture.size().width/3, height: texture.size().height/3)
         let spriteComponent = SpriteComponent(texture: texture,
                                               size: size,
                                               nodePosition: position,
@@ -28,7 +28,7 @@ class Planet: GKEntity {
         addComponent(collisionComponent)
         
         let gravityComponent = GravityComponent(parentNode: spriteComponent.node,
-                                                radius: radius,
+                                                radius: Float(texture.size().width)/2 ,
                                                 strenght: strenght)
         addComponent(gravityComponent)
         

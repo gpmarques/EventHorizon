@@ -65,9 +65,11 @@ class Spaceship: GKEntity {
     }
     
     override func copy() -> Any {
-        let copy = Spaceship(imageNamed: "ret", speed: 100, entityManager: entityManager)
+        let copy = Spaceship(imageNamed: "Spaceship", speed: 150, entityManager: entityManager)
+        copy.spriteComponent?.node.alpha = 0.5
         let fuelComponent = copy.component(ofType: FuelComponent.self)!
         fuelComponent.fuelBar.removeFromParent()
+        fuelComponent.fuelTank.removeFromParent()
         let timeComponent = copy.component(ofType: TimeComponent.self)!
         timeComponent.timeLabel.removeFromParent()
         let particleComponent = copy.component(ofType: ParticleComponent.self)!

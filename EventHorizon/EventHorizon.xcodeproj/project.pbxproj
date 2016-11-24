@@ -149,6 +149,7 @@
 		D1791C971DCD344300FF097A /* EventHorizon */ = {
 			isa = PBXGroup;
 			children = (
+				D188E7031DE723E800DBE849 /* Managers */,
 				D1FD87ED1DD24F77003A247B /* Helper */,
 				D1791CE21DCE55A200FF097A /* Controllers */,
 				D1791CE11DCE559500FF097A /* Scenes */,
@@ -184,7 +185,6 @@
 				D1791CCF1DCE51D300FF097A /* BlackHole.swift */,
 				D1791CD11DCE51F600FF097A /* Planet.swift */,
 				D1791CE31DCE56A700FF097A /* Meteorite.swift */,
-				D1FD87EB1DD21069003A247B /* EntityManager.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -237,6 +237,14 @@
 				FD0BD33F1DDE5AEF00F93281 /* PlanetSelectController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		D188E7031DE723E800DBE849 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D1FD87EB1DD21069003A247B /* EntityManager.swift */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 		D1FD87ED1DD24F77003A247B /* Helper */ = {
@@ -319,7 +327,7 @@
 				TargetAttributes = {
 					D1791C941DCD344200FF097A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = GBFG29DUZF;
+						DevelopmentTeam = 56YN57ZN7X;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -570,7 +578,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = GBFG29DUZF;
+				DEVELOPMENT_TEAM = 56YN57ZN7X;
 				INFOPLIST_FILE = EventHorizon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -584,7 +592,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = GBFG29DUZF;
+				DEVELOPMENT_TEAM = 56YN57ZN7X;
 				INFOPLIST_FILE = EventHorizon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

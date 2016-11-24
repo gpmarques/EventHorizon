@@ -24,7 +24,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
-        print("didLoad")
         entityManager = EntityManager(scene: self)
         selectedNode = SKSpriteNode()
         self.physicsWorld.contactDelegate = self
@@ -39,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view!.addGestureRecognizer(tapGesture)
         
         spaceship = Spaceship(imageNamed: "Spaceship",
-                              speed: 100,
+                              speed: 150,
                               entityManager: entityManager)
         entityManager.add(spaceship)
         
@@ -57,7 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             
-            if planetIsClicked && !gameStart{
+            if planetIsClicked && !gameStart {
                 entityManager.spawnPlanet(inThisPoint: touchedPoint)
                 planetIsClicked = false
             }
@@ -110,32 +109,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let deltaTime = currentTime - lastUpdateTime
         self.lastUpdateTime = currentTime
         
-        if gameStart {
+        //if gameStart {
             entityManager.update(deltaTime)
-        }
-//        guard let orbit = blackHole.component(ofType: OrbitComponent.self) else {return}
-//        
-//        if  orbit.orbitNode.intersects((spaceship.spriteComponent?.node)!) &&
-//            orbit.didClick == false {
-//            
-//            spaceship.component(ofType: ParticleComponent.self)?.emitter.particleAlpha = 1
-//            let angle = blackHole.component(ofType: OrbitComponent.self)?.getAngle(ofObjectOrbiting: (spaceship.spriteComponent?.node)!)
-//            blackHole.component(ofType: OrbitComponent.self)?.ship = spaceship.spriteComponent?.node
-//            blackHole.component(ofType: OrbitComponent.self)?.orbiterAngle = angle!
-//            blackHole.component(ofType: OrbitComponent.self)?.collision = true
-//            blackHole.component(ofType: OrbitComponent.self)?.setupRotationDirection(object: (spaceship.spriteComponent?.node)!)
-//            spaceship.component(ofType: TimeComponent.self)?.timeDilation()
-//            
-//            if (spaceship.component(ofType: FuelComponent.self)?.spendFuel(0.5/6))! {
-//                
-//                spaceship.component(ofType: ParticleComponent.self)?.emitter.particleAlpha = 0
-//                blackHole.component(ofType: OrbitComponent.self)?.fuel = false
-//                blackHole.component(ofType: OrbitComponent.self)?.leaveOrbit()
-//            }
-//        }
+        //}
+        
     }
 }
 
+// draging objects
 extension GameScene {
     
     func panForTranslation(translation: CGPoint) {
@@ -192,6 +173,8 @@ extension GameScene {
     
 }
 
+
+// tap ship and start game
 extension GameScene {
     func tapShip(recognizer: UITapGestureRecognizer) {
         var touchLocation = recognizer.location(in: recognizer.view)

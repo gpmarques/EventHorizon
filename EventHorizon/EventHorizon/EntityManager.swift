@@ -26,7 +26,7 @@ class EntityManager {
     
     init(scene: SKScene) {
         self.scene = scene as! GameScene
-        timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true, block: {_ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
             
             guard let spaceship = self.find(entityOfType: Spaceship.self) else {
                 print("Spaceship not found")
@@ -37,13 +37,6 @@ class EntityManager {
                 print("Trajectory not found")
                 return
             }
-            
-            //            guard let fuelComponent = spaceship.component(ofType: FuelComponent.self) else {
-            //                print("Fuel not found")
-            //                return
-            //            }
-            //
-            //            var _ = fuelComponent.spendFuel(10)
             
             trajectoryComponent.trajectory()
             
@@ -120,6 +113,8 @@ extension EntityManager {
                 return
             }
             
+            print("Components cópia", copy.components.count)
+            
             guard let spriteNode = copy.component(ofType: SpriteComponent.self)?.node else {
                 print("SpriteNode not found")
                 return
@@ -128,6 +123,7 @@ extension EntityManager {
             spriteNode.removeFromParent()
         }
         
+        print("Trajectory array", trajectory.count)
         trajectory.removeSubrange(0...index)
         
 //        print("Trajectory count", trajectory.count)
@@ -192,7 +188,7 @@ extension EntityManager {
     
     func spawnPlanet(inThisPoint point: CGPoint) {
         
-        let planet = Planet(imageNamed: "jupiter", radius: 400, strenght: 1.5, position: point)
+        let planet = Planet(imageNamed: "jupiter", radius: 400, strenght: 0.75, position: point)
         add(planet)
         
     }
