@@ -44,26 +44,28 @@ class CustomButton : SKSpriteNode {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        onButtonPress()
+        
         //actionSequence = SKAction.sequence([action, action2])
         if !isPressed{
             self.run(actionPress)
             self.run(action)
+            isPressed = true
+            
+            onButtonPress()
+        }
+        else{
+            self.run(action.reversed())
+            self.run(actionRelease)
+            isPressed = false
+            
+            onButtonReleased()
         }
         
         //self.run(actionSequence)
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //self.run(actionSequence.reversed())
-        if isPressed{
-            self.run(action.reversed())
-            self.run(actionRelease)
-            isPressed = false
-        } else {
-            isPressed = true
-        }
+  
         
-        onButtonReleased()
     }
     
     required init?(coder aDecoder: NSCoder) {
