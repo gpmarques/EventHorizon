@@ -131,7 +131,6 @@ class OrbitComponent: GKComponent {
     
     override func update(deltaTime: CFTimeInterval) {
         
-        
         guard let node = entityManager.getShipNode() else { return }
         ship = node
         
@@ -148,29 +147,9 @@ class OrbitComponent: GKComponent {
             updateOrbiter(dt: deltaTime, ship: ship!)
         }
         
-        
         if !fuel {
             leaveOrbit()
         }
-        
-//        if collision == true {
-//            print("MAMAMIA")
-//            ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-//            updateOrbiter(dt: deltaTime, ship: ship!)
-//        }
-        
-        
-        //
-        //        if  orbit.orbitNode.intersects((spaceship.spriteComponent?.node)!) &&
-        //            orbit.didClick == false {
-        //
-        //            spaceship.component(ofType: ParticleComponent.self)?.emitter.particleAlpha = 1
-        //            let angle = blackHole.component(ofType: OrbitComponent.self)?.getAngle(ofObjectOrbiting: (spaceship.spriteComponent?.node)!)
-        //            blackHole.component(ofType: OrbitComponent.self)?.ship = spaceship.spriteComponent?.node
-        //            blackHole.component(ofType: OrbitComponent.self)?.orbiterAngle = angle!
-        //            blackHole.component(ofType: OrbitComponent.self)?.collision = true
-        //            blackHole.component(ofType: OrbitComponent.self)?.setupRotationDirection(object: (spaceship.spriteComponent?.node)!)
-        //            spaceship.component(ofType: TimeComponent.self)?.timeDilation()
 
     }
 }
