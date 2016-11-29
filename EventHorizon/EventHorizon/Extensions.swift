@@ -38,6 +38,10 @@ extension EntityManager {
         return entities.first(where: { $0.isKind(of: entityType) })
     }
     
+    func find(entityWithName name: String) -> GKEntity? {
+        return entities.first(where: { $0.spriteComponent?.node.name == name })
+    }
+    
     var getScene: SKScene {
         return self.scene
     }
