@@ -43,18 +43,17 @@ class TriggerButton : SKSpriteNode {
         
     }
     
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         onButtonPress()
-        //actionSequence = SKAction.sequence([action, action2])
         self.run(actionPress)
         self.run(action)
-        //self.run(actionSequence)
     }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //self.run(actionSequence.reversed())
-        self.run(action.reversed())
-        self.run(actionRelease)
         onButtonReleased()
+        self.run(actionRelease)
+        self.run(action.reversed())
     }
     
     required init?(coder aDecoder: NSCoder) {
