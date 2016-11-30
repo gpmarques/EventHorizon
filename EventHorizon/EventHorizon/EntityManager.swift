@@ -21,7 +21,8 @@ class EntityManager {
         let orbitSystem = GKComponentSystem(componentClass: OrbitComponent.self)
         let fuelSystem = GKComponentSystem(componentClass: FuelComponent.self)
         let timeSystem = GKComponentSystem(componentClass: TimeComponent.self)
-        return [moveSystem, orbitSystem, fuelSystem, timeSystem]
+        let collisionSystem = GKComponentSystem(componentClass: CollisionComponent.self)
+        return [moveSystem, orbitSystem, fuelSystem, timeSystem, collisionSystem]
     }()
     
     init(scene: SKScene) {
@@ -206,6 +207,11 @@ extension EntityManager {
             scene.planetIsClicked = false
         }
         
+    }
+    
+    func gameStarted() -> Bool {
+        
+        return scene.gameStart
     }
     
     func spawnblackHole(inThisPoint point: CGPoint) {

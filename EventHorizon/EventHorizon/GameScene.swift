@@ -92,8 +92,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "Spaceship" &&
             (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole") {
-            entityManager.remove(spaceship)
+            if gameStart {
+                entityManager.remove(spaceship)
+            }
+            else {
+                
+                contact.bodyB.node?.name = "removeThisEntity"
+                guard let entity = entityManager.find(entityWithName: "removeThisEntity") else {
+                    print("entity not found")
+                    return
+                }
+                entityManager.remove(entity)
+                
+            }
         }
+        
+        
         
         if contact.bodyA.node?.name == "copy" &&
             (contact.bodyB.node?.name == "Planet"

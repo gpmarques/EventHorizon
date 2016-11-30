@@ -134,7 +134,7 @@ class OrbitComponent: GKComponent {
         guard let node = entityManager.getShipNode() else { return }
         ship = node
         
-        if  self.orbitNode.intersects(ship!) && !self.didClick && fuel {
+        if  self.orbitNode.intersects(ship!) && !self.didClick && fuel && entityManager.gameStarted() {
             print("Intersect ***")
             guard let emitter = entityManager.getEmitter() else {
                 print("particle not found")

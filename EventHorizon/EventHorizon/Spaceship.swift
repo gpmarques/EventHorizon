@@ -13,12 +13,14 @@ class Spaceship: GKEntity {
     
     let entityManager: EntityManager
     var isOrbiting: Bool
+    var collisionComponent: CollisionComponent!
     
     init(imageNamed: String, speed: Double, entityManager: EntityManager) {
         self.entityManager = entityManager
         self.isOrbiting = false
         
         super.init()
+        
         let texture = SKTexture(imageNamed: imageNamed)
         let spriteComponent =
         SpriteComponent(texture: texture,
@@ -30,7 +32,7 @@ class Spaceship: GKEntity {
         spriteComponent.physicsBody?.fieldBitMask = GravityFieldCategory.Gravity
         addComponent(spriteComponent)
         
-        let collisionComponent = CollisionComponent(parentNode: spriteComponent.node,
+        collisionComponent = CollisionComponent(parentNode: spriteComponent.node,
                                                     bodyMass: 0.01)
         spriteComponent.physicsBody?.categoryBitMask = CollisionCategory.None
         addComponent(collisionComponent)
@@ -58,6 +60,7 @@ class Spaceship: GKEntity {
                                                   parentNode: spriteComponent.node,
                                                   entityManager: entityManager)
         addComponent(particleComponent)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
