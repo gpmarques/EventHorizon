@@ -107,8 +107,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        
-        
         if contact.bodyA.node?.name == "copy" &&
             (contact.bodyB.node?.name == "Planet"
                 || contact.bodyB.node?.name == "BlackHole") {

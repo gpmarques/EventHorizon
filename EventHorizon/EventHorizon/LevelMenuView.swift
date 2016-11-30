@@ -22,13 +22,13 @@ class LevelMenuView {
         menuBackground.zPosition = 2
         
         let size = CGSize(width: scene.frame.width/18 , height: scene.frame.width/18)
-        let planetButton = TriggerButton(iconName: "jupiter",
+        let planetButton = CustomButton(iconName: "jupiter",
                                         text: "", view: scene.view!, size: size,
                                         position: CGPoint(x: scene.frame.width/3.25, y: scene.frame.height/22.5),
                                         onButtonPress: entityManager.planetIsClicked, onButtonReleased: {})
         planetButton.zPosition = 3
         
-        let blackHoleButton = TriggerButton(iconName: "blackhole",
+        let blackHoleButton = CustomButton(iconName: "blackhole",
                                            text: "", view: scene.view!, size: size,
                                            position: CGPoint(x: scene.frame.width/2.25, y: scene.frame.height/22.5),
                                            onButtonPress: entityManager.blackHoleIsClicked, onButtonReleased: {})
@@ -42,7 +42,5 @@ class LevelMenuView {
         scene.addChild(blackHoleButton)
         
     }
-    
-    func nada() { }
     
 }

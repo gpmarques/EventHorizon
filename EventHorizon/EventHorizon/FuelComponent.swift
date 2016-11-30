@@ -73,7 +73,6 @@ class FuelComponent: GKComponent {
         
         if entityManager.isShipOrbiting() {
             if spendFuel(1/8) {
-                print("ACABOUUUUU ACABOUUU")
                 guard let blackHole = entityManager.find(entityOfType: BlackHole.self) as? BlackHole else { print("blackhole not found"); return }
                 guard let orbit = blackHole.component(ofType: OrbitComponent.self) else { print("orbit not found"); return }
                 orbit.fuel = false

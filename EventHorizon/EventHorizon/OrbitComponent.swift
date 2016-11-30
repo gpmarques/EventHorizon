@@ -68,7 +68,7 @@ class OrbitComponent: GKComponent {
     
     func leaveOrbit(){
         
-        if didClick == true {
+        if didClick {
             
             collision = false
             
@@ -87,7 +87,7 @@ class OrbitComponent: GKComponent {
             ship?.physicsBody?.velocity = velocityVector
         }
         
-        if fuel == false {
+        if !fuel {
             
             print("Sucked")
             
@@ -121,12 +121,7 @@ class OrbitComponent: GKComponent {
     }
     
     func setupRotationDirection(object: SKSpriteNode) {
-        
-    }
-    
-    func manageParticle () {
-        
-        
+        // TO-DO
     }
     
     override func update(deltaTime: CFTimeInterval) {
