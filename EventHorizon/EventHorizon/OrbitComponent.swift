@@ -19,10 +19,11 @@ class OrbitComponent: GKComponent {
     var orbiterSpeed: CGFloat
     var orbiterRadius: CGFloat
     var orbiterAngle: CGFloat?
+    var direction: Int?
     var collision = false
     var fuel = true
-    var direction: Int?
     var didClick = false
+    var clockwise = false
     
     var orbitNode: SKSpriteNode
     var entityManager: EntityManager
@@ -56,14 +57,27 @@ class OrbitComponent: GKComponent {
         let Pi = CGFloat(M_PI)
         let DegreesToRadians = Pi / 180
         
-        orbiterAngle = (getAngle(ofObjectOrbiting: ship) - orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
         
-        let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
-        let y = sin(orbiterAngle! * DegreesToRadians) * orbiterRadius
+        if clockwise == true {
+            print("blah")
+            orbiterAngle = (getAngle(ofObjectOrbiting: ship) + orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
         
-        shipNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
-        shipNode.zRotation = (orbiterAngle! + 180) * DegreesToRadians
-        //shipNode.children.first?.zRotation = shipNode.zRotation
+            let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
+            let y = sin(orbiterAngle! * DegreesToRadians) * orbiterRadius
+        
+            shipNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
+            shipNode.zRotation = (orbiterAngle!) * DegreesToRadians
+        }
+        else {
+            
+            orbiterAngle = (getAngle(ofObjectOrbiting: ship) - orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
+            print("xablau")
+            let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
+            let y = sin(orbiterAngle! * DegreesToRadians) * orbiterRadius
+            
+            shipNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
+            shipNode.zRotation = (orbiterAngle! + 180) * DegreesToRadians
+        }
     }
     
     func leaveOrbit(){
@@ -72,24 +86,42 @@ class OrbitComponent: GKComponent {
             
             collision = false
             
-            let Pi = CGFloat(M_PI)
-            let DegreesToRadians = Pi / 180
+            if clockwise == false {
+                
+                let Pi = CGFloat(M_PI)
+                let DegreesToRadians = Pi / 180
+                
+                guard let orbiterAngle = self.orbiterAngle else { return }
+                
+                let angle = (360 + orbiterAngle).truncatingRemainder(dividingBy: 360) - 90
+                
+                let x1 = cos((angle) * DegreesToRadians) * speed
+                let y1 = sin((angle) * DegreesToRadians) * speed
+                
+                let velocityVector = CGVector(dx: x1, dy: y1)
+                
+                ship?.physicsBody?.velocity = velocityVector
+            }
+            else {
+                
+                let Pi = CGFloat(M_PI)
+                let DegreesToRadians = Pi / 180
+                
+                guard let orbiterAngle = self.orbiterAngle else { return }
+                
+                let angle = (360 + orbiterAngle).truncatingRemainder(dividingBy: 360) + 90
+                
+                let x1 = cos((angle) * DegreesToRadians) * speed
+                let y1 = sin((angle) * DegreesToRadians) * speed
+                
+                let velocityVector = CGVector(dx: x1, dy: y1)
+                
+                ship?.physicsBody?.velocity = velocityVector
+            }
             
-            guard let orbiterAngle = self.orbiterAngle else { return }
-            
-            let angle = (360 + orbiterAngle).truncatingRemainder(dividingBy: 360) - 90
-            
-            let x1 = cos((angle) * DegreesToRadians) * speed
-            let y1 = sin((angle) * DegreesToRadians) * speed
-            
-            let velocityVector = CGVector(dx: x1, dy: y1)
-            
-            ship?.physicsBody?.velocity = velocityVector
         }
         
         if fuel == false {
-            
-            print("Sucked")
             
             collision = false
             
@@ -110,18 +142,34 @@ class OrbitComponent: GKComponent {
     func getAngle(ofObjectOrbiting object: SKSpriteNode) -> CGFloat {
         
         let Pi = CGFloat(M_PI)
-        let RadiansToDegree = 180 / Pi
+        let RadiansToDegrees = 180 / Pi
         
         let xShip = object.position.x
         let yShip = object.position.y
         let xBlackhole = parentNode.position.x
         let yBlackhole = parentNode.position.y
         
-        return atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegree
+        return atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees
     }
     
-    func setupRotationDirection(object: SKSpriteNode) {
+    func setupRotationDirection(object: SKSpriteNode, dt: CFTimeInterval) {
         
+        let Pi = CGFloat(M_PI)
+        let DegreesToRadians = Pi / 180
+        
+        orbiterAngle = (getAngle(ofObjectOrbiting: ship!)).truncatingRemainder(dividingBy: 360)
+        
+        let clockwiseRotation = (orbiterAngle! + 180) * DegreesToRadians
+        let counterClockwiseRotation = (orbiterAngle!) * DegreesToRadians
+        
+        if (ship?.zRotation)! - abs(clockwiseRotation) < (ship?.zRotation)! - abs(counterClockwiseRotation) {
+            
+            clockwise = true
+        }
+        else {
+            
+            clockwise = false
+        }
     }
     
     func manageParticle () {
@@ -135,21 +183,31 @@ class OrbitComponent: GKComponent {
         ship = node
         
         if  self.orbitNode.intersects(ship!) && !self.didClick && fuel && entityManager.gameStarted() {
-            print("Intersect ***")
-            guard let emitter = entityManager.getEmitter() else {
-                print("particle not found")
-                return
+            
+            if collision == false {
+                
+                setupRotationDirection(object: ship!, dt: deltaTime)
+                collision = true
             }
-            emitter.particleAlpha = 1
-            self.collision = true
-            entityManager.shipIsOrbiting(isOrbiting: true)
-            ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            updateOrbiter(dt: deltaTime, ship: ship!)
+                
+            else {
+                
+                guard let emitter = entityManager.getEmitter() else {
+                    print("particle not found")
+                    return
+                }
+                
+                emitter.particleAlpha = 1
+                entityManager.shipIsOrbiting(isOrbiting: true)
+                ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                updateOrbiter(dt: deltaTime, ship: ship!)
+                
+            }
         }
         
         if !fuel {
+            
             leaveOrbit()
         }
-
     }
 }
