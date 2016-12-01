@@ -75,6 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     orbitComponent.didClick = true
                     orbitComponent.leaveOrbit()
                     entityManager.shipIsOrbiting(isOrbiting: false)
+                    entityManager.getEmitter()?.particleAlpha = 0
                 }
             }
         }
