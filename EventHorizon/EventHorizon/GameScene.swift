@@ -11,22 +11,24 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    private var lastUpdateTime : TimeInterval = 0
     var entityManager: EntityManager!
     var spaceship: Spaceship!
     var planet: Planet!
     var blackHole: BlackHole!
     var menu: LevelMenuView!
     var gameStart = false
-    private var lastUpdateTime : TimeInterval = 0
     var planetIsClicked = false
     var blackHoleIsClicked = false
     var selectedNode: SKSpriteNode!
+    var initialSpaceshipPosition: CGPoint!
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
         entityManager = EntityManager(scene: self)
         selectedNode = SKSpriteNode()
         self.physicsWorld.contactDelegate = self
+        initialSpaceshipPosition = CGPoint(x: self.frame.width/20, y: self.frame.height/7.8)
     }
     
     override func didMove(to view: SKView) {
@@ -37,10 +39,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapShip(recognizer:)))
         self.view!.addGestureRecognizer(tapGesture)
         
-        spaceship = Spaceship(imageNamed: "Spaceship",
-                              speed: 150,
-                              entityManager: entityManager)
+        spaceship = Spaceship(  imageNamed: "Spaceship",
+                                speed: 150,
+                                entityManager: entityManager,
+                                position: initialSpaceshipPosition)
+        
         entityManager.add(spaceship)
+        entityManager.startCopys()
         
         menu = LevelMenuView(scene: self, entityManager: entityManager)
         
@@ -71,7 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let orbitComponent = entityManager.find(entityOfType: BlackHole.self)?.component(ofType: OrbitComponent.self) {
                 
                 if orbitComponent.collision && !orbitComponent.didClick {
-                    print("LeaveOrbit")
+                    
                     orbitComponent.didClick = true
                     orbitComponent.leaveOrbit()
                     entityManager.shipIsOrbiting(isOrbiting: false)
@@ -90,6 +95,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
+        
+        
         if contact.bodyA.node?.name == "Spaceship" &&
             (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole") {
             if gameStart {
@@ -103,11 +110,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     return
                 }
                 entityManager.remove(entity)
-                
+                entityManager.restartLevel()
+                entityManager.timer.invalidate()
             }
         }
-        
-        
         
         if contact.bodyA.node?.name == "copy" &&
             (contact.bodyB.node?.name == "Planet"
@@ -184,9 +190,7 @@ extension GameScene {
             }
         }
     }
-    
 }
-
 
 // tap ship and start game
 extension GameScene {
@@ -198,15 +202,10 @@ extension GameScene {
             selectNodeForTouch(touchLocation: touchLocation)
             if selectedNode.name == "Spaceship" {
                 if !gameStart && !planetIsClicked && !blackHoleIsClicked {
-                    gameStart = true
-                    spaceship.spriteComponent?.physicsBody?.isDynamic = true
-                    spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
-                    entityManager.timer.invalidate()
-                    entityManager.removeAllCopies()
-                    spaceship.component(ofType: TimeComponent.self)?.startTimer()
+                    
+                    entityManager.startLevel()
                 }
             }
         }
-
     }
 }

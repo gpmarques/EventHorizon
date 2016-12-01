@@ -14,6 +14,7 @@ class TriggerButton : SKSpriteNode {
     let onButtonReleased: () -> ()
     let actionPress: SKAction
     let action : SKAction
+    let action2: SKAction
     let actionRelease: SKAction
     var actionSequence: SKAction!
     
@@ -23,8 +24,8 @@ class TriggerButton : SKSpriteNode {
         self.onButtonReleased = onButtonReleased
         actionPress = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
         action = SKAction.scale(by: 0.9, duration: 0.1)
-        actionRelease = SKAction.colorize(with: UIColor.white, colorBlendFactor: 0.5, duration: 0.01)
-        
+        action2 = SKAction.scale(by: 1.11111111, duration: 0.1)
+        actionRelease = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.01)
         let texture = SKTexture(imageNamed: iconName)
         super.init(texture: texture, color: SKColor.white, size: view.frame.size)
         self.name = iconName
@@ -45,15 +46,19 @@ class TriggerButton : SKSpriteNode {
     
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         onButtonPress()
         self.run(actionPress)
         self.run(action)
+        print("algo")        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        onButtonReleased()
+        
         self.run(actionRelease)
-        self.run(action.reversed())
+        self.run(action2)
+        onButtonReleased()
+        print("blah")
     }
     
     required init?(coder aDecoder: NSCoder) {

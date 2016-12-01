@@ -59,7 +59,7 @@ class OrbitComponent: GKComponent {
         
         
         if clockwise == true {
-            print("blah")
+            
             orbiterAngle = (getAngle(ofObjectOrbiting: ship) + orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
         
             let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
@@ -71,7 +71,6 @@ class OrbitComponent: GKComponent {
         else {
             
             orbiterAngle = (getAngle(ofObjectOrbiting: ship) - orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
-            print("xablau")
             let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
             let y = sin(orbiterAngle! * DegreesToRadians) * orbiterRadius
             
@@ -101,6 +100,8 @@ class OrbitComponent: GKComponent {
                 let velocityVector = CGVector(dx: x1, dy: y1)
                 
                 ship?.physicsBody?.velocity = velocityVector
+                
+                
             }
             else {
                 
@@ -137,6 +138,12 @@ class OrbitComponent: GKComponent {
             
             ship?.physicsBody?.velocity = velocityVector
         }
+        
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: {
+            (timer) in
+            
+            self.collision = false
+        })
     }
     
     func getAngle(ofObjectOrbiting object: SKSpriteNode) -> CGFloat {
@@ -166,15 +173,11 @@ class OrbitComponent: GKComponent {
             
             clockwise = true
         }
+            
         else {
             
             clockwise = false
         }
-    }
-    
-    func manageParticle () {
-        
-        
     }
     
     override func update(deltaTime: CFTimeInterval) {
@@ -189,7 +192,7 @@ class OrbitComponent: GKComponent {
                 setupRotationDirection(object: ship!, dt: deltaTime)
                 collision = true
             }
-                
+            
             else {
                 
                 guard let emitter = entityManager.getEmitter() else {
@@ -201,7 +204,6 @@ class OrbitComponent: GKComponent {
                 entityManager.shipIsOrbiting(isOrbiting: true)
                 ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                 updateOrbiter(dt: deltaTime, ship: ship!)
-                
             }
         }
         

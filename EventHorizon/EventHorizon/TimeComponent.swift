@@ -35,6 +35,8 @@ class TimeComponent: GKComponent {
         timeLabel.position = CGPoint(x: entityManager.scene.frame.width - entityManager.scene.frame.width/4.5,
                                      y: entityManager.scene.frame.height/26)
         timeLabel.zPosition = 3
+        timeLabel.name = "timeLabel"
+        
         entityManager.addToScene(thisNode: timeLabel)
         super.init()
     }

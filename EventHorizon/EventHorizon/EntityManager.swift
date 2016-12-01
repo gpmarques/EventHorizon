@@ -27,21 +27,7 @@ class EntityManager {
     
     init(scene: SKScene) {
         self.scene = scene as! GameScene
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
-            
-            guard let spaceship = self.find(entityOfType: Spaceship.self) else {
-                print("Spaceship not found")
-                return
-            }
-            
-            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
-                print("Trajectory not found")
-                return
-            }
-            
-            trajectoryComponent.trajectory()
-            
-        })
+        
     }
     
     func add(_ entity: GKEntity) {
@@ -221,5 +207,52 @@ extension EntityManager {
         
     }
     
+    func restartLevel() {
+        
+        self.remove(scene.spaceship)
+        scene.removeChildren(in: [scene.childNode(withName: "fuelTank")!, scene.childNode(withName: "timeLabel")!])
+        
+        scene.spaceship = Spaceship(  imageNamed: "Spaceship",
+                                      speed: 150,
+                                      entityManager: self,
+                                      position: scene.initialSpaceshipPosition)
+        self.add(scene.spaceship)
+        
+        self.startCopys()
+        scene.gameStart = false
+        scene.spaceship.spriteComponent?.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+    }
+    
+    func startLevel() {
+        
+        scene.planetIsClicked = false
+        scene.blackHoleIsClicked = false
+        
+        scene.gameStart = true
+        scene.spaceship.spriteComponent?.physicsBody?.isDynamic = true
+        scene.spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
+        scene.entityManager.timer.invalidate()
+        scene.entityManager.removeAllCopies()
+        scene.spaceship.component(ofType: TimeComponent.self)?.startTimer()
+    }
+    
+    func startCopys(){
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
+            
+            guard let spaceship = self.find(entityOfType: Spaceship.self) else {
+                print("Spaceship not found")
+                return
+            }
+            
+            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
+                print("Trajectory not found")
+                return
+            }
+            
+            trajectoryComponent.trajectory()
+            
+        })
+    }
 }
 

@@ -34,15 +34,19 @@ class LevelMenuView {
                                            onButtonPress: entityManager.blackHoleIsClicked, onButtonReleased: {})
         blackHoleButton.zPosition = 3
         
+        let resetButton = CustomButton(iconName: "",
+                                       text: "", view: scene.view!, size: size,
+                                       position: CGPoint(x: 3 * scene.frame.width/5, y: scene.frame.height/22.5),
+                                       onButtonPress: { entityManager.startLevel() }, onButtonReleased: { entityManager.restartLevel() })
+        resetButton.zPosition = 3
+        
         //let playButton = CustomButton(iconName: String, text: String, view: SKView, position: CGPoint, size: CGSize, onButtonPress: () -> ())
         
         scene.addChild(sceneBackground)
         scene.addChild(menuBackground)
         scene.addChild(planetButton)
         scene.addChild(blackHoleButton)
+        scene.addChild(resetButton)
         
     }
-    
-    func nada() { }
-    
 }

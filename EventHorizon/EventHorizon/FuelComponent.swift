@@ -39,6 +39,7 @@ class FuelComponent: GKComponent {
         self.fuelTank.lineWidth = 1
         self.fuelTank.fillColor = UIColor.darkGray
         self.fuelTank.zPosition = 3
+        self.fuelTank.name = "fuelTank"
         
         self.fuelBar = SKShapeNode(rect: rect, cornerRadius: rect.height/2.1)
         self.fuelBar.fillColor = UIColor.green
