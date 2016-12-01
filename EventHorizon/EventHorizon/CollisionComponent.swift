@@ -23,7 +23,7 @@ class CollisionComponent: GKComponent {
         parentNode.physicsBody?.categoryBitMask = CollisionCategory.Collision
         parentNode.physicsBody?.collisionBitMask = CollisionCategory.Collision
         parentNode.physicsBody?.contactTestBitMask = CollisionCategory.Collision
-        parentNode.physicsBody?.linearDamping = 0
+
     }
     
     required init?(coder aDecoder: NSCoder) {

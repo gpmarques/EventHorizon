@@ -45,14 +45,13 @@ class EntityManager {
         if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
             spriteNode.removeFromParent()
         }
-        //        toRemove.insert(entity)
         entities.remove(entity)
         
     }
     
     func update(_ deltaTime: CFTimeInterval) {
         componentSystems.forEach{ $0.update(deltaTime: deltaTime) }
-        //        print("Entity update")
+        removeCopiesOutOfBound()
     }
     
 }
@@ -87,8 +86,6 @@ extension EntityManager {
     
     private func removeCopy(UntilThisIndex index: Int) {
         
-//        print("Index", index)
-        
         if trajectory.count == 0 {
             print("Trajectory count is 0")
             return
@@ -110,10 +107,23 @@ extension EntityManager {
             spriteNode.removeFromParent()
         }
         
-        print("Trajectory array", trajectory.count)
         trajectory.removeSubrange(0...index)
+    }
+    
+    func removeCopiesOutOfBound() {
         
-//        print("Trajectory count", trajectory.count)
+        trajectory.forEach({ copy in
+            
+            guard let spriteComponent = copy?.spriteComponent else { fatalError("Copy should have a spritecomponent") }
+            
+            if spriteComponent.node.position.isOutOfBounds(viewWidth: (scene.view?.frame.width)!,
+                                                           viewHeight: (scene.view?.frame.height)!) {
+                spriteComponent.node.name = "removeThisCopy"
+                removeCopy(withThisName: "removeThisCopy")
+            }
+        
+        
+        })
     }
     
 }

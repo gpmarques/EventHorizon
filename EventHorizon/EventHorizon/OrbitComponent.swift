@@ -81,7 +81,7 @@ class OrbitComponent: GKComponent {
     
     func leaveOrbit(){
         
-        if didClick == true {
+        if didClick {
             
             collision = false
             
@@ -122,7 +122,7 @@ class OrbitComponent: GKComponent {
             
         }
         
-        if fuel == false {
+        if !fuel {
             
             collision = false
             
