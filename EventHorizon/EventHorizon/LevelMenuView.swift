@@ -40,14 +40,10 @@ class LevelMenuView {
                                        onButtonPress: { entityManager.startLevel() }, onButtonReleased: { entityManager.restartLevel() })
         resetButton.zPosition = 3
         
-        //let playButton = CustomButton(iconName: String, text: String, view: SKView, position: CGPoint, size: CGSize, onButtonPress: () -> ())
-        
         scene.addChild(sceneBackground)
         scene.addChild(menuBackground)
         scene.addChild(planetButton)
         scene.addChild(blackHoleButton)
         scene.addChild(resetButton)
-        
     }
-
 }

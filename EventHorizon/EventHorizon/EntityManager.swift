@@ -62,7 +62,7 @@ extension EntityManager {
     func addCopy(_ copy: GKEntity) {
         trajectory.append(copy)
         
-        componentSystems.forEach{$0.addComponent(foundIn: copy)}
+        componentSystems.forEach{ $0.addComponent(foundIn: copy) }
         
         if let spriteNode = copy.component(ofType: SpriteComponent.self)?.node {
             scene.addChild(spriteNode)

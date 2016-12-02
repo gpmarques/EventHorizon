@@ -50,7 +50,7 @@ class TriggerButton : SKSpriteNode {
         onButtonPress()
         self.run(actionPress)
         self.run(action)
-        print("algo")        
+        print("algo")
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

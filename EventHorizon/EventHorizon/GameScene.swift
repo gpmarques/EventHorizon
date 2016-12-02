@@ -39,6 +39,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapShip(recognizer:)))
         self.view!.addGestureRecognizer(tapGesture)
         
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.deletePlanet))
+        doubleTap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(doubleTap)
+        
         spaceship = Spaceship(  imageNamed: "Spaceship",
                                 speed: 150,
                                 entityManager: entityManager,
@@ -95,6 +99,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
     
+    
+    
     func didBegin(_ contact: SKPhysicsContact) {
         
         
@@ -110,6 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     print("entity not found")
                     return
                 }
+                
                 entityManager.remove(entity)
                 entityManager.restartLevel()
                 entityManager.timer.invalidate()
@@ -130,17 +137,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let deltaTime = currentTime - lastUpdateTime
         self.lastUpdateTime = currentTime
         
-        //if gameStart {
-            entityManager.update(deltaTime)
-        //}
-        
+        entityManager.update(deltaTime)
     }
 }
 
-// draging objects
+
 extension GameScene {
     
+    // draging objects
     func panForTranslation(translation: CGPoint) {
+        
         let position = selectedNode.position
         guard let name = selectedNode.name else { return }
         
@@ -149,6 +155,7 @@ extension GameScene {
         }
     }
     
+    // draging objects
     func handlePanFrom(recognizer: UIPanGestureRecognizer) {
         if recognizer.state == .began {
             var touchLocation = recognizer.location(in: recognizer.view)
@@ -165,23 +172,37 @@ extension GameScene {
         }
     }
     
+    //deleting planets
+    func deletePlanet (){
+        
+        if gameStart { return }
+        
+        guard let name = selectedNode.name else { return }
+        
+        if name == "BlackHole" || name == "Planet" {
+            selectedNode.removeFromParent()
+        }
+    }
+    
+    
     func degToRad(degree: Double) -> CGFloat {
         return CGFloat(Double(degree) / 180.0 * M_PI)
     }
     
+    //select node
     func selectNodeForTouch(touchLocation: CGPoint) {
-        // 1
+        
         let touchedNode = self.atPoint(touchLocation)
         
         if touchedNode is SKSpriteNode {
-            // 2
+            
             if !selectedNode.isEqual(touchedNode) {
                 selectedNode.removeAllActions()
                 selectedNode.run(SKAction.rotate(toAngle: 0.0, duration: 0.1))
                 
                 guard let node = touchedNode as? SKSpriteNode else { return }
                 selectedNode = node
-                // 3
+                
                 if selectedNode.name == "BlackHole" || selectedNode.name == "Planet" {
                     let sequence = SKAction.sequence([SKAction.rotate(byAngle: degToRad(degree: -4.0), duration: 0.1),
                                                       SKAction.rotate(byAngle: 0.0, duration: 0.1),
@@ -191,10 +212,8 @@ extension GameScene {
             }
         }
     }
-}
-
-// tap ship and start game
-extension GameScene {
+    
+    // tap ship and start game
     func tapShip(recognizer: UITapGestureRecognizer) {
         var touchLocation = recognizer.location(in: recognizer.view)
         touchLocation = self.convertPoint(fromView: touchLocation)
@@ -210,3 +229,4 @@ extension GameScene {
         }
     }
 }
+

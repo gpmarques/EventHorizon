@@ -31,8 +31,8 @@ class SolarSystemScene: SKScene {
                 
             
         }, onButtonReleased: {
-            let action = SKAction.scale(by: 1.1, duration: 0.1)
-            self.startGameButton.run(SKAction.repeatForever(action))
+//            let action = SKAction.scale(by: 1.1, duration: 0.1)
+//            self.startGameButton.run(SKAction.repeatForever(action))
             self.viewController?.performSegue(withIdentifier: "sistema solar", sender: self)
         })
         
@@ -40,7 +40,6 @@ class SolarSystemScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //print(touches.first?.location(in: self.view))
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -52,9 +51,6 @@ class SolarSystemScene: SKScene {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
     
-    
-    
     override func update(_ currentTime: TimeInterval) {
-        
     }
 }

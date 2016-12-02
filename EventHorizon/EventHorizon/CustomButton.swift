@@ -64,12 +64,20 @@ class CustomButton : SKSpriteNode {
         //self.run(actionSequence)
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-  
         
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+extension CustomButton {
     
+    func changeImage (newImage: String) {
+        
+        self.name = newImage
+        self.run(action.reversed())
+        self.run(actionRelease)
+    }
 }

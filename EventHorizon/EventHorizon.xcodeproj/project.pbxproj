@@ -222,9 +222,9 @@
 		D1791CE11DCE559500FF097A /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				D1791C9E1DCD344300FF097A /* GameScene.swift */,
 				FD3ADBC41DDA5CD4004E516D /* SolarSystemScene.swift */,
 				FD0BD3431DDE60BA00F93281 /* PlanetSelectScene.swift */,
+				D1791C9E1DCD344300FF097A /* GameScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
