@@ -217,6 +217,24 @@ extension EntityManager {
         
     }
     
+    func manageStartRestartLevel() {
+        
+        if scene.gameStart {
+            
+            restartLevel()
+            let button = scene.children.first(where: { $0.name == "play" }) as! TriggerButton
+            
+            button.texture = SKTexture(imageNamed: "play")
+            
+        } else {
+            
+            startLevel()
+            let button = scene.children.first(where: { $0.name == "play" }) as! TriggerButton
+            
+            button.texture = SKTexture(imageNamed: "restart")
+        }
+    }
+    
     func restartLevel() {
         
         self.remove(scene.spaceship)
@@ -231,6 +249,8 @@ extension EntityManager {
         self.startCopys()
         scene.gameStart = false
         scene.spaceship.spriteComponent?.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        
+        
     }
     
     func startLevel() {

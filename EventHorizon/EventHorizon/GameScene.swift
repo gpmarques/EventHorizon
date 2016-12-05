@@ -36,9 +36,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanFrom(recognizer:)))
         self.view!.addGestureRecognizer(panGesture)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapShip(recognizer:)))
-        self.view!.addGestureRecognizer(tapGesture)
-        
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.deletePlanet))
         doubleTap.numberOfTapsRequired = 2
         view.addGestureRecognizer(doubleTap)
@@ -180,6 +177,15 @@ extension GameScene {
         guard let name = selectedNode.name else { return }
         
         if name == "BlackHole" || name == "Planet" {
+            entityManager.entities.forEach({ entity in
+                
+                if let spriteComponent = entity.component(ofType: SpriteComponent.self) {
+                    if spriteComponent.node.isEqual(selectedNode) {
+                        entityManager.remove(entity)
+                        
+                    }
+                }
+            })
             selectedNode.removeFromParent()
         }
     }
@@ -208,22 +214,6 @@ extension GameScene {
                                                       SKAction.rotate(byAngle: 0.0, duration: 0.1),
                                                       SKAction.rotate(byAngle: degToRad(degree: 4.0), duration: 0.1)])
                     selectedNode.run(SKAction.repeatForever(sequence))
-                }
-            }
-        }
-    }
-    
-    // tap ship and start game
-    func tapShip(recognizer: UITapGestureRecognizer) {
-        var touchLocation = recognizer.location(in: recognizer.view)
-        touchLocation = self.convertPoint(fromView: touchLocation)
-        
-        if recognizer.state == .ended {
-            selectNodeForTouch(touchLocation: touchLocation)
-            if selectedNode.name == "Spaceship" {
-                if !gameStart && !planetIsClicked && !blackHoleIsClicked {
-                    
-                    entityManager.startLevel()
                 }
             }
         }

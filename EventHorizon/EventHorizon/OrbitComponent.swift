@@ -139,10 +139,10 @@ class OrbitComponent: GKComponent {
             ship?.physicsBody?.velocity = velocityVector
         }
         
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: {
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: {
             (timer) in
             
-            self.collision = false
+            self.didClick = false
         })
     }
     
@@ -169,7 +169,10 @@ class OrbitComponent: GKComponent {
         let clockwiseRotation = (orbiterAngle! + 180) * DegreesToRadians
         let counterClockwiseRotation = (orbiterAngle!) * DegreesToRadians
         
-        if (ship?.zRotation)! - abs(clockwiseRotation) < (ship?.zRotation)! - abs(counterClockwiseRotation) {
+        print((ship?.zRotation)! - abs(clockwiseRotation))
+        print((ship?.zRotation)! - abs(counterClockwiseRotation))
+        
+        if abs((ship?.zRotation)! - abs(clockwiseRotation)) < abs((ship?.zRotation)! - abs(counterClockwiseRotation)) {
             
             clockwise = true
         }
@@ -188,7 +191,7 @@ class OrbitComponent: GKComponent {
         if  self.orbitNode.intersects(ship!) && !self.didClick && fuel && entityManager.gameStarted() {
             
             if collision == false {
-                
+                print("denis")
                 setupRotationDirection(object: ship!, dt: deltaTime)
                 collision = true
             }

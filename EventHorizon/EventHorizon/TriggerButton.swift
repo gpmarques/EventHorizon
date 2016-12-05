@@ -22,10 +22,10 @@ class TriggerButton : SKSpriteNode {
         
         self.onButtonPress = onButtonPress
         self.onButtonReleased = onButtonReleased
-        actionPress = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.01)
-        action = SKAction.scale(by: 0.9, duration: 0.1)
-        action2 = SKAction.scale(by: 1.11111111, duration: 0.1)
-        actionRelease = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.01)
+        actionPress = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.5, duration: 0.001)
+        action = SKAction.scale(by: 0.9, duration: 0.001)
+        action2 = SKAction.scale(by: 1.11111111, duration: 0.001)
+        actionRelease = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.001)
         let texture = SKTexture(imageNamed: iconName)
         super.init(texture: texture, color: SKColor.white, size: view.frame.size)
         self.name = iconName
@@ -55,10 +55,17 @@ class TriggerButton : SKSpriteNode {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        onButtonReleased()
         self.run(actionRelease)
         self.run(action2)
-        onButtonReleased()
         print("blah")
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        self.run(actionRelease)
+        self.run(action2)
+        print("XABLAU")
     }
     
     required init?(coder aDecoder: NSCoder) {
