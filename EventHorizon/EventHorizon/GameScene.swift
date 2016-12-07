@@ -15,6 +15,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var entityManager: EntityManager!
     var spaceship: Spaceship!
     var planet: Planet!
+    var moon: Moon!
     var blackHole: BlackHole!
     var menu: LevelMenuView!
     var gameStart = false
@@ -32,7 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        
+        print("didMove")
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanFrom(recognizer:)))
         self.view!.addGestureRecognizer(panGesture)
         
@@ -49,6 +50,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         entityManager.startCopys()
         
         menu = LevelMenuView(scene: self, entityManager: entityManager)
+        
+        moon = Moon(imageNamed: "netuno", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/1.1, y: self.frame.height/1.1))
+        entityManager.add(moon)
+        
+        moon.spriteComponent?.node.isUserInteractionEnabled = false
+        
+        planet = Planet(imageNamed: "jupiter", radius: self.frame.width/15, strenght: 0.75, position: CGPoint(x: self.frame.width/1.1, y:self.frame.height/1.1) , orbitingNodes: [moon.spriteComponent!.node], entityManager: entityManager, name: "Objective")
+        entityManager.add(planet)
+        
+        planet.spriteComponent?.node.isUserInteractionEnabled = false
+        
+        planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon.spriteComponent!.node)
         
         physicsWorld.gravity = CGVector.zero
     }
@@ -102,7 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if contact.bodyA.node?.name == "Spaceship" &&
-            (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole") {
+            (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole" || contact.bodyB.node?.name == "Moon") {
             if gameStart {
                 entityManager.remove(spaceship)
             }
@@ -122,11 +135,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if contact.bodyA.node?.name == "copy" &&
             (contact.bodyB.node?.name == "Planet"
-                || contact.bodyB.node?.name == "BlackHole") {
+                || contact.bodyB.node?.name == "BlackHole"
+                || contact.bodyB.node?.name == "Objective"
+                || contact.bodyB.node?.name == "Moon") {
             contact.bodyA.node?.name = "removeThisCopy"
             entityManager.removeCopy(withThisName: "removeThisCopy")
         }
-        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -181,8 +195,8 @@ extension GameScene {
                 
                 if let spriteComponent = entity.component(ofType: SpriteComponent.self) {
                     if spriteComponent.node.isEqual(selectedNode) {
-                        entityManager.remove(entity)
                         
+                        entityManager.remove(entity)
                     }
                 }
             })

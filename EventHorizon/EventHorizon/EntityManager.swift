@@ -185,7 +185,8 @@ extension EntityManager {
     
     func spawnPlanet(inThisPoint point: CGPoint) {
         
-        let planet = Planet(imageNamed: "jupiter", radius: 400, strenght: 0.75, position: point)
+        let planet = Planet(imageNamed: "jupiter", radius: scene.frame.width/15, strenght: 0.75, position: point, orbitingNodes: [], entityManager: self, name: "Planet")
+        planet.component(ofType: OrbitComponent.self)?.noMoon = true
         add(planet)
         
     }
@@ -205,17 +206,19 @@ extension EntityManager {
         
     }
     
+    func spawnblackHole(inThisPoint point: CGPoint) {
+        
+        let blackhole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100, position: point, entityManager: self, ship: (scene.spaceship.spriteComponent?.node)!, orbitingNodes: [])
+        add(blackhole)
+        
+    }
+    
     func gameStarted() -> Bool {
         
         return scene.gameStart
     }
     
-    func spawnblackHole(inThisPoint point: CGPoint) {
-        
-        let blackhole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100, position: point, entityManager: self)
-        add(blackhole)
-        
-    }
+    
     
     func manageStartRestartLevel() {
         
@@ -246,10 +249,18 @@ extension EntityManager {
                                       position: scene.initialSpaceshipPosition)
         self.add(scene.spaceship)
         
+        entities.forEach({ entity in
+            
+            if entity.spriteComponent?.node.name == "BlackHole" {
+                
+                entity.component(ofType: OrbitComponent.self)?.ship = self.getShipNode()
+            }
+            
+        })
+        
         self.startCopys()
         scene.gameStart = false
         scene.spaceship.spriteComponent?.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        
         
     }
     
@@ -284,5 +295,6 @@ extension EntityManager {
             
         })
     }
+    
 }
 

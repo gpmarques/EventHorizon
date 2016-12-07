@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A50DAB511DF737ED0093426A /* Moon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50DAB501DF737ED0093426A /* Moon.swift */; };
 		A50EE50B1DE34A6E00CFE575 /* SpaceshipRocket.sks in Resources */ = {isa = PBXBuildFile; fileRef = A50EE50A1DE34A6E00CFE575 /* SpaceshipRocket.sks */; };
 		A50EE50D1DE49E4400CFE575 /* LevelMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50EE50C1DE49E4400CFE575 /* LevelMenuView.swift */; };
 		D1791C991DCD344300FF097A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1791C981DCD344300FF097A /* AppDelegate.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A50DAB501DF737ED0093426A /* Moon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Moon.swift; sourceTree = "<group>"; };
 		A50EE50A1DE34A6E00CFE575 /* SpaceshipRocket.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SpaceshipRocket.sks; sourceTree = "<group>"; };
 		A50EE50C1DE49E4400CFE575 /* LevelMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelMenuView.swift; sourceTree = "<group>"; };
 		D1791C951DCD344300FF097A /* EventHorizon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventHorizon.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +187,7 @@
 				D1791CCF1DCE51D300FF097A /* BlackHole.swift */,
 				D1791CD11DCE51F600FF097A /* Planet.swift */,
 				D1791CE31DCE56A700FF097A /* Meteorite.swift */,
+				A50DAB501DF737ED0093426A /* Moon.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				D1791C991DCD344300FF097A /* AppDelegate.swift in Sources */,
 				A50EE50D1DE49E4400CFE575 /* LevelMenuView.swift in Sources */,
 				D1791CD01DCE51D300FF097A /* BlackHole.swift in Sources */,
+				A50DAB511DF737ED0093426A /* Moon.swift in Sources */,
 				D1E7B3641DDA924800902667 /* TrajectoryComponent.swift in Sources */,
 				D1791CD21DCE51F600FF097A /* Planet.swift in Sources */,
 				D1FD87EC1DD21069003A247B /* EntityManager.swift in Sources */,

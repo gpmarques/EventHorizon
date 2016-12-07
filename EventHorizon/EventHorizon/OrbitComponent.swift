@@ -12,6 +12,7 @@ import GameplayKit
 class OrbitComponent: GKComponent {
     
     var ship: SKSpriteNode?
+    var orbitingNodes: [SKSpriteNode]
     var parentNode: SKSpriteNode
     var lastUpdateTime: CFTimeInterval = 0
     var speed: CGFloat
@@ -24,17 +25,24 @@ class OrbitComponent: GKComponent {
     var fuel = true
     var didClick = false
     var clockwise = false
+    var noMoon = false
     
     var orbitNode: SKSpriteNode
     var entityManager: EntityManager
     
-    init(orbitSpeed: CGFloat, parentNode: SKSpriteNode, blackHoleOrbitSize: CGFloat, speed: CGFloat, entityManager: EntityManager) {
+    init(orbitSpeed: CGFloat, parentNode: SKSpriteNode, blackHoleOrbitSize: CGFloat, speed: CGFloat, entityManager: EntityManager, ship: SKSpriteNode?, orbitingNodes:[SKSpriteNode]) {
         
         self.entityManager = entityManager
         self.parentNode = parentNode
         self.orbiterSpeed = orbitSpeed
         self.orbiterRadius = blackHoleOrbitSize/2
         self.speed = speed
+        
+        if let s = ship {
+            self.ship = s
+        }
+        
+        self.orbitingNodes = orbitingNodes
         
         orbitNode = SKSpriteNode(texture: nil, size: CGSize(width: blackHoleOrbitSize, height: blackHoleOrbitSize))
         
@@ -51,31 +59,31 @@ class OrbitComponent: GKComponent {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateOrbiter(dt: CFTimeInterval, ship: SKSpriteNode) {
+    func updateOrbiter(dt: CFTimeInterval, orbiter: SKSpriteNode) {
         
-        let shipNode = ship
+        let orbiterNode = orbiter
         let Pi = CGFloat(M_PI)
         let DegreesToRadians = Pi / 180
         
         
         if clockwise == true {
             
-            orbiterAngle = (getAngle(ofObjectOrbiting: ship) + orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
+            orbiterAngle = (getAngle(ofObjectOrbiting: orbiterNode) + orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
         
             let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
             let y = sin(orbiterAngle! * DegreesToRadians) * orbiterRadius
         
-            shipNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
-            shipNode.zRotation = (orbiterAngle!) * DegreesToRadians
+            orbiterNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
+            orbiterNode.zRotation = (orbiterAngle!) * DegreesToRadians
         }
         else {
             
-            orbiterAngle = (getAngle(ofObjectOrbiting: ship) - orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
+            orbiterAngle = (getAngle(ofObjectOrbiting: orbiter) - orbiterSpeed * CGFloat(dt)).truncatingRemainder(dividingBy: 360)
             let x = cos(orbiterAngle! * DegreesToRadians) * orbiterRadius
             let y = sin(orbiterAngle! * DegreesToRadians) * orbiterRadius
             
-            shipNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
-            shipNode.zRotation = (orbiterAngle! + 180) * DegreesToRadians
+            orbiterNode.position = CGPoint(x: parentNode.position.x + x, y: parentNode.position.y + y)
+            orbiterNode.zRotation = (orbiterAngle! + 180) * DegreesToRadians
         }
     }
     
@@ -168,11 +176,11 @@ class OrbitComponent: GKComponent {
         
         let clockwiseRotation = (orbiterAngle! + 180) * DegreesToRadians
         let counterClockwiseRotation = (orbiterAngle!) * DegreesToRadians
+        print((ship?.zRotation)!*180/Pi)
+        print((ship?.zRotation)! - (clockwiseRotation))
+        print((ship?.zRotation)! - (counterClockwiseRotation))
         
-        print((ship?.zRotation)! - abs(clockwiseRotation))
-        print((ship?.zRotation)! - abs(counterClockwiseRotation))
-        
-        if abs((ship?.zRotation)! - abs(clockwiseRotation)) < abs((ship?.zRotation)! - abs(counterClockwiseRotation)) {
+        if (ship?.zRotation)! - (clockwiseRotation) < (ship?.zRotation)! - (counterClockwiseRotation) {
             
             clockwise = true
         }
@@ -185,34 +193,70 @@ class OrbitComponent: GKComponent {
     
     override func update(deltaTime: CFTimeInterval) {
         
-        guard let node = entityManager.getShipNode() else { return }
-        ship = node
-        
-        if  self.orbitNode.intersects(ship!) && !self.didClick && fuel && entityManager.gameStarted() {
+        if orbitingNodes.count != 0 || ship != nil {
             
-            if collision == false {
-                print("denis")
-                setupRotationDirection(object: ship!, dt: deltaTime)
-                collision = true
-            }
-            
-            else {
+            if orbitingNodes.count == 0 {
                 
-                guard let emitter = entityManager.getEmitter() else {
-                    print("particle not found")
-                    return
+                if let shipNode = ship {
+                    if self.orbitNode.intersects(shipNode) && !self.didClick && fuel && entityManager.gameStarted() {
+                        
+                        if collision == false {
+                            
+                            setupRotationDirection(object: shipNode, dt: deltaTime)
+                            collision = true
+                            
+                        } else {
+                            
+                            guard let emitter = entityManager.getEmitter() else {
+                                print("particle not found")
+                                return
+                            }
+                            
+                            emitter.particleAlpha = 1
+                            entityManager.shipIsOrbiting(isOrbiting: true)
+                            shipNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                            updateOrbiter(dt: deltaTime, orbiter: shipNode)
+                        }
+                    } else {
+                        
+                        collision = false
+                    }
                 }
                 
-                emitter.particleAlpha = 1
-                entityManager.shipIsOrbiting(isOrbiting: true)
-                ship?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                updateOrbiter(dt: deltaTime, ship: ship!)
+                if !fuel {
+                    
+                    leaveOrbit()
+                }
+            } else {
+                
+                if entityManager.gameStarted(){
+                    
+                    for i in 0..<orbitingNodes.count {
+                        
+                        updateOrbiter(dt: deltaTime, orbiter: orbitingNodes[i])
+                    }
+                }
             }
-        }
-        
-        if !fuel {
-            
-            leaveOrbit()
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
