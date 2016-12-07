@@ -164,6 +164,8 @@ class OrbitComponent: GKComponent {
         let xBlackhole = parentNode.position.x
         let yBlackhole = parentNode.position.y
         
+        print(atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees + 180)
+        
         return atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees
     }
     
@@ -171,16 +173,16 @@ class OrbitComponent: GKComponent {
         
         let Pi = CGFloat(M_PI)
         let DegreesToRadians = Pi / 180
+        let RadiansToDegrees = 180 / Pi
         
         orbiterAngle = (getAngle(ofObjectOrbiting: ship!)).truncatingRemainder(dividingBy: 360)
         
         let clockwiseRotation = (orbiterAngle! + 180) * DegreesToRadians
         let counterClockwiseRotation = (orbiterAngle!) * DegreesToRadians
-        print((ship?.zRotation)!*180/Pi)
-        print((ship?.zRotation)! - (clockwiseRotation))
-        print((ship?.zRotation)! - (counterClockwiseRotation))
         
-        if (ship?.zRotation)! - (clockwiseRotation) < (ship?.zRotation)! - (counterClockwiseRotation) {
+        //getAngle(ofObjectOrbiting: ship)
+        
+        if getAngle(ofObjectOrbiting: ship!) == 2 {
             
             clockwise = true
         }

@@ -158,6 +158,8 @@ extension GameScene {
     // draging objects
     func panForTranslation(translation: CGPoint) {
         
+        if gameStart { return }
+        
         let position = selectedNode.position
         guard let name = selectedNode.name else { return }
         
@@ -214,7 +216,9 @@ extension GameScene {
         
         let touchedNode = self.atPoint(touchLocation)
         
-        if touchedNode is SKSpriteNode {
+        
+        
+        if touchedNode is SKSpriteNode && !gameStart {
             
             if !selectedNode.isEqual(touchedNode) {
                 selectedNode.removeAllActions()

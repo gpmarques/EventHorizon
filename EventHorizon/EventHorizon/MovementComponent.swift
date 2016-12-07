@@ -46,6 +46,9 @@ class MovementComponent: GKComponent {
         
         angle = velocity.angle
         sprite.node.zRotation = angle.minusPi2
+        let Pi = CGFloat(M_PI)
+        let RadiansToDegrees = 180 / Pi
+        //print("zrotaion", Int(sprite.node.zRotation*RadiansToDegrees+270))
     }
     
     required init?(coder aDecoder: NSCoder) {

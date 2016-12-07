@@ -145,6 +145,7 @@ extension EntityManager {
         if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
             return ship.isOrbiting
         }
+        
         return false
     }
     

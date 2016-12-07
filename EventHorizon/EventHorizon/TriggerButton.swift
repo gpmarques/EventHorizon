@@ -50,7 +50,6 @@ class TriggerButton : SKSpriteNode {
         onButtonPress()
         self.run(actionPress)
         self.run(action)
-        print("algo")
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -58,14 +57,12 @@ class TriggerButton : SKSpriteNode {
         onButtonReleased()
         self.run(actionRelease)
         self.run(action2)
-        print("blah")
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         self.run(actionRelease)
         self.run(action2)
-        print("XABLAU")
     }
     
     required init?(coder aDecoder: NSCoder) {
