@@ -159,7 +159,17 @@ extension EntityManager {
         }
         return nil
     }
-
+    
+    func getTime() -> String {
+        if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
+            guard let time = ship.component(ofType: TimeComponent.self) else {
+                fatalError("The ship is expected to have a timecomponent")
+            }
+            return (time.timeLabel.text)!
+        } else {
+            return ""
+        }        
+    }
     
 }
 

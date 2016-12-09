@@ -73,9 +73,7 @@ extension TimeComponent {
                     print(entity.ClassType)
                     mov.velocity = CGVector(dx: mov.velocity.dx*rate, dy: mov.velocity.dy*rate)
                 }
-                
             }
-            
             
         })
     }

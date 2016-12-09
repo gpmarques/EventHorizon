@@ -16,7 +16,7 @@ class PlanetSelectController: UIViewController {
         super.viewDidLoad()
         
         let sceneSize = CGSize(width: view.bounds.width, height: view.bounds.size.height)
-        print("VC size: \(sceneSize)")
+//        print("VC size: \(sceneSize)")
         let scene =
             PlanetSelectScene(size: sceneSize)
         

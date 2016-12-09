@@ -115,9 +115,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if contact.bodyA.node?.name == "Spaceship" &&
-            (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole" || contact.bodyB.node?.name == "Moon") {
+            (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole" || contact.bodyB.node?.name == "Moon" || contact.bodyB.node?.name == "Objective" ) {
             if gameStart {
                 entityManager.remove(spaceship)
+                
             } else {
                 
                 contact.bodyB.node?.name = "removeThisEntity"
@@ -131,12 +132,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 entityManager.timer.invalidate()
 
             }
-        } else {
-            let label = SKLabelNode(fontNamed: "Courier-Bold")
-            label.text = "You won!!!"
-            label.color = UIColor.white
-            label.fontSize = 50
-            self.addChild(label)
         }
         
         if contact.bodyA.node?.name == "copy" &&
