@@ -259,17 +259,17 @@ extension GameScene {
     func selectNodeForTouch(touchLocation: CGPoint) {
         
         let touchedNode = self.atPoint(touchLocation)
-        guard let selected = selectedNode else {  print("SelectedNode"); return }
+        guard let node = touchedNode as? SKSpriteNode else { return }
         
-        if !gameStart && touchedNode is SKSpriteNode {
+        if !gameStart {
             
-            if !selected.isEqual(touchedNode) {
-                selected.removeAllActions()
-                selected.run(SKAction.rotate(toAngle: 0.0, duration: 0.1))
-                
-                guard let node = touchedNode as? SKSpriteNode else { return }
-                selectedNode = node
-                
+            selectedNode = node
+            
+//            if !selected.isEqual(touchedNode) {
+//                selected.removeAllActions()
+//                selected.run(SKAction.rotate(toAngle: 0.0, duration: 0.1))
+//                
+            
 //                if selected.name == "BlackHole" || selected.name == "Planet" {
 //                    let action = SKAction.scale(by: 0.9, duration: 0.5)
 //                    let action2 = SKAction.scale(by: 1.11111111, duration: 0.5)
@@ -279,7 +279,7 @@ extension GameScene {
 ////                    SKAction.rotate(byAngle: degToRad(degree: 4.0), duration: 0.1)
 //                    selected.run(SKAction.repeatForever(sequence))
 //                }
-            }
+//            }
         }
     }
 }
