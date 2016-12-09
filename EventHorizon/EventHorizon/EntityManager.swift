@@ -182,13 +182,15 @@ extension EntityManager {
         
         if scene.planetIsClicked {
             scene.planetIsClicked = false
-//            if let button = scene.children.first(where: {$0.name == "jupiter"}) as? CustomButton {
-//                let sequence = SKAction.sequence([button.action.reversed(), button.action2.reversed()])
-//                button.run(sequence)
-//            }
+            
         } else {
             scene.planetIsClicked = true
-            scene.blackHoleIsClicked = false
+            
+            if scene.blackHoleIsClicked {
+                
+                scene.blackHoleIsClicked = false
+                scene.menu.blackHoleButton.deselect()
+            }
         }
         
     }
@@ -198,28 +200,33 @@ extension EntityManager {
         let planet = Planet(imageNamed: "jupiter", radius: scene.frame.width/15, strenght: 0.75, position: point, orbitingNodes: [], entityManager: self, name: "Planet")
         planet.component(ofType: OrbitComponent.self)?.noMoon = true
         add(planet)
+        scene.menu.planetButton.deselect()
         
     }
     
     func blackHoleIsClicked() {
         
         if scene.blackHoleIsClicked {
+            
             scene.blackHoleIsClicked = false
-//            if let button = scene.children.first(where: {$0.name == "blackhole"}) as? CustomButton {
-//                let sequence = SKAction.sequence([button.action.reversed(), button.action2.reversed()])
-//                button.run(sequence)
-//            }
+            
         } else {
             scene.blackHoleIsClicked = true
-            scene.planetIsClicked = false
+            
+            if scene.planetIsClicked {
+                
+                scene.planetIsClicked = false
+                scene.menu.planetButton.deselect()
+                
+            }
         }
-        
     }
     
     func spawnblackHole(inThisPoint point: CGPoint) {
         
         let blackhole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100, position: point, entityManager: self, ship: (scene.spaceship.spriteComponent?.node)!, orbitingNodes: [])
         add(blackhole)
+        scene.menu.blackHoleButton.deselect()
         
     }
     
@@ -271,6 +278,11 @@ extension EntityManager {
         self.startCopys()
         scene.gameStart = false
         scene.spaceship.spriteComponent?.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        
+        scene.moon1.spriteComponent?.node.position = scene.initialMoon1Position
+        scene.moon2.spriteComponent?.node.position = scene.initialMoon2Position
+        scene.planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: scene.moon1.spriteComponent!.node)
+        scene.planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: scene.moon2.spriteComponent!.node)
         
     }
     

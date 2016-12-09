@@ -80,4 +80,11 @@ extension CustomButton {
         self.run(action.reversed())
         self.run(actionRelease)
     }
+    
+    func deselect() {
+        
+        self.run(action.reversed())
+        self.run(actionRelease)
+        isPressed = false
+    }
 }

@@ -26,6 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var selectedNode: SKSpriteNode?
     var initialSpaceshipPosition: CGPoint!
     var initialMoon1Position: CGPoint!
+    var initialMoon2Position: CGPoint!
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -33,6 +34,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         selectedNode = SKSpriteNode()
         self.physicsWorld.contactDelegate = self
         initialSpaceshipPosition = CGPoint(x: self.frame.width/20, y: self.frame.height/7.8)
+        initialMoon1Position = CGPoint(x: self.frame.width/2.3, y: self.frame.height/1.3)
+        initialMoon2Position = CGPoint(x: self.frame.width/1.1, y: self.frame.height/1.3)
     }
     
     override func didMove(to view: SKView) {
@@ -54,12 +57,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         menu = LevelMenuView(scene: self, entityManager: entityManager)
         
-        moon1 = Moon(imageNamed: "netuno", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/2.3, y: self.frame.height/1.3))
+        moon1 = Moon(imageNamed: "netuno", radius: self.frame.width/40, position: initialMoon1Position)
         entityManager.add(moon1)
         
         moon1.spriteComponent?.node.isUserInteractionEnabled = false
         
-        moon2 = Moon(imageNamed: "mercurio", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/1.1, y: self.frame.height/1.3))
+        moon2 = Moon(imageNamed: "mercurio", radius: self.frame.width/40, position: initialMoon2Position)
         entityManager.add(moon2)
         
         moon2.spriteComponent?.node.isUserInteractionEnabled = false
