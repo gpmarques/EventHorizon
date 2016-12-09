@@ -122,7 +122,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if contact.bodyA.node?.name == "Spaceship" &&
-            (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole" || contact.bodyB.node?.name == "Moon" || contact.bodyB.node?.name == "Objective" ) {
+            (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole" || contact.bodyB.node?.name == "Moon") {
             if gameStart {
                 entityManager.remove(spaceship)
                 
@@ -163,6 +163,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 
             })
+            
+            let label = SKLabelNode(fontNamed: "Courier-Bold")
+            label.text = "Your journey has been completed in\n" +
+                entityManager.getTime()
+            print("Journey time", entityManager.getTime())
+            label.color = UIColor.white
+            label.fontSize = 25
+            label.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+            label.zPosition = 5
+            self.addChild(label)
         }
     }
     

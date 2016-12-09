@@ -165,6 +165,8 @@ extension EntityManager {
             guard let time = ship.component(ofType: TimeComponent.self) else {
                 fatalError("The ship is expected to have a timecomponent")
             }
+            
+            time.timer.invalidate()
             return (time.timeLabel.text)!
         } else {
             return ""
