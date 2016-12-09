@@ -301,11 +301,14 @@ extension EntityManager {
     
     func startLevel() {
         
-        scene.planetIsClicked = false
-        scene.menu.planetButton.deselect()
-        scene.blackHoleIsClicked = false
-        scene.menu.blackHoleButton.deselect()
-        
+        if scene.planetIsClicked {
+            scene.planetIsClicked = false
+            scene.menu.planetButton.deselect()
+        }
+        if scene.blackHoleIsClicked {
+            scene.blackHoleIsClicked = false
+            scene.menu.blackHoleButton.deselect()
+        }
         scene.gameStart = true
         scene.spaceship.spriteComponent?.physicsBody?.isDynamic = true
         scene.spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
