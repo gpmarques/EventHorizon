@@ -275,6 +275,14 @@ extension EntityManager {
             
         })
         
+        if let label = scene.wonLabel {
+            label.removeFromParent()
+        }
+        
+        if let lostLabel = scene.lostLabel {
+            lostLabel.removeFromParent()
+        }
+        
         self.startCopys()
         scene.gameStart = false
         scene.spaceship.spriteComponent?.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)

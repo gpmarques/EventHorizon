@@ -27,6 +27,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var initialSpaceshipPosition: CGPoint!
     var initialMoon1Position: CGPoint!
     var initialMoon2Position: CGPoint!
+    var wonLabel: SKLabelNode!
+    var lostLabel: SKLabelNode!
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -148,6 +150,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 entityManager.timer.invalidate()
 
             }
+            
+            lostLabel = SKLabelNode(fontNamed: "Courier-Bold")
+            lostLabel.text = "Your journey has ended."
+            lostLabel.color = UIColor.white
+            lostLabel.fontSize = 25
+            lostLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+            lostLabel.zPosition = 5
+            lostLabel.name = "lost"
+            self.addChild(lostLabel)
         }
         
         if contact.bodyA.node?.name == "copy" &&
@@ -173,15 +184,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
             })
             
-            let label = SKLabelNode(fontNamed: "Courier-Bold")
-            label.text = "Your journey has been completed in\n" +
+            wonLabel = SKLabelNode(fontNamed: "Courier-Bold")
+            wonLabel.text = "Your journey has been completed in\n" +
                 entityManager.getTime()
             print("Journey time", entityManager.getTime())
-            label.color = UIColor.white
-            label.fontSize = 25
-            label.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-            label.zPosition = 5
-            self.addChild(label)
+            wonLabel.color = UIColor.white
+            wonLabel.fontSize = 25
+            wonLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+            wonLabel.zPosition = 5
+            wonLabel.name = "won"
+            self.addChild(wonLabel)
         }
     }
     
