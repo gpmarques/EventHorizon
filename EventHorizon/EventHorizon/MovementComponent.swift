@@ -27,6 +27,8 @@ class MovementComponent: GKComponent {
         parentNode.physicsBody?.isDynamic = false
         parentNode.physicsBody?.velocity = velocity
         parentNode.physicsBody?.allowsRotation = true
+        parentNode.physicsBody?.linearDamping = 0
+        parentNode.physicsBody?.friction = 0
         
         super.init()
     }

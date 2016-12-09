@@ -13,6 +13,9 @@ class LevelMenuView {
     let blackHoleButton: CustomButton
     let planetButton: CustomButton
     
+    let blackHoleButton: CustomButton
+    let planetButton: CustomButton
+    
     init(scene: SKScene, entityManager: EntityManager) {
         
         let sceneBackground = SKSpriteNode(imageNamed: "gameBackground")
@@ -36,15 +39,16 @@ class LevelMenuView {
                                            onButtonPress: entityManager.blackHoleIsClicked, onButtonReleased: {})
         blackHoleButton.zPosition = 3
         
-        //let playButton = CustomButton(iconName: String, text: String, view: SKView, position: CGPoint, size: CGSize, onButtonPress: () -> ())
+        let resetButton = TriggerButton(iconName: "play",
+                       text: "", view: scene.view!, size: size,
+                       position: CGPoint(x: 3 * scene.frame.width/5, y: scene.frame.height/22.5),
+                       onButtonPress: { }, onButtonReleased: { entityManager.manageStartRestartLevel() })
+        resetButton.zPosition = 3
         
         scene.addChild(sceneBackground)
         scene.addChild(menuBackground)
         scene.addChild(planetButton)
         scene.addChild(blackHoleButton)
-        
+        scene.addChild(resetButton)
     }
-    
-    func nada() { }
-    
 }

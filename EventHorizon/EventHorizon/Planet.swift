@@ -11,16 +11,16 @@ import GameplayKit
 
 class Planet: GKEntity {
     
-    init(imageNamed: String, radius: Float, strenght: Float, position: CGPoint) {
+    init(imageNamed: String, radius: CGFloat, strenght: Float, position: CGPoint, orbitingNodes: [SKSpriteNode], entityManager: EntityManager, name: String) {
         super.init()
         
         let texture = SKTexture(imageNamed: imageNamed)
-        let size = CGSize(width: texture.size().width/3, height: texture.size().height/3)
+        let size = CGSize(width: radius*2, height: radius*2)
         let spriteComponent = SpriteComponent(texture: texture,
                                               size: size,
                                               nodePosition: position,
                                               typeOfBody: .Circle,
-                                              name: "Planet")
+                                              name: name)
         addComponent(spriteComponent)
         
         let collisionComponent = CollisionComponent(parentNode: spriteComponent.node,
@@ -28,9 +28,20 @@ class Planet: GKEntity {
         addComponent(collisionComponent)
         
         let gravityComponent = GravityComponent(parentNode: spriteComponent.node,
-                                                radius: Float(texture.size().width)/2 ,
+                                                radius: Float(radius)*4,
                                                 strenght: strenght)
         addComponent(gravityComponent)
+        
+        let sizeOrbit = CGSize(width: size.width+75, height: size.height+75)
+        
+        let orbitComponent = OrbitComponent(orbitSpeed: 5,
+                                            parentNode: spriteComponent.node,
+                                            blackHoleOrbitSize: sizeOrbit.width,
+                                            speed: 0,
+                                            entityManager: entityManager,
+                                            ship: nil,
+                                            orbitingNodes: orbitingNodes)
+        addComponent(orbitComponent)
         
     }
     

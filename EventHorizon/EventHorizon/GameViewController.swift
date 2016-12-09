@@ -18,12 +18,10 @@ class GameViewController: UIViewController {
         let sceneSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height)
         let scene =
             GameScene(size: sceneSize)
-        
-        //let scroll =
 
         let skView = self.view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        //skView.showsFPS = true
+        //skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .aspectFit
         skView.presentScene(scene)

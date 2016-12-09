@@ -64,7 +64,7 @@ class PlanetSelectScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first! as UITouch
         let positionInScene = touch.location(in: self)
-        print("position \(positionInScene)")
+//        print("position \(positionInScene)")
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -72,7 +72,7 @@ class PlanetSelectScene: SKScene {
             let location = touch.location(in: self)
             let previousLocation = touch.previousLocation(in: self)
             let deltaY =  previousLocation.y - location.y
-            print(location.y)
+//            print(location.y)
             if (cam.position.y + deltaY) <= (0 + frameHeightSize/2) {
                 cam.position.y = 0 + frameHeightSize/2
             } else if (cam.position.y + deltaY) > (universeSize - frameHeightSize/2){

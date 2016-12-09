@@ -56,13 +56,15 @@ class CustomButton : SKSpriteNode {
         //self.run(actionSequence)
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-  
         
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+extension CustomButton {
     
     func activeButton(){
         self.run(actionPress)

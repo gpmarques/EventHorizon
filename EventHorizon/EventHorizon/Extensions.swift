@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-extension GKEntity {    
+extension GKEntity {
     var spriteComponent: SpriteComponent? {
         return self.component(ofType: SpriteComponent.self)
     }
@@ -60,9 +60,26 @@ extension SpriteComponent {
 
 extension Int {
     var years: Int { return self/12 }
-    var reset: Int { return (self >= 12) ? 1 : self}
+    var reset: Int { return (self >= 12) ? 0 : self}
     var stringfyYear: String {
         return (self>1 || self == 0) ? "\(self) years" : "\(self) year" }
     var stringfyMonth: String {
         return (self>1 || self == 0) ? "\(self) months" : "\(self) month" }
 }
+
+extension CGPoint {
+    
+    func isOutOfBounds(viewWidth width: CGFloat, viewHeight height: CGFloat) -> Bool {
+        
+        if self.x < -width/5 || self.x > width + width/5 ||
+            self.y < -height/5 || self.y > height + height/5 {
+            return true
+        } else {
+            return false
+        }
+        
+    }
+    
+}
+
+

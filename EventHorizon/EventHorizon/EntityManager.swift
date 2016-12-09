@@ -27,21 +27,7 @@ class EntityManager {
     
     init(scene: SKScene) {
         self.scene = scene as! GameScene
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
-            
-            guard let spaceship = self.find(entityOfType: Spaceship.self) else {
-                print("Spaceship not found")
-                return
-            }
-            
-            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
-                print("Trajectory not found")
-                return
-            }
-            
-            trajectoryComponent.trajectory()
-            
-        })
+        
     }
     
     func add(_ entity: GKEntity) {
@@ -59,14 +45,13 @@ class EntityManager {
         if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
             spriteNode.removeFromParent()
         }
-        //        toRemove.insert(entity)
         entities.remove(entity)
         
     }
     
     func update(_ deltaTime: CFTimeInterval) {
         componentSystems.forEach{ $0.update(deltaTime: deltaTime) }
-        //        print("Entity update")
+        removeCopiesOutOfBound()
     }
     
 }
@@ -77,7 +62,7 @@ extension EntityManager {
     func addCopy(_ copy: GKEntity) {
         trajectory.append(copy)
         
-        componentSystems.forEach{$0.addComponent(foundIn: copy)}
+        componentSystems.forEach{ $0.addComponent(foundIn: copy) }
         
         if let spriteNode = copy.component(ofType: SpriteComponent.self)?.node {
             scene.addChild(spriteNode)
@@ -101,8 +86,6 @@ extension EntityManager {
     
     private func removeCopy(UntilThisIndex index: Int) {
         
-//        print("Index", index)
-        
         if trajectory.count == 0 {
             print("Trajectory count is 0")
             return
@@ -113,9 +96,7 @@ extension EntityManager {
                 print("Copy not found")
                 return
             }
-            
-            print("Components cópia", copy.components.count)
-            
+                    
             guard let spriteNode = copy.component(ofType: SpriteComponent.self)?.node else {
                 print("SpriteNode not found")
                 return
@@ -124,10 +105,22 @@ extension EntityManager {
             spriteNode.removeFromParent()
         }
         
-        print("Trajectory array", trajectory.count)
         trajectory.removeSubrange(0...index)
+    }
+    
+    func removeCopiesOutOfBound() {
         
-//        print("Trajectory count", trajectory.count)
+        trajectory.forEach({ copy in
+            
+            guard let spriteComponent = copy?.spriteComponent else { fatalError("Copy should have a spritecomponent") }
+            
+            if spriteComponent.node.position.isOutOfBounds(viewWidth: (scene.view?.frame.width)!,
+                                                           viewHeight: (scene.view?.frame.height)!) {
+                spriteComponent.node.name = "removeThisCopy"
+                removeCopy(withThisName: "removeThisCopy")
+            }
+        
+        })
     }
     
 }
@@ -149,6 +142,7 @@ extension EntityManager {
         if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
             return ship.isOrbiting
         }
+        
         return false
     }
     
@@ -165,7 +159,26 @@ extension EntityManager {
         }
         return nil
     }
-
+    
+    func getTime() -> String {
+        if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
+            guard let time = ship.component(ofType: TimeComponent.self) else {
+                fatalError("The ship is expected to have a timecomponent")
+            }
+            return (time.timeLabel.text)!
+        } else {
+            return ""
+        }        
+    }
+    
+    func stopTimeComponentTimer() {
+        if let ship = self.find(entityOfType: Spaceship.self) as? Spaceship {
+            guard let time = ship.component(ofType: TimeComponent.self) else {
+                fatalError("The ship is expected to have a timecomponent")
+            }
+            time.timer.invalidate()
+        }
+    }
     
 }
 
@@ -178,27 +191,48 @@ extension EntityManager {
             scene.planetIsClicked = false
         } else {
             scene.planetIsClicked = true
-            scene.blackHoleIsClicked = false
+            
+            if scene.blackHoleIsClicked {
+                
+                scene.blackHoleIsClicked = false
+                scene.menu.blackHoleButton.deselect()
+            }
         }
         
     }
     
     func spawnPlanet(inThisPoint point: CGPoint) {
         
-        let planet = Planet(imageNamed: "jupiter", radius: 400, strenght: 0.75, position: point)
+        let planet = Planet(imageNamed: "jupiter", radius: scene.frame.width/15, strenght: 0.75, position: point, orbitingNodes: [], entityManager: self, name: "Planet")
+        planet.component(ofType: OrbitComponent.self)?.noMoon = true
         add(planet)
+        scene.menu.planetButton.deselect()
         
     }
     
     func blackHoleIsClicked() {
         
         if scene.blackHoleIsClicked {
+            
             scene.blackHoleIsClicked = false
 
         } else {
             scene.blackHoleIsClicked = true
-            scene.planetIsClicked = false
+            
+            if scene.planetIsClicked {
+                
+                scene.planetIsClicked = false
+                scene.menu.planetButton.deselect()
+                
+            }
         }
+    }
+    
+    func spawnblackHole(inThisPoint point: CGPoint) {
+        
+        let blackhole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100, position: point, entityManager: self, ship: (scene.spaceship.spriteComponent?.node)!, orbitingNodes: [])
+        add(blackhole)
+        scene.menu.blackHoleButton.deselect()
         
     }
     
@@ -207,12 +241,96 @@ extension EntityManager {
         return scene.gameStart
     }
     
-    func spawnblackHole(inThisPoint point: CGPoint) {
+    
+    
+    func manageStartRestartLevel() {
         
-        let blackhole = BlackHole(imageNamed: "blackhole", speedOutBlackHole: 100, position: point, entityManager: self)
-        add(blackhole)
-        
+        if scene.gameStart {
+            
+            restartLevel()
+            let button = scene.children.first(where: { $0.name == "play" }) as! TriggerButton
+            
+            button.texture = SKTexture(imageNamed: "play")
+            
+        } else {
+            
+            startLevel()
+            let button = scene.children.first(where: { $0.name == "play" }) as! TriggerButton
+            
+            button.texture = SKTexture(imageNamed: "restart")
+        }
     }
     
+    func restartLevel() {
+        
+        self.remove(scene.spaceship)
+        scene.removeChildren(in: [scene.childNode(withName: "fuelTank")!, scene.childNode(withName: "timeLabel")!])
+        
+        scene.spaceship = Spaceship(  imageNamed: "Spaceship",
+                                      speed: 150,
+                                      entityManager: self,
+                                      position: scene.initialSpaceshipPosition)
+        self.add(scene.spaceship)
+        
+        entities.forEach({ entity in
+            
+            if entity.spriteComponent?.node.name == "BlackHole" {
+                
+                entity.component(ofType: OrbitComponent.self)?.ship = self.getShipNode()
+            }
+        })
+        
+        if let label = scene.wonLabel {
+            label.removeFromParent()
+        }
+        
+        if let lostLabel = scene.lostLabel {
+            lostLabel.removeFromParent()
+        }
+        
+        self.startCopys()
+        scene.gameStart = false
+        scene.spaceship.spriteComponent?.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        
+        scene.moon1.spriteComponent?.node.position = scene.initialMoon1Position
+        scene.moon2.spriteComponent?.node.position = scene.initialMoon2Position
+        scene.planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: scene.moon1.spriteComponent!.node)
+        scene.planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: scene.moon2.spriteComponent!.node)
+    }
+    
+    func startLevel() {
+        
+        scene.planetIsClicked = false
+        scene.menu.planetButton.deselect()
+        scene.blackHoleIsClicked = false
+        scene.menu.blackHoleButton.deselect()
+        
+        scene.gameStart = true
+        scene.spaceship.spriteComponent?.physicsBody?.isDynamic = true
+        scene.spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
+        scene.entityManager.timer.invalidate()
+        scene.entityManager.removeAllCopies()
+        scene.selectedNode = nil
+        scene.spaceship.component(ofType: TimeComponent.self)?.startTimer()
+    }
+    
+    func startCopys(){
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
+            
+            guard let spaceship = self.find(entityOfType: Spaceship.self) else {
+                print("Spaceship not found")
+                return
+            }
+            
+            guard let trajectoryComponent = spaceship.component(ofType: TrajectoryComponent.self) else {
+                print("Trajectory not found")
+                return
+            }
+            
+            trajectoryComponent.trajectory()
+            
+        })
+    }
 }
 

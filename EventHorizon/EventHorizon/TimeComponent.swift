@@ -35,6 +35,8 @@ class TimeComponent: GKComponent {
         timeLabel.position = CGPoint(x: entityManager.scene.frame.width - entityManager.scene.frame.width/4.5,
                                      y: entityManager.scene.frame.height/26)
         timeLabel.zPosition = 3
+        timeLabel.name = "timeLabel"
+        
         entityManager.addToScene(thisNode: timeLabel)
         super.init()
     }
@@ -56,6 +58,26 @@ extension TimeComponent {
         })
     }
     
+    func dilateOrbitAndMovement(withRate rate: CGFloat) {
+        
+        entityManager.entities.forEach({ entity in
+            
+            if entity.spriteComponent?.node.name == "Objective"
+                || entity.spriteComponent?.node.name == "Planet" {
+                
+                if let orbit = entity.component(ofType: OrbitComponent.self) {
+                    orbit.orbiterSpeed *= rate;
+                }
+                
+                if let mov = entity.component(ofType: MovementComponent.self) {
+                    print(entity.ClassType)
+                    mov.velocity = CGVector(dx: mov.velocity.dx*rate, dy: mov.velocity.dy*rate)
+                }
+            }
+            
+        })
+    }
+    
     func timeDilation() {
         timeRate = 2
     }
@@ -74,10 +96,13 @@ extension TimeComponent {
     
     override func update(deltaTime seconds: TimeInterval) {
         
-        if entityManager.isShipOrbiting() {
+        if entityManager.isShipOrbiting() && timeRate == 1 {
             timeDilation()
-        } else {
+            dilateOrbitAndMovement(withRate: CGFloat(timeRate+3))
+        }
+        if !entityManager.isShipOrbiting() && timeRate == 2 {
             normalizeTimeRate()
+            dilateOrbitAndMovement(withRate: CGFloat(timeRate)/5)
         }
         
     }

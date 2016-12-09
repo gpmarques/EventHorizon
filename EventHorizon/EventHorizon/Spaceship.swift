@@ -14,10 +14,12 @@ class Spaceship: GKEntity {
     let entityManager: EntityManager
     var isOrbiting: Bool
     var collisionComponent: CollisionComponent!
+    var initialPosition: CGPoint
     
-    init(imageNamed: String, speed: Double, entityManager: EntityManager) {
+    init(imageNamed: String, speed: Double, entityManager: EntityManager, position: CGPoint) {
         self.entityManager = entityManager
         self.isOrbiting = false
+        self.initialPosition = position
         
         super.init()
         
@@ -26,7 +28,7 @@ class Spaceship: GKEntity {
         SpriteComponent(texture: texture,
                         size: CGSize(width: texture.size().width/5,
                                      height: texture.size().height/5),
-                        nodePosition: CGPoint(x:338.0, y:100.0),
+                        nodePosition: position,
                         typeOfBody: .Rectangle,
                         name: "Spaceship")
         spriteComponent.physicsBody?.fieldBitMask = GravityFieldCategory.Gravity
@@ -68,18 +70,23 @@ class Spaceship: GKEntity {
     }
     
     override func copy() -> Any {
-        let copy = Spaceship(imageNamed: "Spaceship", speed: 150, entityManager: entityManager)
+        
+        let copy = Spaceship(imageNamed: "Spaceship", speed: 150, entityManager: entityManager, position: initialPosition)
         copy.spriteComponent?.node.alpha = 0.5
+        
         let fuelComponent = copy.component(ofType: FuelComponent.self)!
         fuelComponent.fuelBar.removeFromParent()
         fuelComponent.fuelTank.removeFromParent()
+        
         let timeComponent = copy.component(ofType: TimeComponent.self)!
         timeComponent.timeLabel.removeFromParent()
+        
         let particleComponent = copy.component(ofType: ParticleComponent.self)!
         particleComponent.emitter.removeFromParent()
         copy.removeComponent(ofType: TimeComponent.self)
         copy.removeComponent(ofType: FuelComponent.self)
         copy.removeComponent(ofType: ParticleComponent.self)
+        
         return copy
     }
     
