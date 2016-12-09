@@ -135,6 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node?.name == "Spaceship" &&
             (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole" || contact.bodyB.node?.name == "Moon") {
             if gameStart {
+                entityManager.stopTimeComponentTimer()
                 entityManager.remove(spaceship)
                 
             } else {
@@ -187,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             wonLabel = SKLabelNode(fontNamed: "Courier-Bold")
             wonLabel.text = "Your journey has been completed in\n" +
                 entityManager.getTime()
-            print("Journey time", entityManager.getTime())
+            entityManager.stopTimeComponentTimer()
             wonLabel.color = UIColor.white
             wonLabel.fontSize = 25
             wonLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
