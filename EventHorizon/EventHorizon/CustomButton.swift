@@ -1,3 +1,4 @@
+
 //
 //  SolarSystemButton.swift
 //  EventHorizon
@@ -47,10 +48,18 @@ class CustomButton : SKSpriteNode {
         
         //actionSequence = SKAction.sequence([action, action2])
         if !isPressed{
-            activeButton()
+            self.run(actionPress)
+            self.run(action)
+            isPressed = true
+            
+            onButtonPress()
         }
         else{
-            desactivateButton()
+            self.run(action.reversed())
+            self.run(actionRelease)
+            isPressed = false
+            
+            onButtonReleased()
         }
         
         //self.run(actionSequence)
@@ -66,19 +75,17 @@ class CustomButton : SKSpriteNode {
 
 extension CustomButton {
     
-    func activeButton(){
-        self.run(actionPress)
-        self.run(action)
-        isPressed = true
+    func changeImage (newImage: String) {
         
-        onButtonPress()
+        self.name = newImage
+        self.run(action.reversed())
+        self.run(actionRelease)
     }
     
-    func desactivateButton(){
+    func deselect() {
+        
         self.run(action.reversed())
         self.run(actionRelease)
         isPressed = false
-        
-        onButtonReleased()
     }
 }

@@ -120,7 +120,8 @@ class PlanetSelectScene: SKScene {
         
         planets.forEach({planet in
             node = TriggerButton(iconName: planet.nome, text: "", view: view!, size: planet.size , position: planet.position, onButtonPress: {
-                print(planet.nome)
+//                print(planet.nome)
+
                 
                 
             }, onButtonReleased: {

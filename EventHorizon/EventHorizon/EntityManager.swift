@@ -189,6 +189,7 @@ extension EntityManager {
         
         if scene.planetIsClicked {
             scene.planetIsClicked = false
+            
         } else {
             scene.planetIsClicked = true
             
@@ -215,7 +216,7 @@ extension EntityManager {
         if scene.blackHoleIsClicked {
             
             scene.blackHoleIsClicked = false
-
+            
         } else {
             scene.blackHoleIsClicked = true
             

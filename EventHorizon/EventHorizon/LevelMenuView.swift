@@ -13,9 +13,6 @@ class LevelMenuView {
     let blackHoleButton: CustomButton
     let planetButton: CustomButton
     
-    let blackHoleButton: CustomButton
-    let planetButton: CustomButton
-    
     init(scene: SKScene, entityManager: EntityManager) {
         
         let sceneBackground = SKSpriteNode(imageNamed: "gameBackground")
