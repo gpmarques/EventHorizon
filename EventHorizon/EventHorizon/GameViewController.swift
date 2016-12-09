@@ -18,8 +18,6 @@ class GameViewController: UIViewController {
         let sceneSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height)
         let scene =
             GameScene(size: sceneSize)
-        
-        //let scroll =
 
         let skView = self.view as! SKView
         skView.showsFPS = true

@@ -96,9 +96,7 @@ extension EntityManager {
                 print("Copy not found")
                 return
             }
-            
-            print("Components cópia", copy.components.count)
-            
+                    
             guard let spriteNode = copy.component(ofType: SpriteComponent.self)?.node else {
                 print("SpriteNode not found")
                 return
@@ -121,7 +119,6 @@ extension EntityManager {
                 spriteComponent.node.name = "removeThisCopy"
                 removeCopy(withThisName: "removeThisCopy")
             }
-        
         
         })
     }
@@ -275,6 +272,7 @@ extension EntityManager {
         scene.spaceship.spriteComponent?.physicsBody?.categoryBitMask = CollisionCategory.Collision
         scene.entityManager.timer.invalidate()
         scene.entityManager.removeAllCopies()
+        scene.selectedNode = nil
         scene.spaceship.component(ofType: TimeComponent.self)?.startTimer()
     }
     

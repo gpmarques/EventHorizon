@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameStart = false
     var planetIsClicked = false
     var blackHoleIsClicked = false
-    var selectedNode: SKSpriteNode!
+    var selectedNode: SKSpriteNode?
     var initialSpaceshipPosition: CGPoint!
     
     override func sceneDidLoad() {
@@ -118,8 +118,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole" || contact.bodyB.node?.name == "Moon") {
             if gameStart {
                 entityManager.remove(spaceship)
-            }
-            else {
+            } else {
                 
                 contact.bodyB.node?.name = "removeThisEntity"
                 guard let entity = entityManager.find(entityWithName: "removeThisEntity") else {
@@ -130,7 +129,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 entityManager.remove(entity)
                 entityManager.restartLevel()
                 entityManager.timer.invalidate()
+
             }
+        } else {
+            let label = SKLabelNode(fontNamed: "Courier-Bold")
+            label.text = "You won!!!"
+            label.color = UIColor.white
+            label.fontSize = 50
+            self.addChild(label)
         }
         
         if contact.bodyA.node?.name == "copy" &&
@@ -158,13 +164,18 @@ extension GameScene {
     // draging objects
     func panForTranslation(translation: CGPoint) {
         
-        if gameStart { return }
+//        if gameStart { return }
+//        
+//        let position = selectedNode.position
+//        guard let name = selectedNode.name else { return }
+
+        guard let selected = selectedNode else { return }
         
-        let position = selectedNode.position
-        guard let name = selectedNode.name else { return }
+        let position = selected.position
+        guard let name = selected.name else { return }
         
         if name == "BlackHole" || name == "Planet" {
-            selectedNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+            selected.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
         }
     }
     
@@ -189,8 +200,8 @@ extension GameScene {
     func deletePlanet (){
         
         if gameStart { return }
-        
-        guard let name = selectedNode.name else { return }
+        guard let selected = selectedNode else { return }
+        guard let name = selected.name else { return }
         
         if name == "BlackHole" || name == "Planet" {
             entityManager.entities.forEach({ entity in
@@ -202,7 +213,7 @@ extension GameScene {
                     }
                 }
             })
-            selectedNode.removeFromParent()
+            selected.removeFromParent()
         }
     }
     
@@ -215,24 +226,26 @@ extension GameScene {
     func selectNodeForTouch(touchLocation: CGPoint) {
         
         let touchedNode = self.atPoint(touchLocation)
+        guard let selected = selectedNode else {  print("SelectedNode"); return }
         
-        
-        
-        if touchedNode is SKSpriteNode && !gameStart {
+        if !gameStart && touchedNode is SKSpriteNode {
             
-            if !selectedNode.isEqual(touchedNode) {
-                selectedNode.removeAllActions()
-                selectedNode.run(SKAction.rotate(toAngle: 0.0, duration: 0.1))
+            if !selected.isEqual(touchedNode) {
+                selected.removeAllActions()
+                selected.run(SKAction.rotate(toAngle: 0.0, duration: 0.1))
                 
                 guard let node = touchedNode as? SKSpriteNode else { return }
                 selectedNode = node
                 
-                if selectedNode.name == "BlackHole" || selectedNode.name == "Planet" {
-                    let sequence = SKAction.sequence([SKAction.rotate(byAngle: degToRad(degree: -4.0), duration: 0.1),
-                                                      SKAction.rotate(byAngle: 0.0, duration: 0.1),
-                                                      SKAction.rotate(byAngle: degToRad(degree: 4.0), duration: 0.1)])
-                    selectedNode.run(SKAction.repeatForever(sequence))
-                }
+//                if selected.name == "BlackHole" || selected.name == "Planet" {
+//                    let action = SKAction.scale(by: 0.9, duration: 0.5)
+//                    let action2 = SKAction.scale(by: 1.11111111, duration: 0.5)
+//                    let sequence = SKAction.sequence([action, action2])
+////                    SKAction.rotate(byAngle: degToRad(degree: -4.0), duration: 0.1),
+////                    SKAction.rotate(byAngle: 0.0, duration: 0.1),
+////                    SKAction.rotate(byAngle: degToRad(degree: 4.0), duration: 0.1)
+//                    selected.run(SKAction.repeatForever(sequence))
+//                }
             }
         }
     }

@@ -108,10 +108,8 @@ class OrbitComponent: GKComponent {
                 let velocityVector = CGVector(dx: x1, dy: y1)
                 
                 ship?.physicsBody?.velocity = velocityVector
-                
-                
-            }
-            else {
+
+            } else {
                 
                 let Pi = CGFloat(M_PI)
                 let DegreesToRadians = Pi / 180

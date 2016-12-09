@@ -60,7 +60,7 @@ extension SpriteComponent {
 
 extension Int {
     var years: Int { return self/12 }
-    var reset: Int { return (self >= 12) ? 1 : self}
+    var reset: Int { return (self >= 12) ? 0 : self}
     var stringfyYear: String {
         return (self>1 || self == 0) ? "\(self) years" : "\(self) year" }
     var stringfyMonth: String {
