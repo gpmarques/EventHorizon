@@ -15,6 +15,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var entityManager: EntityManager!
     var spaceship: Spaceship!
     var planet: Planet!
+    var planet2: Planet!
     var moon1: Moon!
     var moon2: Moon!
     var blackHole: BlackHole!
@@ -24,6 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blackHoleIsClicked = false
     var selectedNode: SKSpriteNode?
     var initialSpaceshipPosition: CGPoint!
+    var initialMoon1Position: CGPoint!
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -52,12 +54,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         menu = LevelMenuView(scene: self, entityManager: entityManager)
         
-        moon1 = Moon(imageNamed: "netuno", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/1, y: self.frame.height/1.3))
+        moon1 = Moon(imageNamed: "netuno", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/2.3, y: self.frame.height/1.3))
         entityManager.add(moon1)
         
         moon1.spriteComponent?.node.isUserInteractionEnabled = false
         
-        moon2 = Moon(imageNamed: "mercurio", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/1.1, y: self.frame.height/1.1))
+        moon2 = Moon(imageNamed: "mercurio", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/1.1, y: self.frame.height/1.3))
         entityManager.add(moon2)
         
         moon2.spriteComponent?.node.isUserInteractionEnabled = false
@@ -69,6 +71,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon1.spriteComponent!.node)
         planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon2.spriteComponent!.node)
+        
+        planet2 = Planet(imageNamed: "marte", radius: self.frame.width/25, strenght: 0, position: CGPoint(x: self.frame.width/2.3, y: self.frame.height/1.25), orbitingNodes: [], entityManager: entityManager, name: "Planet")
+        
+        entityManager.add(planet2)
         
         physicsWorld.gravity = CGVector.zero
     }
