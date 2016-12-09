@@ -15,7 +15,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var entityManager: EntityManager!
     var spaceship: Spaceship!
     var planet: Planet!
-    var moon: Moon!
+    var moon1: Moon!
+    var moon2: Moon!
     var blackHole: BlackHole!
     var menu: LevelMenuView!
     var gameStart = false
@@ -51,17 +52,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         menu = LevelMenuView(scene: self, entityManager: entityManager)
         
-        moon = Moon(imageNamed: "netuno", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/1.1, y: self.frame.height/1.1))
-        entityManager.add(moon)
+        moon1 = Moon(imageNamed: "netuno", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/1, y: self.frame.height/1.3))
+        entityManager.add(moon1)
         
-        moon.spriteComponent?.node.isUserInteractionEnabled = false
+        moon1.spriteComponent?.node.isUserInteractionEnabled = false
         
-        planet = Planet(imageNamed: "jupiter", radius: self.frame.width/15, strenght: 0.75, position: CGPoint(x: self.frame.width/1.1, y:self.frame.height/1.1) , orbitingNodes: [moon.spriteComponent!.node], entityManager: entityManager, name: "Objective")
+        moon2 = Moon(imageNamed: "mercurio", radius: self.frame.width/40, position: CGPoint(x: self.frame.width/1.1, y: self.frame.height/1.1))
+        entityManager.add(moon2)
+        
+        moon2.spriteComponent?.node.isUserInteractionEnabled = false
+        
+        planet = Planet(imageNamed: "jupiter", radius: self.frame.width/15, strenght: 0.75, position: CGPoint(x: self.frame.width/1.1, y:self.frame.height/1.1) , orbitingNodes: [moon1.spriteComponent!.node, moon2.spriteComponent!.node], entityManager: entityManager, name: "Objective")
         entityManager.add(planet)
         
         planet.spriteComponent?.node.isUserInteractionEnabled = false
         
-        planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon.spriteComponent!.node)
+        planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon1.spriteComponent!.node)
+        planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon2.spriteComponent!.node)
         
         physicsWorld.gravity = CGVector.zero
     }
@@ -139,8 +146,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 || contact.bodyB.node?.name == "BlackHole"
                 || contact.bodyB.node?.name == "Objective"
                 || contact.bodyB.node?.name == "Moon") {
+            
             contact.bodyA.node?.name = "removeThisCopy"
             entityManager.removeCopy(withThisName: "removeThisCopy")
+        }
+        
+        if contact.bodyA.node?.name == "Spaceship" &&
+            contact.bodyB.node?.name == "Objective" {
+            
+            entityManager.entities.forEach({
+                entity in
+                
+                if entity.spriteComponent?.node.name == "Objective" {
+                    
+                    entity.component(ofType: OrbitComponent.self)?.ship = contact.bodyA.node as! SKSpriteNode?
+                }
+                
+            })
         }
     }
     
