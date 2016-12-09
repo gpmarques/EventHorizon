@@ -32,21 +32,21 @@ class PlanetSelectScene: SKScene {
         self.size = CGSize(width: frame.size.width, height: universeSize)
         
         backgroundColor = SKColor.black
-        backgroundImage = SKSpriteNode(imageNamed: "backgroundSelect2")
+        backgroundImage = SKSpriteNode(imageNamed: "planetSelectBackground")
         backgroundImage.position = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
         addChild(backgroundImage)
         
-
         
+        //self.view?.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.handlePan)))
         
         planets = [PlanetNode(nome: "mercurio",position: CGPoint(x: 250, y: 200), size: CGSize(width: 0.13 * frame.size.width, height: 0.13 * frame.size.width)),
                    PlanetNode(nome: "venus",position: CGPoint(x: 0.8 * frame.size.width, y: 375), size: CGSize(width: 0.18 * frame.size.width, height: 0.18 * frame.size.width)),
                    PlanetNode(nome: "terra" ,position: CGPoint(x: 500, y: 822), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width)),
                    PlanetNode(nome: "marte",position: CGPoint(x: 0.55 * frame.size.width, y: 1300), size: CGSize(width: 0.15 * frame.size.width, height: 0.15 * frame.size.width)),
-                   PlanetNode(nome: "Jupiter" ,position: CGPoint(x: frame.size.width/2 - 150, y: 1900), size: CGSize(width: 0.40 * frame.size.width, height: 0.40 * frame.size.width)),
-                   PlanetNode(nome: "Saturno",position: CGPoint(x: 0.6 * frame.size.width, y: 2500), size: CGSize(width: 2.1 * 0.32 * frame.size.width, height: 0.32 * frame.size.width)),
+                   PlanetNode(nome: "jupiter" ,position: CGPoint(x: frame.size.width/2 - 150, y: 1900), size: CGSize(width: 0.40 * frame.size.width, height: 0.40 * frame.size.width)),
+                   PlanetNode(nome: "saturno",position: CGPoint(x: 0.6 * frame.size.width, y: 2500), size: CGSize(width: 2.1 * 0.32 * frame.size.width, height: 0.32 * frame.size.width)),
                    PlanetNode(nome: "urano" ,position: CGPoint(x: 260, y: 3000), size: CGSize(width: planetSizePercent * frame.size.width, height: 1.9 * planetSizePercent * frame.size.width)),
-                   PlanetNode(nome: "Netuno",position: CGPoint(x: frame.size.width - 0.2 * frame.size.width, y: 3500), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width))]
+                   PlanetNode(nome: "netuno",position: CGPoint(x: frame.size.width - 0.2 * frame.size.width, y: 3500), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width))]
         
         cam = SKCameraNode()
         //position the camera on the gamescene.
@@ -55,7 +55,7 @@ class PlanetSelectScene: SKScene {
         self.camera = cam
         self.addChild(cam)
         
-        drawPath()
+        //drawPath()
         drawPlanets()
         
         //print(self.children)
@@ -106,7 +106,7 @@ class PlanetSelectScene: SKScene {
         //context?.strokePath()
         let line = SKShapeNode()
         //let bezierLine = UIBezierPath(cgPath: path)
-       
+        
         line.path = path
         line.lineWidth = CGFloat(10)
         line.strokeColor = UIColor.white
@@ -116,12 +116,12 @@ class PlanetSelectScene: SKScene {
     }
     
     private func drawPlanets(){
-
+        
         
         planets.forEach({planet in
             node = TriggerButton(iconName: planet.nome, text: "", view: view!, size: planet.size , position: planet.position, onButtonPress: {
                 print(planet.nome)
-
+                
                 
             }, onButtonReleased: {
                 //let transition: SKTransition = SKTransition.moveIn(with: .down, duration: 1)
@@ -130,9 +130,18 @@ class PlanetSelectScene: SKScene {
                 self.scene?.view?.presentScene(gameScene)
             })
             node.zPosition = 2
-//            node.position = planet.position
+            //            node.position = planet.position
             addChild(node)
         })
-//        planets.forEach{addChild(SKSpriteNode(imageNamed: $0))}
+        //        planets.forEach{addChild(SKSpriteNode(imageNamed: $0))}
     }
+//    func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+//        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+//            
+//            let translation = gestureRecognizer.translation(in: self.view)
+//            // note: 'view' is optional and need to be unwrapped
+//            gestureRecognizer.view!.center = CGPoint(x: self.frame.midX, y: gestureRecognizer.view!.center.y + translation.y)
+//            gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
+//        }
+//    }
 }

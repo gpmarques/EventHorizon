@@ -47,18 +47,10 @@ class CustomButton : SKSpriteNode {
         
         //actionSequence = SKAction.sequence([action, action2])
         if !isPressed{
-            self.run(actionPress)
-            self.run(action)
-            isPressed = true
-            
-            onButtonPress()
+            activeButton()
         }
         else{
-            self.run(action.reversed())
-            self.run(actionRelease)
-            isPressed = false
-            
-            onButtonReleased()
+            desactivateButton()
         }
         
         //self.run(actionSequence)
@@ -72,4 +64,19 @@ class CustomButton : SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func activeButton(){
+        self.run(actionPress)
+        self.run(action)
+        isPressed = true
+        
+        onButtonPress()
+    }
+    
+    func desactivateButton(){
+        self.run(action.reversed())
+        self.run(actionRelease)
+        isPressed = false
+        
+        onButtonReleased()
+    }
 }

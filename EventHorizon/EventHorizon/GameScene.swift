@@ -58,11 +58,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if planetIsClicked && !gameStart {
                 entityManager.spawnPlanet(inThisPoint: touchedPoint)
+                menu.planetButton.desactivateButton()
                 planetIsClicked = false
             }
             
             if blackHoleIsClicked && !gameStart{
                 entityManager.spawnblackHole(inThisPoint: touchedPoint)
+                menu.blackHoleButton.desactivateButton()
                 blackHoleIsClicked = false
             }
             
