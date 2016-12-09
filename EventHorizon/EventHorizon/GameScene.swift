@@ -59,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         menu = LevelMenuView(scene: self, entityManager: entityManager)
         
-        moon1 = Moon(imageNamed: "netuno", radius: self.frame.width/40, position: initialMoon1Position)
+        moon1 = Moon(imageNamed: "netuno2", radius: self.frame.width/40, position: initialMoon1Position)
         entityManager.add(moon1)
         
         moon1.spriteComponent?.node.isUserInteractionEnabled = false
@@ -77,7 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon1.spriteComponent!.node)
         planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon2.spriteComponent!.node)
         
-        planet2 = Planet(imageNamed: "marte", radius: self.frame.width/25, strenght: 0, position: CGPoint(x: self.frame.width/2.3, y: self.frame.height/1.25), orbitingNodes: [], entityManager: entityManager, name: "Planet")
+        planet2 = Planet(imageNamed: "asteroide", radius: self.frame.width/25, strenght: 0, position: CGPoint(x: self.frame.width/2.3, y: self.frame.height/1.25), orbitingNodes: [], entityManager: entityManager, name: "Planet")
         
         entityManager.add(planet2)
         

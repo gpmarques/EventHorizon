@@ -46,7 +46,7 @@ class PlanetSelectScene: SKScene {
                    PlanetNode(nome: "jupiter" ,position: CGPoint(x: frame.size.width/2 - 150, y: 1900), size: CGSize(width: 0.40 * frame.size.width, height: 0.40 * frame.size.width)),
                    PlanetNode(nome: "saturno",position: CGPoint(x: 0.6 * frame.size.width, y: 2500), size: CGSize(width: 2.1 * 0.32 * frame.size.width, height: 0.32 * frame.size.width)),
                    PlanetNode(nome: "urano" ,position: CGPoint(x: 260, y: 3000), size: CGSize(width: planetSizePercent * frame.size.width, height: 1.9 * planetSizePercent * frame.size.width)),
-                   PlanetNode(nome: "netuno",position: CGPoint(x: frame.size.width - 0.2 * frame.size.width, y: 3500), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width))]
+                   PlanetNode(nome: "netuno2",position: CGPoint(x: frame.size.width - 0.2 * frame.size.width, y: 3500), size: CGSize(width: planetSizePercent * frame.size.width, height: planetSizePercent * frame.size.width))]
         
         cam = SKCameraNode()
         //position the camera on the gamescene.
