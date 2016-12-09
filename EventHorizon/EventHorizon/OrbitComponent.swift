@@ -147,7 +147,7 @@ class OrbitComponent: GKComponent {
             ship?.physicsBody?.velocity = velocityVector
         }
         
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: {
+        Timer.scheduledTimer(withTimeInterval: 4, repeats: false, block: {
             (timer) in
             
             self.didClick = false
@@ -164,8 +164,6 @@ class OrbitComponent: GKComponent {
         let xBlackhole = parentNode.position.x
         let yBlackhole = parentNode.position.y
         
-        print(atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees + 180)
-        
         return atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees
     }
     
@@ -173,16 +171,18 @@ class OrbitComponent: GKComponent {
         
         let Pi = CGFloat(M_PI)
         let DegreesToRadians = Pi / 180
-        let RadiansToDegrees = 180 / Pi
         
-        orbiterAngle = (getAngle(ofObjectOrbiting: ship!)).truncatingRemainder(dividingBy: 360)
+        orbiterAngle = (getAngle(ofObjectOrbiting: object)+180)
+        
         
         let clockwiseRotation = (orbiterAngle! + 180) * DegreesToRadians
         let counterClockwiseRotation = (orbiterAngle!) * DegreesToRadians
         
-        //getAngle(ofObjectOrbiting: ship)
         
-        if getAngle(ofObjectOrbiting: ship!) == 2 {
+        let option1 = abs((object.zRotation)+90 - clockwiseRotation)
+        let option2 = abs((object.zRotation)+90 - counterClockwiseRotation)
+        
+        if option1 < option2 {
             
             clockwise = true
         }
@@ -195,48 +195,58 @@ class OrbitComponent: GKComponent {
     
     override func update(deltaTime: CFTimeInterval) {
         
-        if orbitingNodes.count != 0 || ship != nil {
+        if orbitingNodes.count == 0 {
             
-            if orbitingNodes.count == 0 {
-                
-                if let shipNode = ship {
-                    if self.orbitNode.intersects(shipNode) && !self.didClick && fuel && entityManager.gameStarted() {
+            if let shipNode = ship {
+                if self.orbitNode.intersects(shipNode) && !self.didClick && fuel && entityManager.gameStarted() {
+                    
+                    if collision == false {
                         
-                        if collision == false {
-                            
-                            setupRotationDirection(object: shipNode, dt: deltaTime)
-                            collision = true
-                            
-                        } else {
-                            
-                            guard let emitter = entityManager.getEmitter() else {
-                                print("particle not found")
-                                return
-                            }
-                            
-                            emitter.particleAlpha = 1
-                            entityManager.shipIsOrbiting(isOrbiting: true)
-                            shipNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                            updateOrbiter(dt: deltaTime, orbiter: shipNode)
-                        }
+                        setupRotationDirection(object: shipNode, dt: deltaTime)
+                        collision = true
+                        
                     } else {
                         
-                        collision = false
-                    }
-                }
-                
-                if !fuel {
-                    
-                    leaveOrbit()
-                }
-            } else {
-                
-                if entityManager.gameStarted(){
-                    
-                    for i in 0..<orbitingNodes.count {
+                        guard let emitter = entityManager.getEmitter() else {
+                            print("particle not found")
+                            return
+                        }
                         
-                        updateOrbiter(dt: deltaTime, orbiter: orbitingNodes[i])
+                        emitter.particleAlpha = 1
+                        entityManager.shipIsOrbiting(isOrbiting: true)
+                        shipNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                        updateOrbiter(dt: deltaTime, orbiter: shipNode)
+                        
+                        
                     }
+                } else {
+                    
+                    collision = false
+                }
+            }
+            
+            if !fuel {
+                
+                leaveOrbit()
+            }
+        } else {
+            
+            if entityManager.gameStarted(){
+                
+                for i in 0..<orbitingNodes.count {
+                    
+                    updateOrbiter(dt: deltaTime, orbiter: orbitingNodes[i])
+                }
+            }
+            
+            if let shipNode = ship {
+                
+                if self.orbitNode.intersects(shipNode) && entityManager.gameStarted() {
+                    
+                    //entityManager.shipIsOrbiting(isOrbiting: true)
+                    shipNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    updateOrbiter(dt: deltaTime, orbiter: shipNode)
+                    
                 }
             }
         }

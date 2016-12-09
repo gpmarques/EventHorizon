@@ -73,7 +73,7 @@ class FuelComponent: GKComponent {
     override func update(deltaTime seconds: TimeInterval) {
         
         if entityManager.isShipOrbiting() {
-            if spendFuel(1/8) {
+            if spendFuel(1/12) {
                 guard let blackHole = entityManager.find(entityOfType: BlackHole.self) as? BlackHole else { print("blackhole not found"); return }
                 guard let orbit = blackHole.component(ofType: OrbitComponent.self) else { print("orbit not found"); return }
                 orbit.fuel = false
