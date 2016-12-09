@@ -279,7 +279,6 @@ extension EntityManager {
                 
                 entity.component(ofType: OrbitComponent.self)?.ship = self.getShipNode()
             }
-            
         })
         
         if let label = scene.wonLabel {
@@ -298,13 +297,14 @@ extension EntityManager {
         scene.moon2.spriteComponent?.node.position = scene.initialMoon2Position
         scene.planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: scene.moon1.spriteComponent!.node)
         scene.planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: scene.moon2.spriteComponent!.node)
-        
     }
     
     func startLevel() {
         
         scene.planetIsClicked = false
+        scene.menu.planetButton.deselect()
         scene.blackHoleIsClicked = false
+        scene.menu.blackHoleButton.deselect()
         
         scene.gameStart = true
         scene.spaceship.spriteComponent?.physicsBody?.isDynamic = true
@@ -333,6 +333,5 @@ extension EntityManager {
             
         })
     }
-    
 }
 

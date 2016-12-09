@@ -162,7 +162,6 @@ class OrbitComponent: GKComponent {
         let xBlackhole = parentNode.position.x
         let yBlackhole = parentNode.position.y
         
-//        print(atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees + 180)
     
         return atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees
     }
