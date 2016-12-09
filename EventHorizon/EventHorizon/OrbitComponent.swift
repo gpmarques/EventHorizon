@@ -163,7 +163,8 @@ class OrbitComponent: GKComponent {
         let yBlackhole = parentNode.position.y
         
 //        print(atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees + 180)
-
+    
+        return atan2(yShip-yBlackhole, xShip-xBlackhole) * RadiansToDegrees
     }
     
     func setupRotationDirection(object: SKSpriteNode, dt: CFTimeInterval) {
