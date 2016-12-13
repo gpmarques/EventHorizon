@@ -278,6 +278,17 @@ extension EntityManager {
             if entity.spriteComponent?.node.name == "BlackHole" {
                 
                 entity.component(ofType: OrbitComponent.self)?.ship = self.getShipNode()
+                entity.component(ofType: OrbitComponent.self)?.fuel = true
+                print(entity.component(ofType: OrbitComponent.self)?.orbiterSpeed)
+                print((entity.component(ofType: OrbitComponent.self)?.defaultOrbiterSpeed)!)
+                entity.component(ofType: OrbitComponent.self)?.orbiterSpeed = (entity.component(ofType: OrbitComponent.self)?.defaultOrbiterSpeed)!
+                
+            }
+            
+            if entity.spriteComponent!.node.name == "Planet" ||
+                entity.spriteComponent!.node.name == "Objective" {
+                
+                entity.component(ofType: OrbitComponent.self)?.orbiterSpeed = (entity.component(ofType: OrbitComponent.self)?.defaultOrbiterSpeed)!
             }
         })
         

@@ -16,7 +16,7 @@ class BlackHole: GKEntity {
         super.init()
         
         let texture = SKTexture(imageNamed: imageNamed)
-//        let size = CGSize(width: texture.size.width, height: <#T##Double#>)
+        
         let spriteComponent = SpriteComponent(texture: texture,
                                               size: texture.size(),
                                               nodePosition: position,
