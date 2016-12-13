@@ -138,6 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 entityManager.stopTimeComponentTimer()
                 entityManager.remove(spaceship)
                 
+                
             } else {
                 
                 contact.bodyB.node?.name = "removeThisEntity"
