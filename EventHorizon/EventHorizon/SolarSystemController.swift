@@ -21,8 +21,8 @@ class SolarSystemController: UIViewController {
             SolarSystemScene(size: sceneSize)
         
         let skView = self.view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        //skView.showsFPS = true
+        //skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .aspectFit
         skView.presentScene(scene)
