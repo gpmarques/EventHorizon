@@ -40,6 +40,7 @@
 		FD3ADBC51DDA5CD4004E516D /* SolarSystemScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3ADBC41DDA5CD4004E516D /* SolarSystemScene.swift */; };
 		FD3ADBC71DDA6ED9004E516D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3ADBC61DDA6ED9004E516D /* CustomButton.swift */; };
 		FD7F67251DFA5CC500AE13CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD7F67241DFA5CC500AE13CC /* Assets.xcassets */; };
+		FD9D70641E004BC7005AD7F3 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = FD9D70631E004BC7005AD7F3 /* Explosion.sks */; };
 		FDE722371DE60A4700193C8B /* TriggerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE722361DE60A4700193C8B /* TriggerButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		FD3ADBC41DDA5CD4004E516D /* SolarSystemScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolarSystemScene.swift; sourceTree = "<group>"; };
 		FD3ADBC61DDA6ED9004E516D /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		FD7F67241DFA5CC500AE13CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
+		FD9D70631E004BC7005AD7F3 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		FDE722361DE60A4700193C8B /* TriggerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,6 +220,7 @@
 				D1791CAA1DCD344300FF097A /* Info.plist */,
 				FD00ACC81DDCDC07009FD0D2 /* MyScene.sks */,
 				A50EE50A1DE34A6E00CFE575 /* SpaceshipRocket.sks */,
+				FD9D70631E004BC7005AD7F3 /* Explosion.sks */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1791CA41DCD344300FF097A /* Main.storyboard in Resources */,
+				FD9D70641E004BC7005AD7F3 /* Explosion.sks in Resources */,
 				FD00ACC91DDCDC07009FD0D2 /* MyScene.sks in Resources */,
 				D1791CA91DCD344300FF097A /* LaunchScreen.storyboard in Resources */,
 				A50EE50B1DE34A6E00CFE575 /* SpaceshipRocket.sks in Resources */,
