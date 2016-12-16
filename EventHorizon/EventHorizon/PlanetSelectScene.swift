@@ -130,8 +130,35 @@ class PlanetSelectScene: SKScene {
                 //gameScene.scaleMode = SKSceneScaleMode.resizeFill
                 self.scene?.view?.presentScene(gameScene)
             })
+            
+            if planet.nome != "mercurio" {
+                
+                node.isUserInteractionEnabled = false
+                
+                let action = SKAction.colorize(with: UIColor.black, colorBlendFactor: 0.8, duration: 0.001)
+                node.run(action)
+                
+                let padlock = SKSpriteNode(imageNamed: "padlock")
+                padlock.position = planet.position
+                
+                let size: CGFloat
+                if planet.size.width < planet.size.height {
+                    
+                    size = planet.size.width
+                } else {
+                    
+                    size = planet.size.height
+                }
+                
+                padlock.size = CGSize(width: size/2, height: size/2)
+                padlock.zPosition = 3
+                
+                addChild(padlock)
+                
+            }
+            
             node.zPosition = 2
-            //            node.position = planet.position
+            
             addChild(node)
         })
         //        planets.forEach{addChild(SKSpriteNode(imageNamed: $0))}

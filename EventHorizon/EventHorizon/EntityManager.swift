@@ -204,7 +204,7 @@ extension EntityManager {
     
     func spawnPlanet(inThisPoint point: CGPoint) {
         
-        let planet = Planet(imageNamed: "venus", radius: scene.frame.width/15, strenght: 0.75, position: point, orbitingNodes: [], entityManager: self, name: "Planet")
+        let planet = Planet(imageNamed: "jupiter", radius: scene.frame.width/15, strenght: 0.75, position: point, orbitingNodes: [], entityManager: self, name: "Planet")
         planet.component(ofType: OrbitComponent.self)?.noMoon = true
         add(planet)
         scene.menu.planetButton.deselect()
@@ -280,8 +280,6 @@ extension EntityManager {
                 
                 entity.component(ofType: OrbitComponent.self)?.ship = self.getShipNode()
                 entity.component(ofType: OrbitComponent.self)?.fuel = true
-                print(entity.component(ofType: OrbitComponent.self)?.orbiterSpeed)
-                print((entity.component(ofType: OrbitComponent.self)?.defaultOrbiterSpeed)!)
                 entity.component(ofType: OrbitComponent.self)?.orbiterSpeed = (entity.component(ofType: OrbitComponent.self)?.defaultOrbiterSpeed)!
                 
             }

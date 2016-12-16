@@ -333,7 +333,7 @@
 				TargetAttributes = {
 					D1791C941DCD344200FF097A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 56YN57ZN7X;
+						DevelopmentTeam = EQQQP3638J;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -586,7 +586,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 56YN57ZN7X;
+				DEVELOPMENT_TEAM = EQQQP3638J;
 				INFOPLIST_FILE = EventHorizon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -600,7 +600,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 56YN57ZN7X;
+				DEVELOPMENT_TEAM = EQQQP3638J;
 				INFOPLIST_FILE = EventHorizon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

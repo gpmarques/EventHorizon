@@ -64,12 +64,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         moon1.spriteComponent?.node.isUserInteractionEnabled = false
         
-        moon2 = Moon(imageNamed: "mercurio", radius: self.frame.width/40, position: initialMoon2Position)
+        moon2 = Moon(imageNamed: "marte", radius: self.frame.width/40, position: initialMoon2Position)
         entityManager.add(moon2)
         
         moon2.spriteComponent?.node.isUserInteractionEnabled = false
         
-        planet = Planet(imageNamed: "jupiter", radius: self.frame.width/15, strenght: 0.75, position: CGPoint(x: self.frame.width/1.1, y:self.frame.height/1.1) , orbitingNodes: [moon1.spriteComponent!.node, moon2.spriteComponent!.node], entityManager: entityManager, name: "Objective")
+        planet = Planet(imageNamed: "mercurio", radius: self.frame.width/15, strenght: 0.75, position: CGPoint(x: self.frame.width/1.1, y:self.frame.height/1.1) , orbitingNodes: [moon1.spriteComponent!.node, moon2.spriteComponent!.node], entityManager: entityManager, name: "Objective")
         entityManager.add(planet)
         planet.spriteComponent?.node.physicsBody?.isDynamic = false
         planet.spriteComponent?.node.isUserInteractionEnabled = false

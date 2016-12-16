@@ -24,11 +24,12 @@ class LevelMenuView {
         menuBackground.zPosition = 2
         
         let size = CGSize(width: scene.frame.width/18 , height: scene.frame.width/18)
-        planetButton = CustomButton(iconName: "venus",
+        planetButton = CustomButton(iconName: "jupiter",
                                         text: "", view: scene.view!, size: size,
                                         position: CGPoint(x: scene.frame.width/3.25, y: scene.frame.height/22.5),
                                         onButtonPress: entityManager.planetIsClicked, onButtonReleased: {})
         planetButton.zPosition = 3
+        
         
         blackHoleButton = CustomButton(iconName: "blackhole",
                                            text: "", view: scene.view!, size: size,
