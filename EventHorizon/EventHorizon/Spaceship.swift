@@ -49,7 +49,7 @@ class Spaceship: GKEntity {
         addComponent(trajectoryComponent)
         
         let fuelComponent = FuelComponent(entityManager: entityManager,
-                                          rect: CGRect(x: 0,
+                                          rect: CGRect(x: entityManager.getScene.frame.width/40,
                                                        y: entityManager.getScene.frame.width/40,
                                                        width: entityManager.getScene.frame.width/5 + 10 ,
                                                        height: entityManager.getScene.frame.height/35), fuel: 100)

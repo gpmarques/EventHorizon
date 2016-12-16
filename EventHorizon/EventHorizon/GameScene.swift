@@ -49,10 +49,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         doubleTap.numberOfTapsRequired = 2
         view.addGestureRecognizer(doubleTap)
         
-        spaceship = Spaceship(  imageNamed: "Spaceship",
-                                speed: 150,
-                                entityManager: entityManager,
-                                position: initialSpaceshipPosition)
+        spaceship = Spaceship(imageNamed: "Spaceship",
+                              speed: 150,
+                              entityManager: entityManager,
+                              position: initialSpaceshipPosition)
         
         entityManager.add(spaceship)
         entityManager.startCopys()
@@ -71,13 +71,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         planet = Planet(imageNamed: "jupiter", radius: self.frame.width/15, strenght: 0.75, position: CGPoint(x: self.frame.width/1.1, y:self.frame.height/1.1) , orbitingNodes: [moon1.spriteComponent!.node, moon2.spriteComponent!.node], entityManager: entityManager, name: "Objective")
         entityManager.add(planet)
-        
+        planet.spriteComponent?.node.physicsBody?.isDynamic = false
         planet.spriteComponent?.node.isUserInteractionEnabled = false
         
         planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon1.spriteComponent!.node)
         planet.component(ofType: OrbitComponent.self)?.updateOrbiter(dt: 1, orbiter: moon2.spriteComponent!.node)
         
-        planet2 = Planet(imageNamed: "asteroide", radius: self.frame.width/25, strenght: 0, position: CGPoint(x: self.frame.width/2.3, y: self.frame.height/1.25), orbitingNodes: [], entityManager: entityManager, name: "Planet")
+        planet2 = Planet(imageNamed: "asteroide", radius: self.frame.width/25, strenght: 0, position: CGPoint(x: self.frame.width/2.3, y: self.frame.height/1.25), orbitingNodes: [], entityManager: entityManager, name: "Obstacle")
+        planet2.spriteComponent?.node.physicsBody?.isDynamic = false
+        planet2.spriteComponent?.node.isUserInteractionEnabled = false
         
         entityManager.add(planet2)
         
@@ -133,10 +135,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if contact.bodyA.node?.name == "Spaceship" &&
-            (contact.bodyB.node?.name == "Planet" || contact.bodyB.node?.name == "BlackHole" || contact.bodyB.node?.name == "Moon") {
+            (contact.bodyB.node?.name == "Planet"
+                || contact.bodyB.node?.name == "BlackHole"
+                || contact.bodyB.node?.name == "Moon"
+                || contact.bodyB.node?.name == "Obstacle") {
             if gameStart {
                 entityManager.stopTimeComponentTimer()
                 entityManager.remove(spaceship)
+                lostLabel = SKLabelNode(fontNamed: "Courier-Bold")
+                lostLabel.text = "Your journey has ended."
+                lostLabel.color = UIColor.white
+                lostLabel.fontSize = 25
+                lostLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+                lostLabel.zPosition = 5
+                lostLabel.name = "lost"
+                self.addChild(lostLabel)
                 
             } else {
                 
@@ -151,22 +164,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 entityManager.timer.invalidate()
 
             }
-            
-            lostLabel = SKLabelNode(fontNamed: "Courier-Bold")
-            lostLabel.text = "Your journey has ended."
-            lostLabel.color = UIColor.white
-            lostLabel.fontSize = 25
-            lostLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-            lostLabel.zPosition = 5
-            lostLabel.name = "lost"
-            self.addChild(lostLabel)
+        
         }
         
         if contact.bodyA.node?.name == "copy" &&
             (contact.bodyB.node?.name == "Planet"
                 || contact.bodyB.node?.name == "BlackHole"
                 || contact.bodyB.node?.name == "Objective"
-                || contact.bodyB.node?.name == "Moon") {
+                || contact.bodyB.node?.name == "Moon"
+                || contact.bodyB.node?.name == "Obstacle" )  {
             
             contact.bodyA.node?.name = "removeThisCopy"
             entityManager.removeCopy(withThisName: "removeThisCopy")

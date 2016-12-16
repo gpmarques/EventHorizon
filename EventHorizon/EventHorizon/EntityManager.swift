@@ -218,6 +218,7 @@ extension EntityManager {
             scene.blackHoleIsClicked = false
             
         } else {
+            
             scene.blackHoleIsClicked = true
             
             if scene.planetIsClicked {
@@ -278,15 +279,20 @@ extension EntityManager {
             if entity.spriteComponent?.node.name == "BlackHole" {
                 
                 entity.component(ofType: OrbitComponent.self)?.ship = self.getShipNode()
+                entity.component(ofType: OrbitComponent.self)?.fuel = true
             }
         })
         
         if let label = scene.wonLabel {
+            
             label.removeFromParent()
+            
         }
         
         if let lostLabel = scene.lostLabel {
+            
             lostLabel.removeFromParent()
+            
         }
         
         self.startCopys()
