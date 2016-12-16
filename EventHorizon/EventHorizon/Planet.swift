@@ -32,6 +32,8 @@ class Planet: GKEntity {
                                                 strenght: strenght)
         addComponent(gravityComponent)
         
+//                  \/ \/ \/ \/ \/ ajustar para size.width*1.1 ou algo do genero
+        
         let sizeOrbit = CGSize(width: size.width+75, height: size.height+75)
         
         let orbitComponent = OrbitComponent(orbitSpeed: 5,

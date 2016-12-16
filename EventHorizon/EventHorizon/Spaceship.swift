@@ -63,6 +63,11 @@ class Spaceship: GKEntity {
                                                   entityManager: entityManager)
         addComponent(particleComponent)
         
+        let explosionComponent = ParticleComponent(fileNamed: "Explosion.sks",
+                                                  parentNode: spriteComponent.node,
+                                                  entityManager: entityManager)
+        addComponent(explosionComponent)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

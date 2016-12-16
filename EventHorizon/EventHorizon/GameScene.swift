@@ -151,6 +151,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 lostLabel.name = "lost"
                 self.addChild(lostLabel)
                 
+                
             } else {
                 
                 contact.bodyB.node?.name = "removeThisEntity"

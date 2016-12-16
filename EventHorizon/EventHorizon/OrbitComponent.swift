@@ -17,6 +17,7 @@ class OrbitComponent: GKComponent {
     var lastUpdateTime: CFTimeInterval = 0
     var speed: CGFloat
     
+    var defaultOrbiterSpeed: CGFloat
     var orbiterSpeed: CGFloat
     var orbiterRadius: CGFloat
     var orbiterAngle: CGFloat?
@@ -34,6 +35,7 @@ class OrbitComponent: GKComponent {
         
         self.entityManager = entityManager
         self.parentNode = parentNode
+        self.defaultOrbiterSpeed = orbitSpeed
         self.orbiterSpeed = orbitSpeed
         self.orbiterRadius = blackHoleOrbitSize/2
         self.speed = speed
